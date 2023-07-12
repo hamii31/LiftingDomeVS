@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-LiftingDome-ae7b4f39-c540-432d-8ab9-20e1286eca4d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LiftingDome.Common\LiftingDome.Common.csproj" />
+    <ProjectReference Include="..\LiftingDome.Data\LiftingDome.Data.csproj" />
+    <ProjectReference Include="..\LiftingDome.Infrastructure\LiftingDome.Infrastructure.csproj" />
+    <ProjectReference Include="..\LiftingDome.Models\LiftingDome.Models.csproj" />
+    <ProjectReference Include="..\LiftingDome.Services.Data\LiftingDome.Services.Data.csproj" />
+    <ProjectReference Include="..\LiftingDome.Web.ViewModels\LiftingDome.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

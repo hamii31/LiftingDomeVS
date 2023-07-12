@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LiftingDome.Common\LiftingDome.Common.csproj" />
+    <ProjectReference Include="..\LiftingDome.Data\LiftingDome.Data.csproj" />
+    <ProjectReference Include="..\LiftingDome.Models\LiftingDome.Models.csproj" />
+    <ProjectReference Include="..\LiftingDome.Web.ViewModels\LiftingDome.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
