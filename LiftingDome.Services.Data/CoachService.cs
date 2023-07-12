@@ -40,7 +40,21 @@
             await this.liftingDomeDbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> UserHasWorkoutsByUserIdAsync(string userId)
+		public async Task<string?> GetCoachIdByUserIdAsync(string userId)
+		{
+            Coach? coach = await this.liftingDomeDbContext
+                .Coaches
+                .FirstOrDefaultAsync(c => c.UserId.ToString() == userId);
+
+            if (coach == null)
+            {
+                return null;
+            }
+
+            return coach.Id.ToString();
+		}
+
+		public async Task<bool> UserHasWorkoutsByUserIdAsync(string userId)
         {
             ApplicationUser? user = await this.liftingDomeDbContext
                 .Users

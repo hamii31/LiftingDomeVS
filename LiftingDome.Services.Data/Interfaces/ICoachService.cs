@@ -8,5 +8,6 @@ namespace LiftingDome.Services.Data.Interfaces
         Task<bool> CoachExistsByPhoneNumberAsync(string phoneNumber);
         Task<bool> UserHasWorkoutsByUserIdAsync(string userId);
         Task Create(string userId, BecomeCoachFormModel model);
+        Task<string?> GetCoachIdByUserIdAsync(string userId);
     }
 }
