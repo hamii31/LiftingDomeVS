@@ -2,6 +2,7 @@ namespace LiftingDome
 {
     using LiftingDome.Data;
     using LiftingDome.Infrastructure.Extensions;
+    using LiftingDome.Infrastructure.ModelBinders;
     using LiftingDome.Models;
     using LiftingDome.Services.Data.Interfaces;
     using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,12 @@ namespace LiftingDome
 
             builder.Services.AddApplicationServices(typeof(IWorkoutService));
 
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
             WebApplication app = builder.Build();
 
