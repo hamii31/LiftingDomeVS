@@ -20,6 +20,7 @@
     <ProjectReference Include="..\LiftingDome.Data\LiftingDome.Data.csproj" />
     <ProjectReference Include="..\LiftingDome.Infrastructure\LiftingDome.Infrastructure.csproj" />
     <ProjectReference Include="..\LiftingDome.Models\LiftingDome.Models.csproj" />
+    <ProjectReference Include="..\LiftingDome.Services.Data.Models\LiftingDome.Services.Data.Models.csproj" />
     <ProjectReference Include="..\LiftingDome.Services.Data\LiftingDome.Services.Data.csproj" />
     <ProjectReference Include="..\LiftingDome.Web.ViewModels\LiftingDome.Web.ViewModels.csproj" />
   </ItemGroup>

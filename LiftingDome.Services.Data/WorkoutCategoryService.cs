@@ -28,6 +28,16 @@
 			return allCategories;
 		}
 
+		public async Task<IEnumerable<string>> AllCategoryNamesAsync()
+		{
+			IEnumerable<string> allNames = await this.liftingDomeDbContext
+				.WorkoutCategories
+				.Select(c => c.Name)
+				.ToArrayAsync();
+
+			return allNames;
+		}
+
 		public async Task<bool> ExistsByIdAsync(int id)
 		{
 			bool result = await this.liftingDomeDbContext

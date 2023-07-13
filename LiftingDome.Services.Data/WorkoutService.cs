@@ -3,8 +3,10 @@
     using LiftingDome.Data;
     using LiftingDome.Models;
     using LiftingDome.Services.Data.Interfaces;
-    using LiftingDome.Web.ViewModels.Home;
+	using LiftingDome.Services.Data.Models.Workout;
+	using LiftingDome.Web.ViewModels.Home;
     using LiftingDome.Web.ViewModels.Workout;
+    using LiftingDome.Web.ViewModels.Workout.Enums;
     using Microsoft.EntityFrameworkCore;
 
     public class WorkoutService : IWorkoutService
@@ -14,6 +16,62 @@
         {
             this.liftingDomeDbContext = liftingDomeDbContext;
         }
+
+		public async Task<AllWorkoutsFilteredAndPagedServiceModel> AllAsync(AllWorkoutsQueryModel queryModel)
+		{
+            IQueryable<Workout> workoutsQuery = this.liftingDomeDbContext
+                .Workouts
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryModel.Category))
+            {
+                workoutsQuery = workoutsQuery
+                    .Where(w => w.Category.Name == queryModel.Category);
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchString))
+            {
+                string wildCard = $"%{queryModel.SearchString.ToLower()}%";
+                workoutsQuery = workoutsQuery
+                    .Where(w => EF.Functions.Like(w.Title, wildCard) ||
+                                EF.Functions.Like(w.Description, wildCard) ||
+                                EF.Functions.Like(w.Coach.Email, wildCard));
+            }
+
+            workoutsQuery = queryModel.WorkoutSorting switch
+            {
+                WorkoutSorting.Newest => workoutsQuery
+                .OrderBy(w => w.CreatedOn),
+
+                WorkoutSorting.Oldest => workoutsQuery
+                .OrderByDescending(w => w.CreatedOn),
+
+                WorkoutSorting.PriceAscending => workoutsQuery
+                .OrderBy(w => w.Price),
+
+                WorkoutSorting.PriceDescending => workoutsQuery
+                .OrderByDescending(w => w.Price)
+            };
+
+            IEnumerable<AllWorkoutsViewModel> allWorkouts = await workoutsQuery
+                .Skip((queryModel.CurrentPage - 1) * queryModel.WorkoutPerPage)
+                .Take(queryModel.WorkoutPerPage)
+                .Select(w => new AllWorkoutsViewModel
+                {
+                    Id = w.Id.ToString(),
+                    Title = w.Title,
+                    ImageUrl = w.ImageURL,
+                    Price = w.Price
+                }).ToArrayAsync();
+
+            int totalWorkouts = workoutsQuery.Count();
+
+            return new AllWorkoutsFilteredAndPagedServiceModel()
+            {
+                TotalWorkoutsCount = totalWorkouts,
+                Workouts = allWorkouts
+            };
+		}
 
 		public async Task CreateAsync(AddWorkoutFormModel model, string coachId)
 		{

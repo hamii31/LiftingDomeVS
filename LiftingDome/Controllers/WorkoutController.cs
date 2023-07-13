@@ -2,6 +2,7 @@
 {
     using LiftingDome.Infrastructure.Extensions;
     using LiftingDome.Services.Data.Interfaces;
+    using LiftingDome.Services.Data.Models.Workout;
     using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,18 @@
             this.workoutService = workoutService;
         }
 
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllWorkoutsQueryModel queryModel)
         {
-            return View();
+            AllWorkoutsFilteredAndPagedServiceModel serviceModel = 
+                await this.workoutService.AllAsync(queryModel);
+
+            queryModel.Workouts = serviceModel.Workouts;
+            queryModel.TotalWorkouts = serviceModel.TotalWorkoutsCount;
+            queryModel.Categories = await this.workoutCategoryService.AllCategoryNamesAsync();
+
+            return View(queryModel);
         }
 
         [HttpGet]

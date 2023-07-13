@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiftingDome.Web.ViewModels"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{19E39584-2744-45C0-913C-46873A138860}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftingDome.Services.Data", "LiftingDome.Services.Data\LiftingDome.Services.Data.csproj", "{46FA4EFE-D0C1-4E7A-AD21-9EFDE830C7A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiftingDome.Services.Data", "LiftingDome.Services.Data\LiftingDome.Services.Data.csproj", "{46FA4EFE-D0C1-4E7A-AD21-9EFDE830C7A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftingDome.Infrastructure", "LiftingDome.Infrastructure\LiftingDome.Infrastructure.csproj", "{E4E7C064-6D8B-431B-AF07-0AD00568095B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiftingDome.Infrastructure", "LiftingDome.Infrastructure\LiftingDome.Infrastructure.csproj", "{E4E7C064-6D8B-431B-AF07-0AD00568095B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftingDome.Services.Data.Models", "LiftingDome.Services.Data.Models\LiftingDome.Services.Data.Models.csproj", "{9D9BE28A-F312-44C5-A4B7-3147767DF676}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{E4E7C064-6D8B-431B-AF07-0AD00568095B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4E7C064-6D8B-431B-AF07-0AD00568095B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4E7C064-6D8B-431B-AF07-0AD00568095B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D9BE28A-F312-44C5-A4B7-3147767DF676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D9BE28A-F312-44C5-A4B7-3147767DF676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D9BE28A-F312-44C5-A4B7-3147767DF676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D9BE28A-F312-44C5-A4B7-3147767DF676}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{32B62A09-54E2-4571-A23D-3A5932F03424} = {5E4A3746-10CD-4E06-80AA-7256D22506F4}
 		{46FA4EFE-D0C1-4E7A-AD21-9EFDE830C7A9} = {19E39584-2744-45C0-913C-46873A138860}
 		{E4E7C064-6D8B-431B-AF07-0AD00568095B} = {5E4A3746-10CD-4E06-80AA-7256D22506F4}
+		{9D9BE28A-F312-44C5-A4B7-3147767DF676} = {19E39584-2744-45C0-913C-46873A138860}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B11C2312-11D6-4F36-9DCB-30196033655C}
