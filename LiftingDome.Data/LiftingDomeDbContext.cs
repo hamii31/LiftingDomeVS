@@ -17,6 +17,7 @@
         public DbSet<WorkoutCategory> WorkoutCategories { get; set; } = null!;
         public DbSet<Workout> Workouts { get; set; } = null!;
         public DbSet<Coach> Coaches { get; set; } = null!;
+        public DbSet<Calculator> CalculatorMeassurments { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -28,5 +28,9 @@
             public const int EmailMinLength = 3;
             public const int EmailMaxLength = 254;
         }
+        public static class Calculator
+        {
+            public const int NameMaxLength = 10;
+        }
     }
 }

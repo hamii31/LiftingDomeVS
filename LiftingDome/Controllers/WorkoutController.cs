@@ -3,6 +3,7 @@
     using LiftingDome.Infrastructure.Extensions;
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Services.Data.Models.Workout;
+    using LiftingDome.Web.ViewModels.Calculator;
     using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,6 @@
         private readonly IWorkoutCategoryService workoutCategoryService;
         private readonly ICoachService coachService;
         private readonly IWorkoutService workoutService;
-
         public WorkoutController(IWorkoutCategoryService workoutCategoryService, ICoachService coachService, IWorkoutService workoutService)
         {
             this.workoutCategoryService = workoutCategoryService;
@@ -110,5 +110,6 @@
 
             return RedirectToAction("All", "Workout");
 		}
-	}
+       
+    }
 }
