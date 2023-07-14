@@ -13,7 +13,7 @@
 		[Display(Name = "Enter your weight")]
 		public double Weight { get; set; }
 		[Required]
-		[Display]
+		[Display(Name = "Enter reps")]
 		public int Reps { get; set; }
 		public double OneRepMax { get; set; }
 
