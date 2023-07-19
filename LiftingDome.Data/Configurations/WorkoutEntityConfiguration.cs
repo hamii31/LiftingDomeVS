@@ -10,7 +10,7 @@
         {
             builder
                 .Property(w => w.CreatedOn)
-                .HasDefaultValue(DateTime.UtcNow);
+                .HasDefaultValueSql("GETDATE()");
 
             builder
                 .HasOne(n => n.Category)

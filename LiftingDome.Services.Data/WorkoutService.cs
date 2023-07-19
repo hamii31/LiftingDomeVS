@@ -41,10 +41,10 @@
             workoutsQuery = queryModel.WorkoutSorting switch
             {
                 WorkoutSorting.Newest => workoutsQuery
-                .OrderBy(w => w.CreatedOn),
+                .OrderByDescending(w => w.CreatedOn),
 
                 WorkoutSorting.Oldest => workoutsQuery
-                .OrderByDescending(w => w.CreatedOn),
+                .OrderBy(w => w.CreatedOn),
 
                 WorkoutSorting.PriceAscending => workoutsQuery
                 .OrderBy(w => w.Price),
