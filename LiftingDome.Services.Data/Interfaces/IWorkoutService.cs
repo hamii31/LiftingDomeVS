@@ -12,5 +12,7 @@
         Task CreateAsync(AddWorkoutFormModel model, string coachId);
 
         Task<AllWorkoutsFilteredAndPagedServiceModel> AllAsync(AllWorkoutsQueryModel queryModel);
+        Task<IEnumerable<AllWorkoutsViewModel>> AllByCoachIdAsync(string coachId);
+        Task<IEnumerable<AllWorkoutsViewModel>> AllByTraineeIdAsync(string traineeId);
     }
 }

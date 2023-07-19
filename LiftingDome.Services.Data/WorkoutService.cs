@@ -8,6 +8,7 @@
     using LiftingDome.Web.ViewModels.Workout;
     using LiftingDome.Web.ViewModels.Workout.Enums;
     using Microsoft.EntityFrameworkCore;
+    using static LiftingDome.Common.EntityValidationConstants.Workout;
 
     public class WorkoutService : IWorkoutService
     {
@@ -74,7 +75,41 @@
             };
 		}
 
-		public async Task CreateAsync(AddWorkoutFormModel model, string coachId)
+        public async Task<IEnumerable<AllWorkoutsViewModel>> AllByCoachIdAsync(string coachId)
+        {
+            IEnumerable<AllWorkoutsViewModel> allCoachWorkouts = await this.liftingDomeDbContext
+                .Workouts
+                .Where(w => w.CoachId.ToString() == coachId)
+                .Select(w => new AllWorkoutsViewModel 
+                { 
+                    Id = w.Id.ToString(),
+                    Title = w.Title,
+                    ImageUrl = w.ImageURL,
+                    Price = w.Price
+                })
+                .ToArrayAsync();
+
+            return allCoachWorkouts;
+        }
+
+        public async Task<IEnumerable<AllWorkoutsViewModel>> AllByTraineeIdAsync(string traineeId)
+        {
+            IEnumerable<AllWorkoutsViewModel> allTraineeWorkouts = await this.liftingDomeDbContext
+                .Workouts
+                .Where(w => w.TraineeId.ToString() == traineeId)
+                .Select(w => new AllWorkoutsViewModel
+                {
+                    Id = w.Id.ToString(),
+                    Title = w.Title,
+                    ImageUrl = w.ImageURL,
+                    Price = w.Price
+                })
+                .ToArrayAsync();
+
+            return allTraineeWorkouts ;
+        }
+
+        public async Task CreateAsync(AddWorkoutFormModel model, string coachId)
 		{
 			Workout workout = new Workout()
             {

@@ -7,6 +7,8 @@
     using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+
     [Authorize]
     public class WorkoutController : Controller
     {
@@ -110,6 +112,28 @@
 
             return RedirectToAction("All", "Workout");
 		}
-       
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            List<AllWorkoutsViewModel> myWorkouts = new List<AllWorkoutsViewModel>();
+
+            string userId = this.User.GetId()!;
+
+            bool IsCoach = await this.coachService.CoachExistsByUserIdAsync(userId);
+
+            if (IsCoach)
+            {
+                string? coachId = await this.coachService.GetCoachIdByUserIdAsync(userId);
+
+                myWorkouts.AddRange(await this.workoutService.AllByCoachIdAsync(coachId!));
+            }
+            else
+            {
+                myWorkouts.AddRange(await this.workoutService.AllByTraineeIdAsync(userId));
+            }
+
+            return View(myWorkouts);
+        }
     }
 }
