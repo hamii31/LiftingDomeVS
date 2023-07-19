@@ -27,6 +27,8 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public bool IsActive { get; set; }
+
         public int WorkoutCategoryId { get; set; }
 
         public virtual WorkoutCategory Category { get; set; } = null!;

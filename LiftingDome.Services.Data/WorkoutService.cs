@@ -54,6 +54,7 @@
             };
 
             IEnumerable<AllWorkoutsViewModel> allWorkouts = await workoutsQuery
+                .Where(w => w.IsActive)
                 .Skip((queryModel.CurrentPage - 1) * queryModel.WorkoutPerPage)
                 .Take(queryModel.WorkoutPerPage)
                 .Select(w => new AllWorkoutsViewModel
@@ -93,6 +94,7 @@
         {
             IEnumerable<IndexViewModel> lastThreeWorkouts = await this.liftingDomeDbContext
                 .Workouts
+                .Where(w => w.IsActive)
                 .OrderByDescending(w => w.CreatedOn)
                 .Take(3)
                 .Select(w => new IndexViewModel
