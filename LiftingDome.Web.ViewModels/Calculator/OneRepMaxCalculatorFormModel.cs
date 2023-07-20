@@ -8,6 +8,7 @@
 		{
 			this.MeassurmentId = DefaultMeassurmentIndex;
 			this.Meassurments = new HashSet<MeassurmentSystemSelectFormModel>();
+			this.OneRepMaxPercentages = new List<double>();	
 		}
 		[Required]
 		[Display(Name = "Enter your weight")]
@@ -20,5 +21,6 @@
 		[Display(Name = "Metric or Imperial System")]
 		public int MeassurmentId { get; set; }
 		public IEnumerable<MeassurmentSystemSelectFormModel> Meassurments { get; set; }
+		public IList<double> OneRepMaxPercentages { get; set; }
 	}
 }

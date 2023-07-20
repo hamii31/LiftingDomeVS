@@ -2,33 +2,74 @@
 
 @{
     ViewData["Title"] = "Calculator";
+    ViewData["Title2"] = "Estimated 1RM";
+    int percentage = 50;
+    int count = 0;
 }
 
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr />
+@if (Model.OneRepMax > 0)
+{
+    <h1 class="text-center">@ViewData["Title2"]</h1>
+    <hr />
+}
+else
+{
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <hr />
+}
+
 
 @if (Model.OneRepMax > 0)
 {
     <div class="text-center">
         <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
             <label asp-for="OneRepMax">
-               <font size="5">
-                    <b>Your estimated 1RM is: </b>
-               </font>
                 @if (Model.MeassurmentId == 1)
                 {
-                    <font size="10">
+                    <font size="8">
                         <div class="text-center">
-                            @($"{Model.OneRepMax:f1}") kgs.
+                            @($"1RM - {Model.OneRepMax:f1} kgs.")
                         </div>
+                        <hr />
+                        @foreach (double weight in Model.OneRepMaxPercentages)
+                        {
+                            <div class="text-center">
+                                @($"{percentage}% of 1RM - {weight:f1} kgs.")
+                            </div>
+                            count++;
+                            if (count < 4)
+                            {
+                                percentage += 10;
+                            }
+                            else
+                            {
+                                percentage += 5;
+                            }
+                        }
                     </font>
+                    <hr />
                 }
                 else
                 {
-                    <font size="10">
-                        <div class="text-center" size="15">
-                            @($"{Model.OneRepMax:f1}") lbs.
+                    <font size="8">
+                        <div class="text-center">
+                            @($"1RM - {Model.OneRepMax:f1} lbs.")
                         </div>
+                        @foreach (double weight in Model.OneRepMaxPercentages)
+                        {
+                            <div class="text-center">
+                                @($"{percentage}% of 1RM - {weight:f1} lbs.")
+                            </div>
+                            count++;
+                            if (count < 4)
+                            {
+                                percentage += 10;
+                            }
+                            else
+                            {
+                                percentage += 5;
+                            }
+                        }
                     </font>
                 }
             </label>

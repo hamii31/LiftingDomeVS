@@ -63,6 +63,7 @@
 			try
 			{
 				model.OneRepMax = await this.calculatorService.Calculate(model);
+				model.OneRepMaxPercentages = await this.calculatorService.CalculatePercentages(model);
 			}
 			catch (Exception)
 			{

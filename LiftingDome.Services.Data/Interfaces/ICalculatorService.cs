@@ -7,5 +7,6 @@
 		Task<IEnumerable<MeassurmentSystemSelectFormModel>> GetAllMeassurmentSystemsAsync();
 		Task<bool> ExistsByIdAsync(int id);
 		Task<double> Calculate(OneRepMaxCalculatorFormModel model);
+		Task<IList<double>> CalculatePercentages(OneRepMaxCalculatorFormModel model);
 	}
 }

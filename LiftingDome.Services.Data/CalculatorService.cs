@@ -22,6 +22,26 @@
 			return Task.FromResult(oneRepMax);
 		}
 
+		public Task<IList<double>> CalculatePercentages(OneRepMaxCalculatorFormModel model)
+		{
+			IList<double> percentages = new List<double>();
+			double max = model.OneRepMax;
+			double percentage = 0.5;
+			for (int i = 0; i < 7; i++)
+			{
+				percentages.Add(max * percentage);
+				if (i < 3)
+				{
+					percentage += 0.1;
+				}
+				else
+				{
+					percentage += 0.05;
+				}
+			}
+			return Task.FromResult(percentages);
+		}
+
 		public async Task<bool> ExistsByIdAsync(int id)
 		{
 			bool result = await this.liftingDomeDbContext

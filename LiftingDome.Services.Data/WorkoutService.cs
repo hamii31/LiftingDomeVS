@@ -3,12 +3,11 @@
     using LiftingDome.Data;
     using LiftingDome.Models;
     using LiftingDome.Services.Data.Interfaces;
-	using LiftingDome.Services.Data.Models.Workout;
-	using LiftingDome.Web.ViewModels.Home;
+    using LiftingDome.Services.Data.Models.Workout;
+    using LiftingDome.Web.ViewModels.Home;
     using LiftingDome.Web.ViewModels.Workout;
     using LiftingDome.Web.ViewModels.Workout.Enums;
     using Microsoft.EntityFrameworkCore;
-    using static LiftingDome.Common.EntityValidationConstants.Workout;
 
     public class WorkoutService : IWorkoutService
     {
@@ -79,7 +78,7 @@
         {
             IEnumerable<AllWorkoutsViewModel> allCoachWorkouts = await this.liftingDomeDbContext
                 .Workouts
-                .Where(w => w.CoachId.ToString() == coachId)
+                .Where(w => w.IsActive && w.CoachId.ToString() == coachId)
                 .Select(w => new AllWorkoutsViewModel 
                 { 
                     Id = w.Id.ToString(),
@@ -96,7 +95,7 @@
         {
             IEnumerable<AllWorkoutsViewModel> allTraineeWorkouts = await this.liftingDomeDbContext
                 .Workouts
-                .Where(w => w.TraineeId.ToString() == traineeId)
+				.Where(w => w.IsActive && w.TraineeId.ToString() == traineeId)
                 .Select(w => new AllWorkoutsViewModel
                 {
                     Id = w.Id.ToString(),
