@@ -129,7 +129,7 @@
             IEnumerable<IndexViewModel> lastThreeWorkouts = await this.liftingDomeDbContext
                 .Workouts
                 .Where(w => w.IsActive)
-                .OrderByDescending(w => w.CreatedOn)
+                .OrderBy(w => w.CreatedOn)
                 .Take(3)
                 .Select(w => new IndexViewModel
                 {

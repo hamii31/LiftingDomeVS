@@ -20,33 +20,37 @@
 		</p>
 	</div>
 }
-<div class="mb-5"></div>
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-	<div class="carousel-inner">
-		@for (int i = 0; i < workouts.Count(); i++)
-		{
-			var workout = workouts[i];
-			<div class="carousel-item @(i == 0 ? "active" : string.Empty)">
-				<img class="d-block w-100" style="height:500px"
-				 src="@workout.ImageUrl" alt="@workout.Title">
-				<div class="carousel-caption d-none d-md-block">
-					<h5>
-						<a class="btn btn-primary" style="background-color:red; border-color:black" asp-controller="Workout" asp-
-					   action="Details"
-					   asp-route-id="@workout.Id"> @workout.Title</a>
-					</h5>
-				</div>
-			</div>
-		}
+
+<!-- Slideshow container -->
+<div class="slideshow-container">
+
+	<!-- Full-width images with number and caption text -->
+	@foreach (var workout in workouts)
+	{
+		<div class="mySlides fade">
+		<div class="numbertext">1 / 3</div>
+		<img src="@workout.ImageUrl" style="width:100%">
+		<div class="carousel-caption d-none d-md-block">
+			<h5>
+				<a class="btn btn-primary" style="background-color:red; border-color:black" asp-controller="Workout" asp-
+				   action="Details"
+				   asp-route-id="@workout.Id"> @workout.Title</a>
+			</h5>
+		</div>
 	</div>
-	<button class="carousel-control-prev" type="button" data-bs-
-			target="#carouselExampleControls" data-bs-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="visually-hidden">Previous</span>
-	</button>
-	<button class="carousel-control-next" type="button" data-bs-
-			target="#carouselExampleControls" data-bs-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="visually-hidden">Next</span>
-	</button>
+	}
+
+	<!-- Next and previous buttons -->
+	<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+	<a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+	<span class="dot" onclick="currentSlide(1)"></span>
+	<span class="dot" onclick="currentSlide(2)"></span>
+	<span class="dot" onclick="currentSlide(3)"></span>
+</div> 
+	<link rel="stylesheet" href="./CSS/index.css">
+	<script src="~/js/Index.js"></script>
