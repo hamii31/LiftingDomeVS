@@ -3,12 +3,10 @@
     using LiftingDome.Infrastructure.Extensions;
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Services.Data.Models.Workout;
-    using LiftingDome.Web.ViewModels.Calculator;
     using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using static LiftingDome.Common.NotificationMessages;
-    using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
     [Authorize]
     public class WorkoutController : Controller
@@ -44,7 +42,7 @@
 
             if (!isCoach)
             {
-                this.TempData["message"] = "You must be a coach in order to add a workout!";
+                this.TempData[ErrorMessage] = "You must be a coach in order to add a workout!";
                 return RedirectToAction("Become", "Coach");
             }
 
@@ -73,7 +71,7 @@
 
 			if (!isCoach)
 			{
-				this.TempData["message"] = "You must be a coach in order to add a workout!";
+				this.TempData[ErrorMessage] = "You must be a coach in order to add a workout!";
 				return RedirectToAction("Become", "Coach");
 			}
 
@@ -122,7 +120,7 @@
             
             if (!existsById)
             {
-                this.TempData["ErrorMessage"] = "Workout with the provided Id does not exist!";
+                this.TempData[ErrorMessage] = "Workout with the provided Id does not exist!";
 
                 return RedirectToAction("All", "Workout");
             }
@@ -138,7 +136,7 @@
 
 			if (!workoutExists)
 			{
-				this.TempData["ErrorMessage"] = "Workout with the provided Id does not exist!";
+				this.TempData[ErrorMessage] = "Workout with the provided Id does not exist!";
 
 				return RedirectToAction("All", "Workout");
 			}
@@ -160,7 +158,7 @@
 
             if (!isCoachOwner)
             {
-                this.TempData["ErrorMessage"] = "You are not the owner of this workout!";
+                this.TempData[ErrorMessage] = "You are not the owner of this workout!";
 
                 return RedirectToAction("Mine", "Workout");
             }
