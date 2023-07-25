@@ -4,9 +4,9 @@
 	using System.ComponentModel.DataAnnotations;
 	using static Common.EntityValidationConstants.Workout;
 
-	public class AddWorkoutFormModel
+	public class WorkoutFormModel
 	{
-		public AddWorkoutFormModel()
+		public WorkoutFormModel()
 		{
 			this.Categories = new HashSet<WorkoutCategorySelectFormModel>();
 		}

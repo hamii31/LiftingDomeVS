@@ -9,11 +9,14 @@
     {
         Task<IEnumerable<IndexViewModel>> LastThreeWorkoutsAsync();
          
-        Task CreateAsync(AddWorkoutFormModel model, string coachId);
+        Task CreateAsync(WorkoutFormModel model, string coachId);
 
         Task<AllWorkoutsFilteredAndPagedServiceModel> AllAsync(AllWorkoutsQueryModel queryModel);
         Task<IEnumerable<AllWorkoutsViewModel>> AllByCoachIdAsync(string coachId);
         Task<IEnumerable<AllWorkoutsViewModel>> AllByTraineeIdAsync(string traineeId);
-        Task<WorkoutDetailsViewModel?> GetDetailsByIdAsync(string workoutId);
+        Task<WorkoutDetailsViewModel> GetDetailsByIdAsync(string workoutId);
+        Task<bool> ExistsByIdAsync(string workoutId);
+        Task<WorkoutFormModel> GetWorkoutForEditByIdAsync(string workoutId);
+        Task<bool> IsCoachOwnerOfWorkoutWithId(string coachId, string workoutId);
     }
 }

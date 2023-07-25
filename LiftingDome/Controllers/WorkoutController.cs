@@ -7,6 +7,7 @@
     using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using static LiftingDome.Common.NotificationMessages;
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
     [Authorize]
@@ -47,10 +48,10 @@
                 return RedirectToAction("Become", "Coach");
             }
 
-            AddWorkoutFormModel formModel;
+            WorkoutFormModel formModel;
             try
             {
-                formModel = new AddWorkoutFormModel()
+                formModel = new WorkoutFormModel()
 				{
 					Categories = await this.workoutCategoryService.AllCategoriesAsync(),
 				};
@@ -66,7 +67,7 @@
 		}
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddWorkoutFormModel model)
+        public async Task<IActionResult> Add(WorkoutFormModel model)
         {
 			bool isCoach = await this.coachService.CoachExistsByUserIdAsync(this.User.GetId()!);
 
@@ -117,16 +118,60 @@
         [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
         {
-            WorkoutDetailsViewModel? model = await this.workoutService.GetDetailsByIdAsync(id);
-
-            if (model == null)
+            bool existsById = await this.workoutService.ExistsByIdAsync(id);
+            
+            if (!existsById)
             {
                 this.TempData["ErrorMessage"] = "Workout with the provided Id does not exist!";
 
                 return RedirectToAction("All", "Workout");
             }
-            return View(model);
+
+			WorkoutDetailsViewModel model = await this.workoutService.GetDetailsByIdAsync(id);
+
+			return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+			bool workoutExists = await this.workoutService.ExistsByIdAsync(id);
+
+			if (!workoutExists)
+			{
+				this.TempData["ErrorMessage"] = "Workout with the provided Id does not exist!";
+
+				return RedirectToAction("All", "Workout");
+			}
+
+            bool isCoach = await this.coachService
+                .CoachExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isCoach)
+            {
+                this.TempData[ErrorMessage] = "You must be a Coach in ordere to edit this information!";
+
+                return RedirectToAction("Become", "Coach");
+            }
+
+            string? coachId = await this.coachService.GetCoachIdByUserIdAsync(this.User.GetId()!);
+
+			bool isCoachOwner = await this.workoutService
+                .IsCoachOwnerOfWorkoutWithId(coachId!, id);
+
+            if (!isCoachOwner)
+            {
+                this.TempData["ErrorMessage"] = "You are not the owner of this workout!";
+
+                return RedirectToAction("Mine", "Workout");
+            }
+
+            WorkoutFormModel formModel = await this.workoutService
+                .GetWorkoutForEditByIdAsync(id);
+
+            formModel.Categories = await this.workoutCategoryService.AllCategoriesAsync();
+
+            return View(formModel);
+		}
 
         [HttpGet]
         public async Task<IActionResult> Mine()

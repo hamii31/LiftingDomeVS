@@ -109,7 +109,7 @@
             return allTraineeWorkouts ;
         }
 
-        public async Task CreateAsync(AddWorkoutFormModel model, string coachId)
+        public async Task CreateAsync(WorkoutFormModel model, string coachId)
 		{
 			Workout workout = new Workout()
             {
@@ -125,20 +125,26 @@
             await this.liftingDomeDbContext.SaveChangesAsync();
 		}
 
-        public async Task<WorkoutDetailsViewModel?> GetDetailsByIdAsync(string workoutId)
+		public async Task<bool> ExistsByIdAsync(string workoutId)
+		{
+            bool result = await this.liftingDomeDbContext
+                .Workouts
+                .Where(w => w.IsActive)
+                .AnyAsync(w => w.Id.ToString() == workoutId);
+
+            return result;
+		}
+
+		public async Task<WorkoutDetailsViewModel> GetDetailsByIdAsync(string workoutId)
         {
-            Workout? workout = await this.liftingDomeDbContext
+            Workout workout = await this.liftingDomeDbContext
                 .Workouts
                 .Include(w => w.Category)
                 .Include(w => w.Coach)
                 .ThenInclude(c => c.User)
                 .Where(w => w.IsActive)
-                .FirstOrDefaultAsync(w => w.Id.ToString() == workoutId);
+                .FirstAsync(w => w.Id.ToString() == workoutId);
 
-            if (workout == null)
-            {
-                return null;
-            }
 
             return new WorkoutDetailsViewModel
             {
@@ -156,7 +162,35 @@
             };
         }
 
-        public async Task<IEnumerable<IndexViewModel>> LastThreeWorkoutsAsync()
+		public async Task<WorkoutFormModel> GetWorkoutForEditByIdAsync(string workoutId)
+		{
+			Workout workout = await this.liftingDomeDbContext
+			   .Workouts
+			   .Include(w => w.Category)
+			   .Where(w => w.IsActive)
+			   .FirstAsync(w => w.Id.ToString() == workoutId);
+
+            return new WorkoutFormModel()
+            {
+                Title = workout.Title,
+                Description = workout.Description,
+                ImageUrl = workout.ImageURL,
+                Price = workout.Price,
+                CategoryId = workout.Category.Id
+            };
+		}
+
+		public async Task<bool> IsCoachOwnerOfWorkoutWithId(string coachId, string workoutId)
+		{
+            Workout workout = await this.liftingDomeDbContext
+                .Workouts
+                .Where(w => w.IsActive)
+                .FirstAsync(w => w.Id.ToString() == workoutId);
+
+            return workout.CoachId.ToString() == coachId;
+		}
+
+		public async Task<IEnumerable<IndexViewModel>> LastThreeWorkoutsAsync()
         {
             IEnumerable<IndexViewModel> lastThreeWorkouts = await this.liftingDomeDbContext
                 .Workouts

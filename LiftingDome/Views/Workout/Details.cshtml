@@ -1,6 +1,6 @@
 ﻿@model WorkoutDetailsViewModel
 @{
-	ViewBag.Title = "House Details";
+	ViewBag.Title = "Workout Details";
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class="col-4">
 			<img class="card-img-top" style="width: 20rem;"
-				 src="@Model.ImageUrl" alt="House Image">
+				 src="@Model.ImageUrl" alt="Workout Image">
 		</div>
 		<div class="card col-8 border-0">
 			<p style="font-size:25px;"><u>@Model.Title</u></p>
@@ -21,26 +21,20 @@
 			<div class="form-inline">
 				@if (this.User.Identity?.IsAuthenticated ?? false)
 				{
-					<a class="btn btn-warning" asp-controller="House" asp-
-				   action="Edit"
-				   asp-route-id="@Model.Id">Edit</a>
-					<a class="ml-2 btn btn-danger" asp-controller="House" asp-
-				   action="Delete"
-				   asp-route-id="@Model.Id">Delete</a>
-					<form class="ml-2" asp-controller="House" asp-action="Add" asp-route-id="@Model.Id"
-					  method="post">
-						<input class="btn btn-primary" type="submit" value="Add" />
-					</form>
+					<a class="btn btn-warning" asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
 
-					<form class="ml-2" asp-controller="House" asp-action="Leave" asp-route-id="@Model.Id" method="post">
-						<input class="btn btn-primary" type="submit" value="Leave" />
+					<a class="ml-2 btn btn-danger" asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+
+					<form class="ml-2" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id"
+					  method="post">
+						<input class="btn btn-primary" type="submit" value="Get" />
 					</form>
 				}
 			</div>
 			<p></p>
 			<div class="card" style="width: 18rem;">
 				<div class="card-body">
-					<h5 class="card-title">Agent Info</h5>
+					<h5 class="card-title">Coach Info</h5>
 					<p class="card-text">Email: @Model.Coach.Email</p>
 					<p class="card-text">Phone Number: @Model.Coach.PhoneNumber</p>
 				</div>
