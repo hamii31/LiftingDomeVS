@@ -114,6 +114,21 @@
 		}
 
         [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(string id)
+        {
+            WorkoutDetailsViewModel? model = await this.workoutService.GetDetailsByIdAsync(id);
+
+            if (model == null)
+            {
+                this.TempData["ErrorMessage"] = "Workout with the provided Id does not exist!";
+
+                return RedirectToAction("All", "Workout");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Mine()
         {
             List<AllWorkoutsViewModel> myWorkouts = new List<AllWorkoutsViewModel>();

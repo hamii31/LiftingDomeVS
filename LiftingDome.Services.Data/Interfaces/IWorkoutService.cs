@@ -14,5 +14,6 @@
         Task<AllWorkoutsFilteredAndPagedServiceModel> AllAsync(AllWorkoutsQueryModel queryModel);
         Task<IEnumerable<AllWorkoutsViewModel>> AllByCoachIdAsync(string coachId);
         Task<IEnumerable<AllWorkoutsViewModel>> AllByTraineeIdAsync(string traineeId);
+        Task<WorkoutDetailsViewModel?> GetDetailsByIdAsync(string workoutId);
     }
 }

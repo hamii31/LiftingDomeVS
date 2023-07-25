@@ -5,6 +5,7 @@
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Services.Data.Models.Workout;
     using LiftingDome.Web.ViewModels.Home;
+    using LiftingDome.Web.ViewModels.Coach;
     using LiftingDome.Web.ViewModels.Workout;
     using LiftingDome.Web.ViewModels.Workout.Enums;
     using Microsoft.EntityFrameworkCore;
@@ -41,10 +42,10 @@
             workoutsQuery = queryModel.WorkoutSorting switch
             {
                 WorkoutSorting.Newest => workoutsQuery
-                .OrderByDescending(w => w.CreatedOn),
+                .OrderBy(w => w.CreatedOn),
 
                 WorkoutSorting.Oldest => workoutsQuery
-                .OrderBy(w => w.CreatedOn),
+                .OrderByDescending(w => w.CreatedOn),
 
                 WorkoutSorting.PriceAscending => workoutsQuery
                 .OrderBy(w => w.Price),
@@ -124,7 +125,38 @@
             await this.liftingDomeDbContext.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<IndexViewModel>> LastThreeWorkoutsAsync()
+        public async Task<WorkoutDetailsViewModel?> GetDetailsByIdAsync(string workoutId)
+        {
+            Workout? workout = await this.liftingDomeDbContext
+                .Workouts
+                .Include(w => w.Category)
+                .Include(w => w.Coach)
+                .ThenInclude(c => c.User)
+                .Where(w => w.IsActive)
+                .FirstOrDefaultAsync(w => w.Id.ToString() == workoutId);
+
+            if (workout == null)
+            {
+                return null;
+            }
+
+            return new WorkoutDetailsViewModel
+            {
+                Id = workout.Id.ToString(),
+                Title = workout.Title,
+                Description = workout.Description,
+                ImageUrl = workout.ImageURL,
+                Price = workout.Price,
+                Category = workout.Category.Name,
+                Coach = new CoachInfoWorkoutViewModel()
+                {
+                    Email = workout.Coach.User.Email,
+                    PhoneNumber = workout.Coach.PhoneNumber
+                }
+            };
+        }
+
+        public async Task<IEnumerable<IndexViewModel>> LastThreeWorkoutsAsync()
         {
             IEnumerable<IndexViewModel> lastThreeWorkouts = await this.liftingDomeDbContext
                 .Workouts
