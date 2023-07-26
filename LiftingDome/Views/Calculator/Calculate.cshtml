@@ -100,7 +100,7 @@ else
                     <select asp-for="MeassurmentId" class="form-control">
                         @foreach (var meassurment in Model.Meassurments)
                         {
-                                <option value="@meassurment.Id">@meassurment.Name</option>
+                             <option value="@meassurment.Id">@(meassurment.Name == "Metric" ? "kg" : "lbs")</option>
                         }
                     </select>
                     <span asp-validation-for="MeassurmentId" class="small text-danger"></span>

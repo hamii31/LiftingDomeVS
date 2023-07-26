@@ -3,21 +3,20 @@
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
+    using NToastNotify;
     using System.Diagnostics;
     public class HomeController : Controller
     {
         private readonly IWorkoutService workoutService;
-
-        public HomeController(IWorkoutService workoutService)
+		public HomeController(IWorkoutService workoutService)
         {
             this.workoutService = workoutService;
-        }
+		}
 
         public async Task<IActionResult> Index()
         {
             IEnumerable<IndexViewModel> viewModel = await this.workoutService.LastThreeWorkoutsAsync();
-
-            return View(viewModel);
+			return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -125,7 +125,23 @@
             await this.liftingDomeDbContext.SaveChangesAsync();
 		}
 
-		public async Task<bool> ExistsByIdAsync(string workoutId)
+        public async Task EditWorkoutByIdAndFormModel(string workoutId, WorkoutFormModel formModel)
+        {
+            Workout workout = await this.liftingDomeDbContext
+                .Workouts
+                .Where(w => w.IsActive)
+                .FirstAsync(w => w.Id.ToString() == workoutId);
+                
+            workout.Title = formModel.Title;
+            workout.Description = formModel.Description;
+            workout.ImageURL = formModel.ImageUrl;
+            workout.Price = formModel.Price;
+            workout.WorkoutCategoryId = formModel.CategoryId;
+
+            await this.liftingDomeDbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> ExistsByIdAsync(string workoutId)
 		{
             bool result = await this.liftingDomeDbContext
                 .Workouts

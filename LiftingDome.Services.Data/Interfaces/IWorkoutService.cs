@@ -18,5 +18,6 @@
         Task<bool> ExistsByIdAsync(string workoutId);
         Task<WorkoutFormModel> GetWorkoutForEditByIdAsync(string workoutId);
         Task<bool> IsCoachOwnerOfWorkoutWithId(string coachId, string workoutId);
+        Task EditWorkoutByIdAndFormModel(string workoutId, WorkoutFormModel formModel);
     }
 }

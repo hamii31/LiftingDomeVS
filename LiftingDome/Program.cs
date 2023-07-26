@@ -36,6 +36,7 @@ namespace LiftingDome
             }).AddEntityFrameworkStores<LiftingDomeDbContext>();
 
             builder.Services.AddApplicationServices(typeof(IWorkoutService));
+            builder.Services.AddMvc().AddNToastNotifyToastr();
 
             builder.Services
                 .AddControllersWithViews()
@@ -56,6 +57,7 @@ namespace LiftingDome
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            app.UseNToastNotify();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

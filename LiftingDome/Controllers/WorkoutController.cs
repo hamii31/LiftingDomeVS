@@ -6,7 +6,7 @@
     using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using static LiftingDome.Common.NotificationMessages;
+    using NToastNotify;
 
     [Authorize]
     public class WorkoutController : Controller
@@ -14,25 +14,33 @@
         private readonly IWorkoutCategoryService workoutCategoryService;
         private readonly ICoachService coachService;
         private readonly IWorkoutService workoutService;
-        public WorkoutController(IWorkoutCategoryService workoutCategoryService, ICoachService coachService, IWorkoutService workoutService)
+		private readonly IToastNotification _toastNotification;
+		public WorkoutController(IWorkoutCategoryService workoutCategoryService, ICoachService coachService, IWorkoutService workoutService, IToastNotification toastNotification)
         {
             this.workoutCategoryService = workoutCategoryService;
             this.coachService = coachService;
             this.workoutService = workoutService;
-        }
+			_toastNotification = toastNotification;
+		}
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery]AllWorkoutsQueryModel queryModel)
         {
-            AllWorkoutsFilteredAndPagedServiceModel serviceModel = 
-                await this.workoutService.AllAsync(queryModel);
+            try
+            {
+                AllWorkoutsFilteredAndPagedServiceModel serviceModel = await this.workoutService.AllAsync(queryModel);
 
-            queryModel.Workouts = serviceModel.Workouts;
-            queryModel.TotalWorkouts = serviceModel.TotalWorkoutsCount;
-            queryModel.Categories = await this.workoutCategoryService.AllCategoryNamesAsync();
+                queryModel.Workouts = serviceModel.Workouts;
+                queryModel.TotalWorkouts = serviceModel.TotalWorkoutsCount;
+                queryModel.Categories = await this.workoutCategoryService.AllCategoryNamesAsync();
 
-            return View(queryModel);
+                return View(queryModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
         }
 
         [HttpGet]
@@ -42,7 +50,7 @@
 
             if (!isCoach)
             {
-                this.TempData[ErrorMessage] = "You must be a coach in order to add a workout!";
+                _toastNotification.AddErrorToastMessage("You must be a coach in order to add a workout!");
                 return RedirectToAction("Become", "Coach");
             }
 
@@ -57,9 +65,8 @@
 			}
             catch (Exception)
             {
-				this.ModelState.AddModelError(nameof(formModel.Categories), "An unexpected error occured while fetching the categories! Please try again later! If the problem persists, please contact an administrator.");
-				return RedirectToAction("Index", "Home");
-			}
+                return this.GeneralError();
+            }
 
 			return View(formModel);
 		}
@@ -71,7 +78,7 @@
 
 			if (!isCoach)
 			{
-				this.TempData[ErrorMessage] = "You must be a coach in order to add a workout!";
+                _toastNotification.AddErrorToastMessage("You must be a coach in order to add a workout!");
 				return RedirectToAction("Become", "Coach");
 			}
 
@@ -90,9 +97,8 @@
 				}
                 catch (Exception)
                 {
-					this.ModelState.AddModelError(nameof(model.Categories), "An unexpected error occured while re-fetching the categories! Please try again later! If the problem persists, please contact an administrator.");
-					return RedirectToAction("Index", "Home");
-				}
+                    return this.GeneralError();
+                }
                 return View(model);
             }
 
@@ -108,7 +114,7 @@
 				model.Categories = await this.workoutCategoryService.AllCategoriesAsync();
 				return View(model);
             }
-
+            _toastNotification.AddSuccessToastMessage("Workout added successfully!");
             return RedirectToAction("All", "Workout");
 		}
 
@@ -120,14 +126,20 @@
             
             if (!existsById)
             {
-                this.TempData[ErrorMessage] = "Workout with the provided Id does not exist!";
-
+                _toastNotification.AddErrorToastMessage("Workout with the provided Id does not exist!");
                 return RedirectToAction("All", "Workout");
             }
+            try
+            {
+                WorkoutDetailsViewModel model = await this.workoutService.GetDetailsByIdAsync(id);
 
-			WorkoutDetailsViewModel model = await this.workoutService.GetDetailsByIdAsync(id);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
 
-			return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
@@ -136,8 +148,7 @@
 
 			if (!workoutExists)
 			{
-				this.TempData[ErrorMessage] = "Workout with the provided Id does not exist!";
-
+                _toastNotification.AddErrorToastMessage("Workout with the provided Id does not exist!");
 				return RedirectToAction("All", "Workout");
 			}
 
@@ -146,8 +157,7 @@
 
             if (!isCoach)
             {
-                this.TempData[ErrorMessage] = "You must be a Coach in ordere to edit this information!";
-
+                _toastNotification.AddErrorToastMessage("You must be a Coach in order to edit this information!");
                 return RedirectToAction("Become", "Coach");
             }
 
@@ -158,18 +168,76 @@
 
             if (!isCoachOwner)
             {
-                this.TempData[ErrorMessage] = "You are not the owner of this workout!";
-
+                _toastNotification.AddErrorToastMessage("You are not the owner of this workout!");
                 return RedirectToAction("Mine", "Workout");
             }
 
-            WorkoutFormModel formModel = await this.workoutService
-                .GetWorkoutForEditByIdAsync(id);
+            try
+            {
+                WorkoutFormModel formModel = await this.workoutService
+            .GetWorkoutForEditByIdAsync(id);
 
-            formModel.Categories = await this.workoutCategoryService.AllCategoriesAsync();
+                formModel.Categories = await this.workoutCategoryService.AllCategoriesAsync();
 
-            return View(formModel);
+                return View(formModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        
 		}
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, WorkoutFormModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.Categories = await this.workoutCategoryService.AllCategoriesAsync();
+                return View(model);
+            }
+
+			bool workoutExists = await this.workoutService.ExistsByIdAsync(id);
+
+			if (!workoutExists)
+			{
+				_toastNotification.AddErrorToastMessage("Workout with the provided Id does not exist!");
+				return RedirectToAction("All", "Workout");
+			}
+
+			bool isCoach = await this.coachService
+				.CoachExistsByUserIdAsync(this.User.GetId()!);
+
+			if (!isCoach)
+			{
+				_toastNotification.AddErrorToastMessage("You must be a Coach in order to edit this information!");
+				return RedirectToAction("Become", "Coach");
+			}
+
+			string? coachId = await this.coachService.GetCoachIdByUserIdAsync(this.User.GetId()!);
+
+			bool isCoachOwner = await this.workoutService
+				.IsCoachOwnerOfWorkoutWithId(coachId!, id);
+
+			if (!isCoachOwner)
+			{
+				_toastNotification.AddErrorToastMessage("You are not the owner of this workout!");
+				return RedirectToAction("Mine", "Workout");
+			}
+
+
+			try
+			{
+                await this.workoutService.EditWorkoutByIdAndFormModel(id, model);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "An unexpected error occured while saving the changes to your workout. Please try again later or contact administrator");
+                model.Categories = await this.workoutCategoryService.AllCategoriesAsync();
+                return View(model);
+            }
+            _toastNotification.AddSuccessToastMessage("Workout changes saved successfully!");
+            return RedirectToAction("Details", "Workout", new { id });
+        }
 
         [HttpGet]
         public async Task<IActionResult> Mine()
@@ -180,18 +248,30 @@
 
             bool IsCoach = await this.coachService.CoachExistsByUserIdAsync(userId);
 
-            if (IsCoach)
+            try
             {
-                string? coachId = await this.coachService.GetCoachIdByUserIdAsync(userId);
+                if (IsCoach)
+                {
+                    string? coachId = await this.coachService.GetCoachIdByUserIdAsync(userId);
 
-                myWorkouts.AddRange(await this.workoutService.AllByCoachIdAsync(coachId!));
+                    myWorkouts.AddRange(await this.workoutService.AllByCoachIdAsync(coachId!));
+                }
+                else
+                {
+                    myWorkouts.AddRange(await this.workoutService.AllByTraineeIdAsync(userId));
+                }
+
+                return View(myWorkouts);
             }
-            else
+            catch (Exception)
             {
-                myWorkouts.AddRange(await this.workoutService.AllByTraineeIdAsync(userId));
+                return this.GeneralError();
             }
-
-            return View(myWorkouts);
         }
+        private IActionResult GeneralError()
+        {
+			this.ModelState.AddModelError(string.Empty, "An unexpected error occured! Please try again later! If the problem persists, please contact an administrator.");
+			return RedirectToAction("Index", "Home");
+		}
     }
 }

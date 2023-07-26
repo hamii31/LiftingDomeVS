@@ -22,7 +22,12 @@
 }
 
 <div class="slideshow-container">
-
+	<font size="5">
+		<div class="text-center">
+			Welcome To Lifting Dome!
+			The No.1 site for workouts and fitness!
+		</div>
+	</font>
 	@foreach (var workout in workouts)
 	{
 		<div class="mySlides fade">
@@ -30,9 +35,7 @@
 		<img src="@workout.ImageUrl" style="width:100%">
 		<div class="carousel-caption d-none d-md-block">
 			<h5>
-				<a class="btn btn-primary" style="background-color:red; border-color:black" asp-controller="Workout" asp-
-				   action="Details"
-				   asp-route-id="@workout.Id"> @workout.Title</a>
+				<a class="btn btn-primary" style="background-color:red; border-color:black" asp-controller="Workout" asp-action="Details" asp-route-id="@workout.Id"> @workout.Title</a>
 			</h5>
 		</div>
 	</div>

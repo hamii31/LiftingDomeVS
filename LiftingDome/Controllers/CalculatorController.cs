@@ -30,8 +30,7 @@
 			}
 			catch (Exception)
 			{
-				this.ModelState.AddModelError(nameof(formModel.Meassurments), "An unexpected error occured while fetching the categories! Please try again later! If the problem persists, please contact an administrator.");
-				return RedirectToAction("Index", "Home");
+				return this.GeneralError();
 			}
 
 			return View(formModel);
@@ -54,8 +53,7 @@
 				}
 				catch (Exception)
 				{
-					this.ModelState.AddModelError(nameof(model.Meassurments), "An unexpected error occured while re-fetching the meassurments! Please try again later! If the problem persists, please contact an administrator.");
-					return RedirectToAction("Index", "Home");
+					return this.GeneralError();
 				}
 				return View(model);
 			}
@@ -72,6 +70,11 @@
 				return View(model);
 			}
 			return View(model);
+		}
+		private IActionResult GeneralError()
+		{
+			this.ModelState.AddModelError(string.Empty, "An unexpected error occured! Please try again later! If the problem persists, please contact an administrator.");
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }
