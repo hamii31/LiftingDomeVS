@@ -17,7 +17,7 @@
         {
             this.liftingDomeDbContext = liftingDomeDbContext;
         }
-
+        
 		public async Task<AllWorkoutsFilteredAndPagedServiceModel> AllAsync(AllWorkoutsQueryModel queryModel)
 		{
             IQueryable<Workout> workoutsQuery = this.liftingDomeDbContext
@@ -125,7 +125,19 @@
             await this.liftingDomeDbContext.SaveChangesAsync();
 		}
 
-        public async Task EditWorkoutByIdAndFormModel(string workoutId, WorkoutFormModel formModel)
+		public async Task DeleteWorkoutByIdAsync(string workoutId)
+		{
+            Workout workoutToDelete = await this.liftingDomeDbContext
+                .Workouts
+                .Where(w => w.IsActive)
+                .FirstAsync(w => w.Id.ToString() == workoutId);
+
+            workoutToDelete.IsActive = false;
+
+            await this.liftingDomeDbContext.SaveChangesAsync();
+		}
+
+		public async Task EditWorkoutByIdAndFormModelAsync(string workoutId, WorkoutFormModel formModel)
         {
             Workout workout = await this.liftingDomeDbContext
                 .Workouts
@@ -178,6 +190,20 @@
             };
         }
 
+		public async Task<WorkoutPreDeleteDetailsViewModel> GetWorkoutForDeleteByIdAsync(string workoutId)
+		{
+			Workout workout = await this.liftingDomeDbContext
+			   .Workouts
+			   .Where(w => w.IsActive)
+			   .FirstAsync(w => w.Id.ToString() == workoutId);
+
+            return new WorkoutPreDeleteDetailsViewModel()
+            {
+                Title = workout.Title,
+                ImageUrl = workout.ImageURL
+            };
+		}
+
 		public async Task<WorkoutFormModel> GetWorkoutForEditByIdAsync(string workoutId)
 		{
 			Workout workout = await this.liftingDomeDbContext
@@ -196,7 +222,7 @@
             };
 		}
 
-		public async Task<bool> IsCoachOwnerOfWorkoutWithId(string coachId, string workoutId)
+		public async Task<bool> IsCoachOwnerOfWorkoutWithIdAsync(string coachId, string workoutId)
 		{
             Workout workout = await this.liftingDomeDbContext
                 .Workouts

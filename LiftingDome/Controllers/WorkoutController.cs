@@ -6,6 +6,7 @@
     using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using NToastNotify;
 
     [Authorize]
@@ -164,7 +165,7 @@
             string? coachId = await this.coachService.GetCoachIdByUserIdAsync(this.User.GetId()!);
 
 			bool isCoachOwner = await this.workoutService
-                .IsCoachOwnerOfWorkoutWithId(coachId!, id);
+                .IsCoachOwnerOfWorkoutWithIdAsync(coachId!, id);
 
             if (!isCoachOwner)
             {
@@ -216,7 +217,7 @@
 			string? coachId = await this.coachService.GetCoachIdByUserIdAsync(this.User.GetId()!);
 
 			bool isCoachOwner = await this.workoutService
-				.IsCoachOwnerOfWorkoutWithId(coachId!, id);
+				.IsCoachOwnerOfWorkoutWithIdAsync(coachId!, id);
 
 			if (!isCoachOwner)
 			{
@@ -227,7 +228,7 @@
 
 			try
 			{
-                await this.workoutService.EditWorkoutByIdAndFormModel(id, model);
+                await this.workoutService.EditWorkoutByIdAndFormModelAsync(id, model);
             }
             catch (Exception)
             {
@@ -238,6 +239,90 @@
             _toastNotification.AddSuccessToastMessage("Workout changes saved successfully!");
             return RedirectToAction("Details", "Workout", new { id });
         }
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+			bool workoutExists = await this.workoutService.ExistsByIdAsync(id);
+
+			if (!workoutExists)
+			{
+				_toastNotification.AddErrorToastMessage("Workout with the provided Id does not exist!");
+				return RedirectToAction("All", "Workout");
+			}
+
+			bool isCoach = await this.coachService
+				.CoachExistsByUserIdAsync(this.User.GetId()!);
+
+			if (!isCoach)
+			{
+				_toastNotification.AddErrorToastMessage("You must be a Coach in order to edit this information!");
+				return RedirectToAction("Become", "Coach");
+			}
+
+			string? coachId = await this.coachService.GetCoachIdByUserIdAsync(this.User.GetId()!);
+
+			bool isCoachOwner = await this.workoutService
+				.IsCoachOwnerOfWorkoutWithIdAsync(coachId!, id);
+
+			if (!isCoachOwner)
+			{
+				_toastNotification.AddErrorToastMessage("You are not the owner of this workout!");
+				return RedirectToAction("Mine", "Workout");
+			}
+
+            try
+            {
+                WorkoutPreDeleteDetailsViewModel formModel = await this.workoutService.GetWorkoutForDeleteByIdAsync(id);
+
+                return View(formModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+		}
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id, WorkoutPreDeleteDetailsViewModel model)
+        {
+			bool workoutExists = await this.workoutService.ExistsByIdAsync(id);
+
+			if (!workoutExists)
+			{
+				_toastNotification.AddErrorToastMessage("Workout with the provided Id does not exist!");
+				return RedirectToAction("All", "Workout");
+			}
+
+			bool isCoach = await this.coachService
+				.CoachExistsByUserIdAsync(this.User.GetId()!);
+
+			if (!isCoach)
+			{
+				_toastNotification.AddErrorToastMessage("You must be a Coach in order to edit this information!");
+				return RedirectToAction("Become", "Coach");
+			}
+
+			string? coachId = await this.coachService.GetCoachIdByUserIdAsync(this.User.GetId()!);
+
+			bool isCoachOwner = await this.workoutService
+				.IsCoachOwnerOfWorkoutWithIdAsync(coachId!, id);
+
+			if (!isCoachOwner)
+			{
+				_toastNotification.AddErrorToastMessage("You are not the owner of this workout!");
+				return RedirectToAction("Mine", "Workout");
+			}
+
+            try
+            {
+                await this.workoutService.DeleteWorkoutByIdAsync(id);
+                _toastNotification.AddWarningToastMessage("Workout successfully deleted!");
+                return RedirectToAction("Mine", "Workout");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+		}
 
         [HttpGet]
         public async Task<IActionResult> Mine()

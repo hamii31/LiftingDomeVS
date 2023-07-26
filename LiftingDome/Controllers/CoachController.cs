@@ -26,7 +26,7 @@
             bool isCoach = await this.coachService.CoachExistsByUserIdAsync(userId!);
             if (isCoach)
             {
-                _toastNotification.AddErrorToastMessage("You are already an agent!");
+                _toastNotification.AddErrorToastMessage("You are already a coach!");
 				return RedirectToAction("Index", "Home");
             }
 
@@ -40,7 +40,7 @@
             bool isCoach = await this.coachService.CoachExistsByUserIdAsync(userId!);
             if (isCoach)
             {
-                _toastNotification.AddErrorToastMessage("You are already an agent!");
+                _toastNotification.AddErrorToastMessage("You are already a coach!");
                 return RedirectToAction("Index", "Home");
             }
 

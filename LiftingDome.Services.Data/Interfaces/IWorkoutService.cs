@@ -17,7 +17,9 @@
         Task<WorkoutDetailsViewModel> GetDetailsByIdAsync(string workoutId);
         Task<bool> ExistsByIdAsync(string workoutId);
         Task<WorkoutFormModel> GetWorkoutForEditByIdAsync(string workoutId);
-        Task<bool> IsCoachOwnerOfWorkoutWithId(string coachId, string workoutId);
-        Task EditWorkoutByIdAndFormModel(string workoutId, WorkoutFormModel formModel);
+        Task<bool> IsCoachOwnerOfWorkoutWithIdAsync(string coachId, string workoutId);
+        Task EditWorkoutByIdAndFormModelAsync(string workoutId, WorkoutFormModel formModel);
+        Task<WorkoutPreDeleteDetailsViewModel> GetWorkoutForDeleteByIdAsync(string workoutId);
+        Task DeleteWorkoutByIdAsync(string workoutId);
     }
 }
