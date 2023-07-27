@@ -6,7 +6,6 @@
     using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using NToastNotify;
 
     [Authorize]
@@ -323,8 +322,79 @@
                 return this.GeneralError();
             }
 		}
+        [HttpPost]
+        public async Task<IActionResult> Get(string id)
+        {
+			bool workoutExists = await this.workoutService.ExistsByIdAsync(id);
 
-        [HttpGet]
+			if (!workoutExists)
+			{
+				_toastNotification.AddErrorToastMessage("Workout with the provided Id does not exist!");
+				return RedirectToAction("All", "Workout");
+			}
+
+            bool workoutIsOwned = await this.workoutService.WorkoutIsOwnedByIdAsync(id, this.User.GetId()!);
+
+			if (workoutIsOwned)
+			{
+				_toastNotification.AddErrorToastMessage("Workout with the provided Id is already owned!");
+				return RedirectToAction("Mine", "Workout");
+			}
+
+			bool isUserCoach = await this.coachService
+				.CoachExistsByUserIdAsync(this.User.GetId()!);
+
+			if (isUserCoach)
+			{
+				_toastNotification.AddErrorToastMessage("You can't get a workout as a Coach! Register as a trainee or contact the owner of the workout!");
+				return RedirectToAction("Index", "Home");
+			}
+
+            try
+            {
+                await this.workoutService.AddWorkoutToUserAsync(id, this.User.GetId()!);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
+            _toastNotification.AddSuccessToastMessage("Workout successfully added to your collection!");
+            return RedirectToAction("Mine", "Workout");
+		}
+        [HttpPost]
+        public async Task<IActionResult> Remove(string id)
+        {
+			bool workoutExists = await this.workoutService.ExistsByIdAsync(id);
+
+			if (!workoutExists)
+			{
+				_toastNotification.AddErrorToastMessage("Workout does not exist!");
+				return RedirectToAction("All", "Workout");
+			}
+
+			bool workoutIsOwned = await this.workoutService.WorkoutIsOwnedByIdAsync(id, this.User.GetId()!);
+
+			if (!workoutIsOwned)
+			{
+				_toastNotification.AddErrorToastMessage("Workout is not owned by the user!");
+				return RedirectToAction("Mine", "Workout");
+			}
+
+            try
+            {
+                await this.workoutService.RemoveWorkoutByIdAsync(id);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
+            _toastNotification.AddWarningToastMessage("Workout successfully removed!");
+            return RedirectToAction("Mine", "Workout");
+		}
+
+		[HttpGet]
         public async Task<IActionResult> Mine()
         {
             List<AllWorkoutsViewModel> myWorkouts = new List<AllWorkoutsViewModel>();

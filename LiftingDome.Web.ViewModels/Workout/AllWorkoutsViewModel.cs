@@ -12,5 +12,6 @@
 
 		[Display(Name = "Workout Price")]
 		public decimal Price { get; set; }
+		public bool IsOwned { get; set; }
 	}
 }

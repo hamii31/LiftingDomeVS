@@ -102,7 +102,8 @@
                     Id = w.Id.ToString(),
                     Title = w.Title,
                     ImageUrl = w.ImageURL,
-                    Price = w.Price
+                    Price = w.Price,
+                    IsOwned = true
                 })
                 .ToArrayAsync();
 
@@ -190,6 +191,18 @@
             };
         }
 
+		public async Task AddWorkoutToUserAsync(string workoutId, string userid)
+		{
+			Workout workout = await this.liftingDomeDbContext
+			   .Workouts
+			   .Where(w => w.IsActive)
+			   .FirstAsync(w => w.Id.ToString() == workoutId);
+
+            workout.TraineeId = Guid.Parse(userid);
+
+            await this.liftingDomeDbContext.SaveChangesAsync();
+		}
+
 		public async Task<WorkoutPreDeleteDetailsViewModel> GetWorkoutForDeleteByIdAsync(string workoutId)
 		{
 			Workout workout = await this.liftingDomeDbContext
@@ -249,5 +262,27 @@
 
             return lastThreeWorkouts;
         }
-    }
+
+		public async Task<bool> WorkoutIsOwnedByIdAsync(string workoutId, string userid)
+		{
+			Workout workout = await this.liftingDomeDbContext
+				.Workouts
+                .Where(w => w.IsActive)
+                .FirstAsync(w => w.Id.ToString() == workoutId);
+
+            return workout.TraineeId.ToString() == userid;
+		}
+
+		public async Task RemoveWorkoutByIdAsync(string workoutId)
+		{
+			Workout workout = await this.liftingDomeDbContext
+				.Workouts
+				.Where(w => w.IsActive)
+				.FirstAsync(w => w.Id.ToString() == workoutId);
+
+            workout.TraineeId = null;
+
+            await this.liftingDomeDbContext.SaveChangesAsync();
+		}
+	}
 }
