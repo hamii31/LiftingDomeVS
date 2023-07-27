@@ -22,27 +22,8 @@
 }
 <div class="mb-5"></div>
 
-<div class="row">
-	<div class="col-12 text-center">
-		<button class="btn btn-primary" id="statistics-button">Show Statistics</button>
-	</div>
-</div>
-
-<div class="mt-4 p-5 bg-light d-none" id="statistics">
-	<div class="row">
-		<h2 class="col-md-6 text-center" id="total-workouts"></h2>
-		<h2 class="col-md-6 text-center" id="total-users"></h2>
-	</div>
-</div>
-
 <div class="slideshow-container">
-	<font size="5">
-		<div class="text-center">
-			Welcome To Lifting Dome!
-			The No.1 site for workouts and fitness!
-		</div>
-	</font>
-	<div class="mb-5"></div>
+
 	@foreach (var workout in workouts)
 	{
 		<div class="mySlides fade">
@@ -67,11 +48,46 @@
 	<span class="dot" onclick="currentSlide(3)"></span>
 </div>
 
+<div class="mb-5"></div>
 
-<link rel="stylesheet" href="./CSS/index.css">
-<script src="~/js/Index.js"></script>
+<div class="row">
+	<div class="col-12 text-center">
+		<button class="btn btn-primary" id="statistics-button">Show Statistics</button>
+	</div>
+</div>
+
+<div class="mt-4 p-5 bg-light d-none" id="statistics">
+
+	<font size="5">
+		<div class="text-center">
+			Welcome To Lifting Dome!
+			Home to:
+		</div>
+	</font>
+
+	<div class="mb-5"></div>
+
+	<div class="row">
+		<h2 class="col-md-6 text-center" id="total_workouts"></h2>
+		<h2 class="col-md-6 text-center" id="total_users"></h2>
+	</div>
+</div>
 
 @section Scripts
 {
-	<script>statistics();</script>
+	<script>
+		$('#statistics-button').on('click', function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+
+			$.get('https://localhost:7087/api/statistics', function (data) {
+				$('#total_workouts').text(data.totalWorkouts + " Workouts");
+				$('#total_users').text(data.totalUsers + " Users");
+				$('#statistics').removeClass('d-none');
+				$('#statistics-button').hide();
+			});
+		});</script>
 }
+
+<link rel="stylesheet" href="./CSS/index.css">
+<script src="~/js/Index.js"></script>
