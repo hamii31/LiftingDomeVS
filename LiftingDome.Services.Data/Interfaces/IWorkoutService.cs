@@ -1,5 +1,6 @@
 ﻿namespace LiftingDome.Services.Data.Interfaces
 {
+    using LiftingDome.Services.Data.Models.Statistics;
     using LiftingDome.Services.Data.Models.Workout;
 
     using LiftingDome.Web.ViewModels.Home;
@@ -22,5 +23,6 @@
         Task<bool> WorkoutIsOwnedByIdAsync(string workoutId, string userId);
         Task AddWorkoutToUserAsync(string workoutId, string userid);
         Task RemoveWorkoutByIdAsync(string workoutId);
+        Task<StatisticsServiceModel> GetStatisticsAsync();
     }
 }

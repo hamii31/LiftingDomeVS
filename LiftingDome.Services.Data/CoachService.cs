@@ -1,9 +1,13 @@
 ﻿namespace LiftingDome.Services.Data
 {
     using LiftingDome.Data;
+
     using LiftingDome.Models;
+
     using LiftingDome.Services.Data.Interfaces;
+
     using LiftingDome.Web.ViewModels.Coach;
+
     using Microsoft.EntityFrameworkCore;
 
     public class CoachService : ICoachService

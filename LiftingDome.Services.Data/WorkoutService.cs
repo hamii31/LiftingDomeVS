@@ -2,15 +2,20 @@
 {
     using LiftingDome.Data;
     using LiftingDome.Models;
+
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Services.Data.Models.Workout;
+	using LiftingDome.Services.Data.Models.Statistics;
+
     using LiftingDome.Web.ViewModels.Home;
     using LiftingDome.Web.ViewModels.Coach;
     using LiftingDome.Web.ViewModels.Workout;
     using LiftingDome.Web.ViewModels.Workout.Enums;
+
     using Microsoft.EntityFrameworkCore;
 
-    public class WorkoutService : IWorkoutService
+
+	public class WorkoutService : IWorkoutService
     {
         private readonly LiftingDomeDbContext liftingDomeDbContext;
         public WorkoutService(LiftingDomeDbContext liftingDomeDbContext)
@@ -283,6 +288,15 @@
             workout.TraineeId = null;
 
             await this.liftingDomeDbContext.SaveChangesAsync();
+		}
+
+		public async Task<StatisticsServiceModel> GetStatisticsAsync()
+		{
+            return new StatisticsServiceModel()
+            {
+                TotalWorkouts = await this.liftingDomeDbContext.Workouts.CountAsync(),
+                TotalUsers = await this.liftingDomeDbContext.Users.CountAsync(),
+            };
 		}
 	}
 }

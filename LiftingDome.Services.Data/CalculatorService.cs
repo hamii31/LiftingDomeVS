@@ -1,8 +1,11 @@
 ﻿namespace LiftingDome.Services.Data
 {
 	using LiftingDome.Data;
+
 	using LiftingDome.Services.Data.Interfaces;
+
 	using LiftingDome.Web.ViewModels.Calculator;
+
 	using Microsoft.EntityFrameworkCore;
 
 	public class CalculatorService : ICalculatorService

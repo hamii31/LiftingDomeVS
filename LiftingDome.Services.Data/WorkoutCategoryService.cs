@@ -1,8 +1,11 @@
 ﻿namespace LiftingDome.Services.Data
 {
 	using LiftingDome.Data;
+
 	using LiftingDome.Services.Data.Interfaces;
+
 	using LiftingDome.Web.ViewModels.WorkoutCategory;
+
 	using Microsoft.EntityFrameworkCore;
 
 	public class WorkoutCategoryService : IWorkoutCategoryService

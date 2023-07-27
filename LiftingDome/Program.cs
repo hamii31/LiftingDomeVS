@@ -36,6 +36,7 @@ namespace LiftingDome
             }).AddEntityFrameworkStores<LiftingDomeDbContext>();
 
             builder.Services.AddApplicationServices(typeof(IWorkoutService));
+
             builder.Services.AddMvc().AddNToastNotifyToastr();
 
             builder.Services

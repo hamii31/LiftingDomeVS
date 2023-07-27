@@ -1,4 +1,13 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function statistics() {
+    $('#statistics-button').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-// Write your JavaScript code.
+        $.get('https://localhost:7087/api/statistics', function (data) {
+            $('#total-workouts').text(data.totalWorkouts + " Workouts");
+            $('#total-users').text(data.totalUsers + " Users");
+            $('#statistics').removeClass('d-nome');
+            $('#statistics-button').hide();
+        });
+    });
+}

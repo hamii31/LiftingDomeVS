@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dd06e5ea-103a-4ef5-b6a7-c0f115aa54ff</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LiftingDome.Common\LiftingDome.Common.csproj" />
+    <ProjectReference Include="..\LiftingDome.Infrastructure\LiftingDome.Infrastructure.csproj" />
+    <ProjectReference Include="..\LiftingDome.Services.Data.Models\LiftingDome.Services.Data.Models.csproj" />
+    <ProjectReference Include="..\LiftingDome.Services.Data\LiftingDome.Services.Data.csproj" />
+  </ItemGroup>
+
+</Project>
