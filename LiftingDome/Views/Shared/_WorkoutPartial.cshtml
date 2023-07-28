@@ -1,4 +1,13 @@
-﻿@model AllWorkoutsViewModel
+﻿@using LiftingDome.Infrastructure.Extensions;
+@using LiftingDome.Services.Data.Interfaces;
+@model AllWorkoutsViewModel
+
+@inject ICoachService CoachService
+@{
+	bool isUserCoach = await CoachService.CoachExistsByUserIdAsync(this.User.GetId()!);
+	bool isCoachOwnerOfWorkout = await CoachService.HasWorkoutWithIdAsync(this.User.GetId()!, Model.Id);
+}
+
 <div class="col-md-4">
 	<div class="card mb-3">
 		<img class="card-img-top" src="@Model.ImageUrl" alt="Workout Image">
@@ -14,9 +23,13 @@
 				<a asp-controller="Workout" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
 				@if (this.User.Identity?.IsAuthenticated ?? false)
 				{
-					<a asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-					<a asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
-					@if (!Model.IsOwned)
+					@if (isUserCoach && isCoachOwnerOfWorkout)
+					{
+						<a asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+						<a asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+					}
+					
+					@if (!Model.IsOwned && !isUserCoach)
 					{
 						<form class="input-group-sm" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id" method="post">
 							<input class="btn btn-dark" type="submit" value="Get" />
@@ -24,9 +37,12 @@
 					}
 					else
 					{
-						<form asp-controller="Workout" asp-action="Remove" asp-route-id="@Model.Id" method="post">
-							<input class="btn btn-dark" type="submit" value="Remove" />
-						</form>
+						@if (!isUserCoach)
+						{
+							<form asp-controller="Workout" asp-action="Remove" asp-route-id="@Model.Id" method="post">
+								<input class="btn btn-dark" type="submit" value="Remove" />
+							</form>
+						}
 					}
 				}
 			</div>

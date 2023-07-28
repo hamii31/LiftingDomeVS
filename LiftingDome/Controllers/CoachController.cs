@@ -1,6 +1,7 @@
 ﻿namespace LiftingDome.Controllers
 {
     using LiftingDome.Infrastructure.Extensions;
+    using LiftingDome.Models;
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Web.ViewModels.Coach;
     using Microsoft.AspNetCore.Authorization;
@@ -35,6 +36,7 @@
         [HttpPost]
         public async Task<IActionResult> Become(BecomeCoachFormModel model)
         {
+
             string? userId = this.User.GetId();
 
             bool isCoach = await this.coachService.CoachExistsByUserIdAsync(userId!);
@@ -44,11 +46,12 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            bool isPhoneNumberTaken = await this.coachService.CoachExistsByPhoneNumberAsync(model.PhoneNumber);
+			bool isPhoneNumberTaken = await this.coachService.CoachExistsByPhoneNumberAsync(model.PhoneNumber);
             if (isPhoneNumberTaken)
             {
                 this.ModelState.AddModelError(string.Empty, "Phone number unavailable!");
             }
+
             if (!this.ModelState.IsValid)
             {
                 return View(model);

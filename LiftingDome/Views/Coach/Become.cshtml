@@ -1,4 +1,11 @@
-﻿@model BecomeCoachFormModel
+﻿@using LiftingDome.Infrastructure.Extensions;
+@using LiftingDome.Services.Data.Interfaces;
+@model BecomeCoachFormModel
+
+@inject ICoachService CoachService
+@{
+	BecomeCoachFormModel.Email = await this.CoachService.GetUserEmailByUserIdAsync(this.User.GetId()!);
+}
 @{
 	ViewBag.Title = "Become Coach";
 }

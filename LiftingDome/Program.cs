@@ -5,6 +5,7 @@ namespace LiftingDome
     using LiftingDome.Infrastructure.ModelBinders;
     using LiftingDome.Models;
     using LiftingDome.Services.Data.Interfaces;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     public class Program
     {
@@ -44,6 +45,7 @@ namespace LiftingDome
                 .AddMvcOptions(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
 
             WebApplication app = builder.Build();

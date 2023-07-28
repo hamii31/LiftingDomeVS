@@ -24,6 +24,15 @@
 
 <div class="slideshow-container">
 
+	<font size="5">
+		<div class="text-center">
+			Welcome To Lifting Dome!
+			The No.1 site for fitness!
+		</div>
+	</font>
+
+	<div class="mb-5"></div>
+
 	@foreach (var workout in workouts)
 	{
 		<div class="mySlides fade">
@@ -57,16 +66,6 @@
 </div>
 
 <div class="mt-4 p-5 bg-light d-none" id="statistics">
-
-	<font size="5">
-		<div class="text-center">
-			Welcome To Lifting Dome!
-			Home to:
-		</div>
-	</font>
-
-	<div class="mb-5"></div>
-
 	<div class="row">
 		<h2 class="col-md-6 text-center" id="total_workouts"></h2>
 		<h2 class="col-md-6 text-center" id="total_users"></h2>
@@ -76,16 +75,31 @@
 @section Scripts
 {
 	<script>
-		$('#statistics-button').on('click', function (e) {
+		$('#statistics-button').on('click', function (e) 
+		{
 			e.preventDefault();
 			e.stopPropagation();
 
-			$.get('https://localhost:7087/api/statistics', function (data) {
-				$('#total_workouts').text(data.totalWorkouts + " Workouts");
-				$('#total_users').text(data.totalUsers + " Users");
-				$('#statistics').removeClass('d-none');
-				$('#statistics-button').hide();
-			});
+			if($('#statistics').hasClass('d-none'))
+			{
+				$.get('https://localhost:7087/api/statistics', function (data) 
+				{
+					$('#total_workouts').text(data.totalWorkouts + " Workouts");
+					$('#total_users').text(data.totalUsers + " Users");
+					$('#statistics').removeClass('d-none');
+					$('#statistics-button').text('Hide Statistics');
+					$('#statistics-button').removeClass('btn-primary');
+					$('#statistics-button').addClass('btn-danger');
+				});
+			}
+			else
+			{
+				$('#statistics').addClass('d-none');
+				$('#statistics-button').text('Show Statistics');
+				$('#statistics-button').removeClass('btn-danger');
+				$('#statistics-button').addClass('btn-primary');
+			}
+		
 		});</script>
 }
 

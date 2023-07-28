@@ -11,5 +11,6 @@
 		[Phone]
 		[Display(Name = "Phone")]
 		public string PhoneNumber { get; set; } = null!;
+		public static string Email { get; set; } = null!;
 	}
 }

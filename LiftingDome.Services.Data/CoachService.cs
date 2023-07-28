@@ -37,12 +37,27 @@
             Coach coach = new Coach()
             {
                 PhoneNumber = model.PhoneNumber,
+                Email = BecomeCoachFormModel.Email,
                 UserId = Guid.Parse(userId)
             };
 
             await this.liftingDomeDbContext.Coaches.AddAsync(coach);
             await this.liftingDomeDbContext.SaveChangesAsync();
         }
+
+		public async Task<string?> GetUserEmailByUserIdAsync(string userId)
+		{
+            ApplicationUser? user = await this.liftingDomeDbContext
+                .Users
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user.Email.ToString();
+		}
 
 		public async Task<string?> GetCoachIdByUserIdAsync(string userId)
 		{
@@ -58,10 +73,25 @@
             return coach.Id.ToString();
 		}
 
-		public async Task<bool> UserHasWorkoutsByUserIdAsync(string userId)
+        public async Task<bool> HasWorkoutWithIdAsync(string userId, string workoutId)
+        {
+            Coach? coach = await this.liftingDomeDbContext
+                .Coaches
+                .Include(w => w.CreatedWorkouts)
+                .FirstOrDefaultAsync(c => c.UserId.ToString() == userId);
+            if (coach == null)
+            {
+                return false;
+            }
+            
+            return coach.CreatedWorkouts.Any(w => w.Id.ToString() == workoutId.ToLower());
+        }
+
+        public async Task<bool> UserHasWorkoutsByUserIdAsync(string userId)
         {
             ApplicationUser? user = await this.liftingDomeDbContext
                 .Users
+                .Include(w => w.AddedWorkouts)
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
             if (user == null)
@@ -71,5 +101,20 @@
 
             return user.AddedWorkouts.Any();
         }
-    }
+
+		public async Task<bool> UserHasWorkoutsWithId(string userId, string workoutId)
+		{
+			ApplicationUser? user = await this.liftingDomeDbContext
+			   .Users
+			   .Include(w => w.AddedWorkouts)
+			   .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+			if (user == null)
+			{
+				return false;
+			}
+
+            return user.AddedWorkouts.Any(w => w.Id.ToString() == workoutId.ToLower());
+		}
+	}
 }
