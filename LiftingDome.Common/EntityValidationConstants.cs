@@ -32,5 +32,9 @@
         {
             public const int NameMaxLength = 10;
         }
+        public static class ForumPost
+        {
+            public const int TextMaxLength = 300;
+        }
     }
 }

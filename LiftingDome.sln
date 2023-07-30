@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiftingDome.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiftingDome.Services.Data.Models", "LiftingDome.Services.Data.Models\LiftingDome.Services.Data.Models.csproj", "{9D9BE28A-F312-44C5-A4B7-3147767DF676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftingDome.WebAPI", "LiftingDome.WebAPI\LiftingDome.WebAPI.csproj", "{32CADDA8-0BCA-4827-BA82-B1E77F89E7B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiftingDome.WebAPI", "LiftingDome.WebAPI\LiftingDome.WebAPI.csproj", "{32CADDA8-0BCA-4827-BA82-B1E77F89E7B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
