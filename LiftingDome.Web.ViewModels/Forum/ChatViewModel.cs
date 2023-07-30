@@ -2,7 +2,11 @@
 {
 	public class ChatViewModel
 	{
-		public MessageViewModel CurrentMessage { get; set; } = null!;
-		public List<MessageViewModel> Messages { get; set; } = null!;
+		public ChatViewModel()
+		{
+			this.Posts = new HashSet<AllForumPostViewModel>();
+		}
+		public MessageFormModel CurrentPost { get; set; } = null!;
+		public IEnumerable<AllForumPostViewModel> Posts { get; set; }
 	}
 }

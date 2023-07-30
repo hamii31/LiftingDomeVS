@@ -1,4 +1,4 @@
-﻿@model List<AllWorkoutsViewModel>
+﻿@model             List<LiftingDome.Web.ViewModels.Workout.AllWorkoutsViewModel>
 @{
 	ViewData["Title"] = "My Workouts";
 }
@@ -12,7 +12,7 @@
 else
 {
 	<div class="row">
-		@foreach (AllWorkoutsViewModel workout in Model)
+		@foreach (LiftingDome.Web.ViewModels.Workout.AllWorkoutsViewModel workout in Model)
 		{
 			<partial name="_WorkoutPartial" model="workout"/>
 		}
