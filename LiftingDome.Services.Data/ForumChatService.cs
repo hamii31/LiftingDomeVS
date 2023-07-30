@@ -54,7 +54,8 @@
                 {
                     Id = p.Id.ToString(),
                     Text = p.Text,
-                    CreatorId = p.UserId.ToString()
+                    CreatorId = p.UserId.ToString(),
+                    CreatorName = p.User.Email.ToString()
                 }).ToArrayAsync();
                   
             int totalPosts = postsQuery.Count();
