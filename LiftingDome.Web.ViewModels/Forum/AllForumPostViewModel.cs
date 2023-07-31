@@ -6,5 +6,6 @@
         public string Text { get; set; } = null!;
         public string CreatorId { get; set; } = null!;
         public string CreatorName { get; set; } = null!;
+        public string CategoryName { get; set; } = null!;
     }
 }

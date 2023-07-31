@@ -68,7 +68,8 @@
                     Id = w.Id.ToString(),
                     Title = w.Title,
                     ImageUrl = w.ImageURL,
-                    Price = w.Price
+                    Price = w.Price,
+                    CategoryName = w.Category.Name
                 }).ToArrayAsync();
 
             int totalWorkouts = workoutsQuery.Count();
@@ -90,7 +91,8 @@
                     Id = w.Id.ToString(),
                     Title = w.Title,
                     ImageUrl = w.ImageURL,
-                    Price = w.Price
+                    Price = w.Price,
+                    CategoryName = w.Category.Name
                 })
                 .ToArrayAsync();
 
@@ -108,7 +110,8 @@
                     Title = w.Title,
                     ImageUrl = w.ImageURL,
                     Price = w.Price,
-                    IsOwned = true
+                    IsOwned = true,
+                    CategoryName = w.Category.Name
                 })
                 .ToArrayAsync();
 

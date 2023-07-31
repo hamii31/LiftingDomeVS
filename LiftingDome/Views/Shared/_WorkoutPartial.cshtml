@@ -10,29 +10,42 @@
 
 <div class="col-md-4">
 	<div class="card mb-3">
-		<img class="card-img-top" src="@Model.ImageUrl" alt="Workout Image">
+		@switch (Model.CategoryName.ToLower())
+		{
+			case "crossfit":
+				<p class="text-center" style="background-color:#bfbfbe; margin:0">@Model.CategoryName</p>
+				break;
+			case "bodybuilding":
+				<p class="text-center" style="background-color:#9f9f9e; margin:0">@Model.CategoryName</p>
+				break;
+			case "powerlifting":
+				<p class="text-center" style="background-color:#6f706f; margin:0">@Model.CategoryName</p>
+				break;
+			default:
+				break;
+		}
+		<img class="card-img-top" src="@Model.ImageUrl" alt="Workout Image" />
 			<div class="card-body text-center">
 				<h4>@Model.Title</h4>
-
 				<h6>
 					Price:
 						<b>@($"{Model.Price:f2}") BGN</b>
 				</h6>
 
 				<br />
-				<a asp-controller="Workout" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
+				<a asp-controller="Workout" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark">Details</a>
 				@if (this.User.Identity?.IsAuthenticated ?? false)
 				{
 					@if (isUserCoach && isCoachOwnerOfWorkout)
 					{
-						<a asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+						<a asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">Edit</a>
 						<a asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
 					}
 					
 					@if (!Model.IsOwned && !isUserCoach)
 					{
 						<form class="input-group-sm" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id" method="post">
-							<input class="btn btn-dark" type="submit" value="Get" />
+							<input class="btn btn-danger" type="submit" value="Get" />
 						</form>
 					}
 					else
@@ -40,7 +53,7 @@
 						@if (!isUserCoach)
 						{
 							<form asp-controller="Workout" asp-action="Remove" asp-route-id="@Model.Id" method="post">
-								<input class="btn btn-dark" type="submit" value="Remove" />
+								<input class="btn btn-danger" type="submit" value="Remove" />
 							</form>
 						}
 					}

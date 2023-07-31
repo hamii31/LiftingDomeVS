@@ -7,5 +7,6 @@
     {
         Task CreatePost(PostFormModel model, string userId);
         Task<AllPostsFilteredAndPagedServiceModel> AllAsync(AllForumPostQueryModel queryModel);
+        Task<IEnumerable<AllForumPostViewModel>> AllByUserIdAsync(string traineeId);
     }
 }

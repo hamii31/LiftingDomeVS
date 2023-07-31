@@ -109,6 +109,34 @@
 			_toastNotification.AddSuccessToastMessage("Post added successfully!");
 			return RedirectToAction("All", "ForumChat");
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> Mine()
+		{
+			List<AllForumPostViewModel> myPosts = new List<AllForumPostViewModel>();
+
+            string userId = this.User.GetId()!;
+
+            bool userExists = await this.coachService.UserExistsByUserIdAsync(userId);
+
+			if (!userExists)
+			{
+				_toastNotification.AddErrorToastMessage("Only logged users can have posts!");
+				return RedirectToAction("All", "Index");
+			}
+
+			try
+			{
+                myPosts.AddRange(await this.forumChatService.AllByUserIdAsync(userId!));
+
+				return View(myPosts);
+            }
+			catch (Exception)
+			{
+				return this.GeneralError();
+			}
+        }
+
 		private IActionResult GeneralError()
         {
             this.ModelState.AddModelError(string.Empty, "An unexpected error occured! Please try again later! If the problem persists, please contact an administrator.");

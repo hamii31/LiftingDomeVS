@@ -1,10 +1,41 @@
-﻿@model AllForumPostViewModel
+﻿@using LiftingDome.Infrastructure.Extensions;
+@using LiftingDome.Services.Data.Interfaces;
+@model AllForumPostViewModel
+@inject ICoachService CoachService
+
 
 <div class="col-md-4">
 	<div class="card mb-3">
-			<div class="card-body text-center">
-				<h3>@Model.CreatorName</h3>
-				<h4>@Model.Text</h4>
-		    </div>
+		<div class="card-body text-center">
+		@switch (Model.CategoryName.ToLower())
+		{
+			case "crossfit":
+				<p class="text-center" style="background-color:#bfbfbe; margin:0">@Model.CategoryName</p>
+				break;
+			case "bodybuilding":
+				<p class="text-center" style="background-color:#9f9f9e; margin:0">@Model.CategoryName</p>
+				break;
+			case "powerlifting":
+				<p class="text-center" style="background-color:#6f706f; margin:0">@Model.CategoryName</p>
+				break;
+			case "general":
+				<p class="text-center" style="background-color:white; margin:0">@Model.CategoryName</p>
+				break;
+			default:
+				break;
+		}
+			<h5>@Model.Text</h5>
+			<b>
+				@Model.CreatorName
+			</b>
+			@if (await CoachService.CoachExistsByUserIdAsync(Model.CreatorId))
+			{
+				<label style="color:red">Coach</label>
+			}
+			else
+			{
+				<label style="color:red">Trainee</label>
+			}
+		 </div>
 	</div>
 </div>

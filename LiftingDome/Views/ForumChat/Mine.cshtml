@@ -1,0 +1,20 @@
+﻿@model List<AllForumPostViewModel>
+@{
+	ViewData["Title"] = "My Posts";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if (!Model.Any())
+{
+		<h2 class="text-center">You do not have any posts yet! Create some!</h2>
+}
+else
+{
+		<div class="row">
+		@foreach (AllForumPostViewModel post in Model)
+		{
+			<partial name="_PostPartial" model="post"/>
+		}
+		</div>
+}
