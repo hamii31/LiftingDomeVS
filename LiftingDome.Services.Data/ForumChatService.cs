@@ -4,7 +4,6 @@
     using LiftingDome.Models;
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Services.Data.Models.ForumPost;
-    using LiftingDome.Services.Data.Models.Workout;
     using LiftingDome.Web.ViewModels.Forum;
     using LiftingDome.Web.ViewModels.Forum.Enums;
     using Microsoft.EntityFrameworkCore;
@@ -67,11 +66,11 @@
             };
         }
 
-        public async Task CreatePost(MessageFormModel model, string userId)
+        public async Task CreatePost(PostFormModel model, string userId)
         {
             ForumPost post = new ForumPost()
             {
-                Text = model.MessageText,
+                Text = model.Text,
                 CategoryId = model.CategoryId,
                 UserId = Guid.Parse(userId)
             };

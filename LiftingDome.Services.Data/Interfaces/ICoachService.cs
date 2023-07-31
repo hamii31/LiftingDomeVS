@@ -12,5 +12,6 @@ namespace LiftingDome.Services.Data.Interfaces
         Task<bool> HasWorkoutWithIdAsync(string userId, string workoutId);
         Task<string?> GetUserEmailByUserIdAsync(string userId);
         Task<bool> UserHasWorkoutsWithId(string userId, string workoutId);
+        Task<bool> UserExistsByUserIdAsync(string userId);
     }
 }

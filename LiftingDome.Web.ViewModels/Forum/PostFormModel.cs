@@ -4,16 +4,16 @@
 	using System.ComponentModel.DataAnnotations;
 	using static Common.EntityValidationConstants.ForumPost;
 
-	public class MessageFormModel
+	public class PostFormModel
 	{
-		public MessageFormModel()
+		public PostFormModel()
 		{
 			this.Categories = new HashSet<ForumCategorySelectFormModel>();
 		}
         [Required]
         [MaxLength(TextMaxLength)]
 		[Display(Name = "Text")]
-        public string MessageText { get; set; } = null!;
+        public string Text { get; set; } = null!;
         [Required]
 		[Display(Name = "Category")]
 		public int CategoryId { get; set; }

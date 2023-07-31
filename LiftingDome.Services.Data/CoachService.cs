@@ -116,5 +116,12 @@
 
             return user.AddedWorkouts.Any(w => w.Id.ToString() == workoutId.ToLower());
 		}
+
+		public async Task<bool> UserExistsByUserIdAsync(string userId)
+		{
+			bool result = await this.liftingDomeDbContext.Users.AnyAsync(x => x.Id.ToString() == userId);
+
+			return result;
+		}
 	}
 }

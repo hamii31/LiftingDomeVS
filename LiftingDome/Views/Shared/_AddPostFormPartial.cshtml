@@ -1,0 +1,25 @@
+﻿@model PostFormModel
+<div class="row">
+	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+		<form method="post">
+			<div class="form-group">
+				<label asp-for="Text"></label>
+				<input asp-for="Text" class="form-control" placeholder="Text...">
+				<span asp-validation-for="Text" class="small text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CategoryId"></label>
+				<select asp-for="CategoryId" class="form-control">
+					@foreach (var category in Model.Categories)
+					{
+						<option value="@category.Id">@category.Name</option>
+					}
+				</select>
+				<span asp-validation-for="CategoryId" class="small text-danger"></span>
+			</div>
+			<div class="text-center">
+				<input class="btn btn-primary mt-3" type="submit" value="Send" />
+			</div>
+		</form>
+	</div>
+</div>

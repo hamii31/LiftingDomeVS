@@ -6,7 +6,7 @@
 		{
 			this.Posts = new HashSet<AllForumPostViewModel>();
 		}
-		public MessageFormModel CurrentPost { get; set; } = null!;
+		public PostFormModel CurrentPost { get; set; } = null!;
 		public IEnumerable<AllForumPostViewModel> Posts { get; set; }
 	}
 }

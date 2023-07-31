@@ -5,7 +5,7 @@
 
     public interface IForumChatService
     {
-        Task CreatePost(MessageFormModel model, string userId);
+        Task CreatePost(PostFormModel model, string userId);
         Task<AllPostsFilteredAndPagedServiceModel> AllAsync(AllForumPostQueryModel queryModel);
     }
 }
