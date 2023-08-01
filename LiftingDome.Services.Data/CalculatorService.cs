@@ -20,9 +20,16 @@
 		{
 			//weight / ( 1.0278 – 0.0278 × reps )
 
-			double oneRepMax = model.Weight / (1.0278 - 0.0278 * model.Reps);
+			if (model.Reps > 1)
+			{
+                double oneRepMax = model.Weight / (1.0278 - 0.0278 * model.Reps);
 
-			return Task.FromResult(oneRepMax);
+                return Task.FromResult(oneRepMax);
+            }
+			else
+			{
+				return Task.FromResult(model.Weight);
+			}
 		}
 
 		public Task<IList<double>> CalculatePercentages(OneRepMaxCalculatorFormModel model)

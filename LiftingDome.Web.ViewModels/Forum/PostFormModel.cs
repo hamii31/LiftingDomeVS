@@ -2,7 +2,7 @@
 {
 	using LiftingDome.Web.ViewModels.ForumCategories;
 	using System.ComponentModel.DataAnnotations;
-	using static Common.EntityValidationConstants.ForumPost;
+	using static Common.EntityValidationConstants.Post;
 
 	public class PostFormModel
 	{

@@ -175,7 +175,7 @@
             try
             {
                 WorkoutFormModel formModel = await this.workoutService
-            .GetWorkoutForEditByIdAsync(id);
+                .GetWorkoutForEditByIdAsync(id);
 
                 formModel.Categories = await this.workoutCategoryService.AllCategoriesAsync();
 

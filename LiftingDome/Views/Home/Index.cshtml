@@ -24,10 +24,11 @@
 
 <div class="slideshow-container">
 
-	<font size="5">
-		<div class="text-center">
-			Welcome To Lifting Dome!
-			The No.1 site for fitness!
+	<font size="6">
+		<div class="text-center" style="padding-top:50px; font-family:Arial">
+			<b>
+				Welcome To Lifting Dome! The <span style="color:red">No.1</span> site for fitness!
+			</b>
 		</div>
 	</font>
 
@@ -61,7 +62,7 @@
 
 <div class="row">
 	<div class="col-12 text-center">
-		<button class="btn btn-primary" id="statistics-button">Show Statistics</button>
+		<button class="btn btn-dark" id="statistics-button" style="margin-bottom:25px">Show Statistics</button>
 	</div>
 </div>
 
@@ -88,7 +89,7 @@
 					$('#total_users').text(data.totalUsers + " Users");
 					$('#statistics').removeClass('d-none');
 					$('#statistics-button').text('Hide Statistics');
-					$('#statistics-button').removeClass('btn-primary');
+					$('#statistics-button').removeClass('btn-dark');
 					$('#statistics-button').addClass('btn-danger');
 				});
 			}
@@ -97,7 +98,7 @@
 				$('#statistics').addClass('d-none');
 				$('#statistics-button').text('Show Statistics');
 				$('#statistics-button').removeClass('btn-danger');
-				$('#statistics-button').addClass('btn-primary');
+				$('#statistics-button').addClass('btn-dark');
 			}
 		
 		});</script>

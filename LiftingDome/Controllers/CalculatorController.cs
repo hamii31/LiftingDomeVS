@@ -3,13 +3,16 @@
 	using LiftingDome.Services.Data.Interfaces;
 	using LiftingDome.Web.ViewModels.Calculator;
 	using Microsoft.AspNetCore.Mvc;
+	using NToastNotify;
 
 	public class CalculatorController : Controller
 	{
 		private readonly ICalculatorService calculatorService;
-		public CalculatorController(ICalculatorService calculatorService)
+        private readonly IToastNotification _toastNotification;
+        public CalculatorController(ICalculatorService calculatorService, IToastNotification toastNotification)
 		{
 			this.calculatorService = calculatorService;
+			this._toastNotification = toastNotification;
 		}
 		public IActionResult Result(OneRepMaxCalculatorFormModel model)
 		{
@@ -42,12 +45,13 @@
 
 			if (!MeassurmentSystemExists)
 			{
-				this.ModelState.AddModelError(nameof(model.MeassurmentId), "This meassurment system does not figure in the database!");
+				_toastNotification.AddErrorToastMessage("This meassurment system does not figure in the database!");
+				return View(model);
 			}
 
 			if (!this.ModelState.IsValid)
 			{
-				try
+                try
 				{
 					model.Meassurments = await this.calculatorService.GetAllMeassurmentSystemsAsync();
 				}
@@ -55,7 +59,7 @@
 				{
 					return this.GeneralError();
 				}
-				return View(model);
+                return View(model);
 			}
 
 			try

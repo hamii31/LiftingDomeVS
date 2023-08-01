@@ -1,7 +1,7 @@
 ﻿namespace LiftingDome.Models
 {
 	using System.ComponentModel.DataAnnotations;
-	using static Common.EntityValidationConstants.ForumPost;
+	using static Common.EntityValidationConstants.Post;
 
 	public class ForumPost
 	{

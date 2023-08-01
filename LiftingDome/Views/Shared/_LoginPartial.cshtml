@@ -13,28 +13,28 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @User.Identity?.Name!</a>
+     <li class="nav-item">
+            <a class="nav-link text-white" style="margin-top:25px" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><b>Hello, @User.Identity?.Name!</b></a>
      </li>
     @if (!isUserCoach)
     {
-        <li class="nav-item">
-            <a class="nav-link text-white" asp-area="" asp-controller="Coach" asp-action="Become">Become Coach</a>
+         <li class="nav-item">
+                <a class="nav-link text-white" style="margin-top:25px" asp-area="" asp-controller="Coach" asp-action="Become"><b>Become Coach</b></a>
         </li>
     }
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-white">Logout</button>
+                <button type="submit" style="margin-top:25px" class="nav-link btn btn-link text-white"><b>Logout</b></button>
         </form>
     </li>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register</a>
+     <li class="nav-item">
+            <a class="nav-link text-white" style="margin-top:25px" asp-area="Identity" asp-page="/Account/Register"><b>Register</b></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-white" style="margin-top:25px" asp-area="Identity" asp-page="/Account/Login"><b>Login</b></a>
     </li>
 }
 </ul>

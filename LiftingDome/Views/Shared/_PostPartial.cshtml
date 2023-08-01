@@ -2,7 +2,11 @@
 @using LiftingDome.Services.Data.Interfaces;
 @model AllForumPostViewModel
 @inject ICoachService CoachService
+@inject IForumChatService ForumChatService
 
+@{
+	bool IsOwner = await ForumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, Model.Id);
+}
 
 <div class="col-md-4">
 	<div class="card mb-3">
@@ -10,16 +14,16 @@
 		@switch (Model.CategoryName.ToLower())
 		{
 			case "crossfit":
-				<p class="text-center" style="background-color:#bfbfbe; margin:0">@Model.CategoryName</p>
+					<p class="text-center text-white" style="background-color:#bfbfbe; margin:0; padding:5px">@Model.CategoryName</p>
 				break;
 			case "bodybuilding":
-				<p class="text-center" style="background-color:#9f9f9e; margin:0">@Model.CategoryName</p>
+					<p class="text-center text-white" style="background-color:#9f9f9e; margin:0; padding:5px">@Model.CategoryName</p>
 				break;
 			case "powerlifting":
-				<p class="text-center" style="background-color:#6f706f; margin:0">@Model.CategoryName</p>
+					<p class="text-center text-white" style="background-color:#6f706f; margin:0; padding:5px">@Model.CategoryName</p>
 				break;
 			case "general":
-				<p class="text-center" style="background-color:white; margin:0">@Model.CategoryName</p>
+					<p class="text-center text-white" style="background-color:black; margin:0; padding:5px">@Model.CategoryName</p>
 				break;
 			default:
 				break;
@@ -35,6 +39,10 @@
 			else
 			{
 				<label style="color:red">Trainee</label>
+			}
+			@if (IsOwner)
+			{
+				<a asp-controller="ForumChat" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">Edit</a>
 			}
 		 </div>
 	</div>

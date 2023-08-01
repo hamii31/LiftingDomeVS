@@ -21,39 +21,43 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="background-color:red; border:red; margin:0; padding:0; position:fixed; top:0; width:100%; z-index: 1;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="background-color:red; border:red; height:30px; margin:0; padding:0; position:fixed; top:0; width:100%; z-index: 1;">
             <div class="container-fluid" style="background-color:red">
-                <a class="nav-link text-white" style="font-size:30px" asp-area="" asp-controller="Home" asp-action="Index">LD</a>
+                <a class="nav-link text-dark" style="font-size:30px; margin-top:25px;" asp-area="" asp-controller="Home" asp-action="Index"><b>LD</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1" style="background-color:red">
+                    <ul class="navbar-nav flex-grow-1" style="background-color:red; margin-top:25px">
+                        
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Workout" asp-action="All">All Workouts</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Workout" asp-action="All"><b>All Workouts</b></a>
                         </li>
+                        @if (!isUserCoach)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Calculator" asp-action="Calculate"><b>Calculate your 1RM!</b></a>
+                            </li>
+                        }
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Calculator" asp-action="Calculate">Calculate your 1RM!</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="ForumChat" asp-action="All">Forum</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="ForumChat" asp-action="All"><b>Forum</b></a>
                         </li>
                         @if (this.User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                 <a class="nav-link text-white" asp-area="" asp-controller="Workout" asp-action="Mine">My Workouts</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Workout" asp-action="Mine"><b>My Workouts</b></a>
                             </li>
                              <li class="nav-item">
-                                 <a class="nav-link text-dark" asp-area="" asp-controller="ForumChat" asp-action="Add">Add Post To Forum</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="ForumChat" asp-action="Add"><b>Add Post To Forum</b></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="ForumChat" asp-action="Mine">My Forum Posts</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="ForumChat" asp-action="Mine"><b>My Forum Posts</b></a>
                             </li>
                             @if (isUserCoach)
                             {
                                <li class="nav-item">
-                                   <a class="nav-link text-white" asp-area="" asp-controller="Workout" asp-action="Add">Add Workout</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Workout" asp-action="Add"><b>Add Workout</b></a>
                                </li>
                             }
                         }

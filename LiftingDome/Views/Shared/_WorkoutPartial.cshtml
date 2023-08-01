@@ -13,13 +13,13 @@
 		@switch (Model.CategoryName.ToLower())
 		{
 			case "crossfit":
-				<p class="text-center" style="background-color:#bfbfbe; margin:0">@Model.CategoryName</p>
+				<p class="text-center" style="background-color:#bfbfbe; margin:0; padding:5px">@Model.CategoryName</p>
 				break;
 			case "bodybuilding":
-				<p class="text-center" style="background-color:#9f9f9e; margin:0">@Model.CategoryName</p>
+				<p class="text-center text-white" style="background-color:#9f9f9e; margin:0; padding:5px">@Model.CategoryName</p>
 				break;
 			case "powerlifting":
-				<p class="text-center" style="background-color:#6f706f; margin:0">@Model.CategoryName</p>
+				<p class="text-center text-white" style="background-color:#6f706f; margin:0; padding:5px">@Model.CategoryName</p>
 				break;
 			default:
 				break;
@@ -29,7 +29,14 @@
 				<h4>@Model.Title</h4>
 				<h6>
 					Price:
-						<b>@($"{Model.Price:f2}") BGN</b>
+						@if (Model.Price == 0)
+					    {
+							<b style="color:red">FREE</b>
+					    }
+						else
+						{
+							<b style="color:red">@($"{Model.Price:f2}") BGN</b>
+						}
 				</h6>
 
 				<br />

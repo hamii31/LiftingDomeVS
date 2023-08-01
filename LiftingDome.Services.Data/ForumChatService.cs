@@ -6,9 +6,9 @@
     using LiftingDome.Services.Data.Models.ForumPost;
     using LiftingDome.Web.ViewModels.Forum;
     using LiftingDome.Web.ViewModels.Forum.Enums;
-    using LiftingDome.Web.ViewModels.Workout;
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
+    using static LiftingDome.Common.EntityValidationConstants;
 
     public class ForumChatService : IForumChatService
     {
@@ -96,6 +96,54 @@
             };
             await this.liftingDomeDbContext.Posts.AddAsync(post);
             await this.liftingDomeDbContext.SaveChangesAsync();
+        }
+
+        public async Task EditPostByIdAndFormModelAsync(string postId, PostFormModel formModel)
+        {
+            ForumPost workout = await this.liftingDomeDbContext
+                .Posts
+                .Where(w => w.IsActive)
+                .FirstAsync(w => w.Id.ToString() == postId);
+
+            workout.Text = formModel.Text;
+            workout.CategoryId = formModel.CategoryId;
+
+            await this.liftingDomeDbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> ExistsByIdAsync(string postId)
+        {
+             bool result = await this.liftingDomeDbContext
+                .Posts
+                .Where(w => w.IsActive)
+                .AnyAsync(w => w.Id.ToString() == postId);
+             
+             return result;
+        }
+
+        public async Task<PostFormModel> GetPostForEditAsync(string postId)
+        {
+            ForumPost post = await this.liftingDomeDbContext
+               .Posts
+               .Include(w => w.Category)
+               .Where(w => w.IsActive)
+               .FirstAsync(w => w.Id.ToString() == postId);
+
+            return new PostFormModel()
+            {
+                Text = post.Text,
+                CategoryId = post.CategoryId
+            };
+        }
+
+        public async Task<bool> IsUserOwnerOfPostWithIdAsync(string userId, string postId)
+        {
+            ForumPost post = await this.liftingDomeDbContext
+                .Posts
+                .Where(p => p.IsActive)
+                .FirstAsync(p => p.Id.ToString() == postId);
+            
+            return post.UserId.ToString() == userId;
         }
     }
 }

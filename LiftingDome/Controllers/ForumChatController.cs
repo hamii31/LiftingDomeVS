@@ -85,7 +85,7 @@
 
 			if (!this.ModelState.IsValid)
 			{
-				try
+                try
 				{
 					model.Categories = await this.forumCategoryService.AllCategoriesAsync();
 				}
@@ -128,7 +128,6 @@
 			try
 			{
                 myPosts.AddRange(await this.forumChatService.AllByUserIdAsync(userId!));
-
 				return View(myPosts);
             }
 			catch (Exception)
@@ -137,6 +136,86 @@
 			}
         }
 
+		[HttpGet]
+		public async Task<IActionResult> Edit(string id)
+		{
+            bool isLogged = await this.coachService.UserExistsByUserIdAsync(this.User.GetId()!);
+            if (!isLogged)
+            {
+                _toastNotification.AddErrorToastMessage("You must be a logged user in order to edit posts!");
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool postExists = await this.forumChatService.ExistsByIdAsync(id);
+            if (!postExists)
+            {
+                _toastNotification.AddErrorToastMessage("Post with the provided Id does not exist!");
+                return RedirectToAction("All", "ForumChat");
+            }
+
+			bool IsUserOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, id);
+			if (!IsUserOwner)
+			{
+				_toastNotification.AddErrorToastMessage("You must be the owner of the post in order to edit it!");
+				return RedirectToAction("Mine", "ForumChat");
+			}
+            try
+            {
+                PostFormModel formModel = await this.forumChatService
+                .GetPostForEditAsync(id);
+
+                formModel.Categories = await this.forumCategoryService.AllCategoriesAsync();
+
+                return View(formModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+		[HttpPost]
+		public async Task<IActionResult> Edit(string id, PostFormModel model)
+		{
+            if (!this.ModelState.IsValid)
+            {
+                model.Categories = await this.forumCategoryService.AllCategoriesAsync();
+                return View(model);
+            }
+
+            bool isLogged = await this.coachService.UserExistsByUserIdAsync(this.User.GetId()!);
+            if (!isLogged)
+            {
+                _toastNotification.AddErrorToastMessage("You must be a logged user in order to edit posts!");
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool postExists = await this.forumChatService.ExistsByIdAsync(id);
+            if (!postExists)
+            {
+                _toastNotification.AddErrorToastMessage("Post with the provided Id does not exist!");
+                return RedirectToAction("All", "ForumChat");
+            }
+
+            bool IsUserOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, id);
+            if (!IsUserOwner)
+            {
+                _toastNotification.AddErrorToastMessage("You must be the owner of the post in order to edit it!");
+                return RedirectToAction("Mine", "ForumChat");
+            }
+
+            try
+            {
+                await this.forumChatService.EditPostByIdAndFormModelAsync(id, model);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "An unexpected error occured while saving the changes to your post. Please try again later or contact administrator");
+                model.Categories = await this.forumCategoryService.AllCategoriesAsync();
+                return View(model);
+            }
+            _toastNotification.AddSuccessToastMessage("Post changes saved successfully!");
+            return RedirectToAction("Mine", "ForumChat");
+        }
 		private IActionResult GeneralError()
         {
             this.ModelState.AddModelError(string.Empty, "An unexpected error occured! Please try again later! If the problem persists, please contact an administrator.");
