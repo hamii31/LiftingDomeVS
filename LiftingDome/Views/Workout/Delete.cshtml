@@ -14,8 +14,10 @@
 				<label asp-for="Title" class="control-label"></label>
 				<input asp-for="Title" class="form-control" disabled="disabled" />
 			</div>
-			<div class="form-group mt-2">
+			<b>Are you sure you want to delete this workout?</b>
+			<div class="form-group mt-2" style="float:none">
 				<input type="submit" value="Delete" class="btn btn-danger" />
+				<a class="btn btn-dark" asp-area="" asp-controller="Workout" asp-action="Mine">Go back</a>
 			</div>
 		</div>
 	</div>

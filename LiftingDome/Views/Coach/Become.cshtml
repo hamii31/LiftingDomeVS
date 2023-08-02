@@ -2,9 +2,9 @@
 @using LiftingDome.Services.Data.Interfaces;
 @model BecomeCoachFormModel
 
-@inject ICoachService CoachService
+@inject IUserService UserService
 @{
-	BecomeCoachFormModel.Email = await this.CoachService.GetUserEmailByUserIdAsync(this.User.GetId()!);
+	BecomeCoachFormModel.Email = await this.UserService.GetUserEmailByUserIdAsync(this.User.GetId()!);
 }
 @{
 	ViewBag.Title = "Become Coach";

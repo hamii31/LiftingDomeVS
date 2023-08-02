@@ -28,10 +28,14 @@
 			default:
 				break;
 		}
+			
+
 			<h5>@Model.Text</h5>
+
 			<b>
 				@Model.CreatorName
 			</b>
+
 			@if (await CoachService.CoachExistsByUserIdAsync(Model.CreatorId))
 			{
 				<label style="color:red">Coach</label>
@@ -40,9 +44,15 @@
 			{
 				<label style="color:red">Trainee</label>
 			}
+
+			<p>(Created On: @Model.CreatedOn)</p>
+
 			@if (IsOwner)
 			{
-				<a asp-controller="ForumChat" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">Edit</a>
+				<div class="text-center" style="float:none">
+					<a asp-controller="ForumChat" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">Edit</a>
+					<a asp-controller="ForumChat" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-dark">Delete</a>
+				</div>
 			}
 		 </div>
 	</div>

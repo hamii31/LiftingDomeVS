@@ -45,20 +45,6 @@
             await this.liftingDomeDbContext.SaveChangesAsync();
         }
 
-		public async Task<string?> GetUserEmailByUserIdAsync(string userId)
-		{
-            ApplicationUser? user = await this.liftingDomeDbContext
-                .Users
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            return user.Email.ToString();
-		}
-
 		public async Task<string?> GetCoachIdByUserIdAsync(string userId)
 		{
             Coach? coach = await this.liftingDomeDbContext
@@ -87,41 +73,5 @@
             return coach.CreatedWorkouts.Any(w => w.Id.ToString() == workoutId.ToLower());
         }
 
-        public async Task<bool> UserHasWorkoutsByUserIdAsync(string userId)
-        {
-            ApplicationUser? user = await this.liftingDomeDbContext
-                .Users
-                .Include(w => w.AddedWorkouts)
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-
-            if (user == null)
-            {
-                return false;
-            }
-
-            return user.AddedWorkouts.Any();
-        }
-
-		public async Task<bool> UserHasWorkoutsWithId(string userId, string workoutId)
-		{
-			ApplicationUser? user = await this.liftingDomeDbContext
-			   .Users
-			   .Include(w => w.AddedWorkouts)
-			   .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-
-			if (user == null)
-			{
-				return false;
-			}
-
-            return user.AddedWorkouts.Any(w => w.Id.ToString() == workoutId.ToLower());
-		}
-
-		public async Task<bool> UserExistsByUserIdAsync(string userId)
-		{
-			bool result = await this.liftingDomeDbContext.Users.AnyAsync(x => x.Id.ToString() == userId);
-
-			return result;
-		}
 	}
 }

@@ -8,7 +8,6 @@
     using LiftingDome.Web.ViewModels.Forum.Enums;
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
-    using static LiftingDome.Common.EntityValidationConstants;
 
     public class ForumChatService : IForumChatService
     {
@@ -41,10 +40,10 @@
             postsQuery = queryModel.PostSorting switch
             {
                 ForumPostSorting.Newest => postsQuery
-                .OrderBy(w => w.CreatedOn),
+                .OrderByDescending(w => w.CreatedOn),
 
                 ForumPostSorting.Oldest => postsQuery
-                .OrderByDescending(w => w.CreatedOn)
+                .OrderBy(w => w.CreatedOn)
             };
             IEnumerable<AllForumPostViewModel> allPosts = await postsQuery
                 .Where(p => p.IsActive)
@@ -56,7 +55,8 @@
                     Text = p.Text,
                     CreatorId = p.UserId.ToString(),
                     CreatorName = p.User.Email.ToString(),
-                    CategoryName = p.Category.Name
+                    CategoryName = p.Category.Name,
+                    CreatedOn = p.CreatedOn
                 }).ToArrayAsync();
                   
             int totalPosts = postsQuery.Count();
@@ -79,7 +79,8 @@
                    Text = w.Text,
                    CreatorId = w.UserId.ToString(),
                    CreatorName = w.User.Email,
-                   CategoryName = w.Category.Name
+                   CategoryName = w.Category.Name,
+                   CreatedOn = w.CreatedOn
                })
                .ToArrayAsync();
 
@@ -94,11 +95,23 @@
                 CategoryId = model.CategoryId,
                 UserId = Guid.Parse(userId)
             };
-            await this.liftingDomeDbContext.Posts.AddAsync(post);
+			await this.liftingDomeDbContext.Posts.AddAsync(post);
             await this.liftingDomeDbContext.SaveChangesAsync();
         }
 
-        public async Task EditPostByIdAndFormModelAsync(string postId, PostFormModel formModel)
+		public async Task DeletePostByIdAsync(string postId)
+		{
+            ForumPost postToDelete = await this.liftingDomeDbContext
+                .Posts
+                .Where(p => p.IsActive)
+                .FirstAsync(p => p.Id.ToString() == postId);
+
+            postToDelete.IsActive = false;
+
+            await this.liftingDomeDbContext.SaveChangesAsync();
+		}
+
+		public async Task EditPostByIdAndFormModelAsync(string postId, PostFormModel formModel)
         {
             ForumPost workout = await this.liftingDomeDbContext
                 .Posts
@@ -121,7 +134,20 @@
              return result;
         }
 
-        public async Task<PostFormModel> GetPostForEditAsync(string postId)
+		public async Task<PostPreDeleteDetailsViewModel> GetPostForDeleteByIdAsync(string postId)
+		{
+			ForumPost post = await this.liftingDomeDbContext
+                .Posts
+                .Where(p => p.IsActive)
+                .FirstAsync(p => p.Id.ToString() == postId);
+
+            return new PostPreDeleteDetailsViewModel()
+            {
+                Text = post.Text
+            };
+		}
+
+		public async Task<PostFormModel> GetPostForEditAsync(string postId)
         {
             ForumPost post = await this.liftingDomeDbContext
                .Posts

@@ -7,5 +7,6 @@
         public string CreatorId { get; set; } = null!;
         public string CreatorName { get; set; } = null!;
         public string CategoryName { get; set; } = null!;
+        public DateTime CreatedOn { get; set; } 
     }
 }

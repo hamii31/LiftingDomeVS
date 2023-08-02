@@ -12,5 +12,7 @@
         Task<PostFormModel> GetPostForEditAsync(string postId);
         Task<bool> ExistsByIdAsync(string postId);
         Task EditPostByIdAndFormModelAsync(string postId, PostFormModel formModel);
+        Task<PostPreDeleteDetailsViewModel> GetPostForDeleteByIdAsync(string postId);
+        Task DeletePostByIdAsync(string postId);
     }
 }

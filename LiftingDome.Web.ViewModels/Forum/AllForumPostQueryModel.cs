@@ -28,7 +28,6 @@
         public int TotalPosts { get; set; }
 
         public IEnumerable<string> Categories { get; set; } = null!;
-
         public IEnumerable<AllForumPostViewModel> Posts { get; set; }
     }
 }

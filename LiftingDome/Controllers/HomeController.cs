@@ -3,8 +3,6 @@
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
-    using NToastNotify;
-    using System.Diagnostics;
     public class HomeController : Controller
     {
         private readonly IWorkoutService workoutService;

@@ -14,12 +14,14 @@
         private readonly IWorkoutCategoryService workoutCategoryService;
         private readonly ICoachService coachService;
         private readonly IWorkoutService workoutService;
+        private readonly IUserService userService;
 		private readonly IToastNotification _toastNotification;
-		public WorkoutController(IWorkoutCategoryService workoutCategoryService, ICoachService coachService, IWorkoutService workoutService, IToastNotification toastNotification)
+		public WorkoutController(IWorkoutCategoryService workoutCategoryService, ICoachService coachService, IWorkoutService workoutService, IUserService userService,  IToastNotification toastNotification)
         {
             this.workoutCategoryService = workoutCategoryService;
             this.coachService = coachService;
             this.workoutService = workoutService;
+            this.userService = userService;
 			_toastNotification = toastNotification;
 		}
 
@@ -122,6 +124,14 @@
         [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
         {
+            bool isUserLogged = await this.userService.UserExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isUserLogged)
+            {
+                _toastNotification.AddErrorToastMessage("You must be a logged user in order to see details for workouts!");
+                return RedirectToAction("Index", "Home");
+            }
+
             bool existsById = await this.workoutService.ExistsByIdAsync(id);
             
             if (!existsById)
@@ -129,6 +139,7 @@
                 _toastNotification.AddErrorToastMessage("Workout with the provided Id does not exist!");
                 return RedirectToAction("All", "Workout");
             }
+            
             try
             {
                 WorkoutDetailsViewModel model = await this.workoutService.GetDetailsByIdAsync(id);
@@ -307,7 +318,7 @@
 
 			if (!isCoachOwner)
 			{
-				_toastNotification.AddErrorToastMessage("You are not the owner of this workout!");
+				_toastNotification.AddErrorToastMessage("You must be the owner of this workout in order to delete it!");
 				return RedirectToAction("Mine", "Workout");
 			}
 

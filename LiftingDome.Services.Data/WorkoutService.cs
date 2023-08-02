@@ -70,6 +70,7 @@
                     ImageUrl = w.ImageURL,
                     Price = w.Price,
                     CategoryName = w.Category.Name
+                    
                 }).ToArrayAsync();
 
             int totalWorkouts = workoutsQuery.Count();
