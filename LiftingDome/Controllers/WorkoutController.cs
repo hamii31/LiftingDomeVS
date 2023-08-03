@@ -132,7 +132,7 @@
 
 				if (!isUserLogged)
 				{
-					_toastNotification.AddErrorToastMessage("You must be a logged user in order to see details for workouts!");
+					_toastNotification.AddErrorToastMessage("You must be a logged user in order to see details for paid workouts!");
 					return RedirectToAction("Index", "Home");
 				}
 			}
