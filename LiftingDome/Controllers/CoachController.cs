@@ -1,7 +1,6 @@
 ﻿namespace LiftingDome.Controllers
 {
     using LiftingDome.Infrastructure.Extensions;
-    using LiftingDome.Models;
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Web.ViewModels.Coach;
     using Microsoft.AspNetCore.Authorization;
