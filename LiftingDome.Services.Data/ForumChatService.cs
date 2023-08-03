@@ -56,7 +56,10 @@
                     CreatorId = p.UserId.ToString(),
                     CreatorName = p.User.Email.ToString(),
                     CategoryName = p.Category.Name,
-                    CreatedOn = p.CreatedOn
+                    CreatedOn = p.CreatedOn,
+                    TaggedUser = p.TaggedUser,
+                    HasBeenEdited = p.HasBeenEdited
+
                 }).ToArrayAsync();
                   
             int totalPosts = postsQuery.Count();
@@ -72,15 +75,17 @@
         {
             IEnumerable<AllForumPostViewModel> allTraineePosts = await this.liftingDomeDbContext
                .Posts
-               .Where(w => w.IsActive && w.UserId.ToString() == userId)
-               .Select(w => new AllForumPostViewModel
+               .Where(p => p.IsActive && p.UserId.ToString() == userId)
+               .Select(p => new AllForumPostViewModel
                {
-                   Id = w.Id.ToString(),
-                   Text = w.Text,
-                   CreatorId = w.UserId.ToString(),
-                   CreatorName = w.User.Email,
-                   CategoryName = w.Category.Name,
-                   CreatedOn = w.CreatedOn
+                   Id = p.Id.ToString(),
+                   Text = p.Text,
+                   CreatorId = p.UserId.ToString(),
+                   CreatorName = p.User.Email,
+                   CategoryName = p.Category.Name,
+                   CreatedOn = p.CreatedOn,
+                   TaggedUser = p.TaggedUser,
+                   HasBeenEdited = p.HasBeenEdited
                })
                .ToArrayAsync();
 
@@ -95,6 +100,10 @@
                 CategoryId = model.CategoryId,
                 UserId = Guid.Parse(userId)
             };
+            if (model.TaggedUser != null)
+            {
+                post.TaggedUser = model.TaggedUser;
+            }
 			await this.liftingDomeDbContext.Posts.AddAsync(post);
             await this.liftingDomeDbContext.SaveChangesAsync();
         }
@@ -113,13 +122,20 @@
 
 		public async Task EditPostByIdAndFormModelAsync(string postId, PostFormModel formModel)
         {
-            ForumPost workout = await this.liftingDomeDbContext
+            ForumPost post = await this.liftingDomeDbContext
                 .Posts
-                .Where(w => w.IsActive)
-                .FirstAsync(w => w.Id.ToString() == postId);
+                .Where(p => p.IsActive)
+                .FirstAsync(p => p.Id.ToString() == postId);
 
-            workout.Text = formModel.Text;
-            workout.CategoryId = formModel.CategoryId;
+            post.Text = formModel.Text;
+            post.CategoryId = formModel.CategoryId;
+            post.CreatedOn = formModel.EditedOn;
+            post.HasBeenEdited = true;
+
+            if (formModel.TaggedUser != null)
+            {
+                post.TaggedUser = formModel.TaggedUser;
+            }
 
             await this.liftingDomeDbContext.SaveChangesAsync();
         }
@@ -128,8 +144,8 @@
         {
              bool result = await this.liftingDomeDbContext
                 .Posts
-                .Where(w => w.IsActive)
-                .AnyAsync(w => w.Id.ToString() == postId);
+                .Where(p => p.IsActive)
+                .AnyAsync(p => p.Id.ToString() == postId);
              
              return result;
         }
@@ -158,7 +174,8 @@
             return new PostFormModel()
             {
                 Text = post.Text,
-                CategoryId = post.CategoryId
+                CategoryId = post.CategoryId,
+                TaggedUser = post.TaggedUser
             };
         }
 

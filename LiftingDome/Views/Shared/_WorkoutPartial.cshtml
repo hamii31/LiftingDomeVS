@@ -3,11 +3,12 @@
 @model LiftingDome.Web.ViewModels.Workout.AllWorkoutsViewModel
 
 @inject ICoachService CoachService
+@inject IWorkoutService WorkoutService
 @{
 	bool isUserCoach = await CoachService.CoachExistsByUserIdAsync(this.User.GetId()!);
 	bool isCoachOwnerOfWorkout = await CoachService.HasWorkoutWithIdAsync(this.User.GetId()!, Model.Id);
+	bool isWorkoutFree = await WorkoutService.IsWorkoutFree(Model.Id);
 }
-
 <div class="col-md-4">
 	<div class="card mb-3">
 		@switch (Model.CategoryName.ToLower())
@@ -39,28 +40,45 @@
 						}
 				</h6>
 
-				<br />
-				@if (this.User.Identity?.IsAuthenticated ?? false)
+				@if (isCoachOwnerOfWorkout)
 				{
-					<a asp-controller="Workout" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark">Details</a>
+					<b>Created By: <span style="color:red">You</span></b>
+				}
+				else
+				{
+					<b>Created By: @Model.CreatorName.Remove(Model.CreatorName.IndexOf("@"))</b>
+				}
+
+				@if (Model.HasBeenEdited)
+				{
+					<p>(Edited On: @Model.CreatedOn)</p>
+				}
+				else
+				{
+					<p>(Created On: @Model.CreatedOn)</p>
+				}
+
+				@if (isWorkoutFree || (this.User.Identity?.IsAuthenticated ?? false))
+				{
+				<a asp-controller="Workout" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark" style="margin-top:5px">Details</a>
 					@if (isUserCoach && isCoachOwnerOfWorkout)
 					{
-						<a asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">Edit</a>
-						<a asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+					<a asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark" style="margin-top:5px">Edit</a>
+					<a asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" style="margin-top:5px">Delete</a>
 					}
 					
-					@if (!Model.IsOwned && !isUserCoach)
+					@if (!Model.IsOwned && !isUserCoach && (this.User.Identity?.IsAuthenticated ?? false))
 					{
 						<form class="input-group-sm" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id" method="post">
-							<input class="btn btn-danger" type="submit" value="Get" />
+						<input class="btn btn-danger" style="margin-top:5px" type="submit" value="Get" />
 						</form>
 					}
-					else
+					else 
 					{
-						@if (!isUserCoach)
+						@if (Model.IsOwned && !isUserCoach && (this.User.Identity?.IsAuthenticated ?? false))
 						{
 							<form asp-controller="Workout" asp-action="Remove" asp-route-id="@Model.Id" method="post">
-								<input class="btn btn-danger" type="submit" value="Remove" />
+								<input class="btn btn-danger" style="margin-top:5px" type="submit" value="Remove" />
 							</form>
 						}
 					}

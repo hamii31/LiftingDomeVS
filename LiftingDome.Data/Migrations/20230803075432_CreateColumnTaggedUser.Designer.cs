@@ -4,6 +4,7 @@ using LiftingDome.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftingDome.Data.Migrations
 {
     [DbContext(typeof(LiftingDomeDbContext))]
-    partial class LiftingDomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230803075432_CreateColumnTaggedUser")]
+    partial class CreateColumnTaggedUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,9 +199,6 @@ namespace LiftingDome.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<bool>("HasBeenEdited")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -227,20 +226,18 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0e5cde5f-e7e9-44a7-9e4a-61dc1fe7b2ec"),
+                            Id = new Guid("fac0ca86-a6ee-42cf-b848-63936e214c1a"),
                             CategoryId = 4,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HasBeenEdited = false,
                             IsActive = false,
                             Text = "Welcome to The Lifting Dome! The No.1 place for fitness and health! Feel free to browse through the published workouts and try some out, or become a coach yourself and create new workouts!",
                             UserId = new Guid("d659b40a-2c01-417f-a452-19b194b2c081")
                         },
                         new
                         {
-                            Id = new Guid("0ac8c807-8d8b-47d3-9d70-1852b5c1b8e3"),
+                            Id = new Guid("cb64ddc5-9e3d-4ac5-ada1-bee52d4e2fe3"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HasBeenEdited = false,
                             IsActive = false,
                             Text = "Hi! I don't understand how to do the 5/3/1 workout. Can a coach instruct me how to do it?",
                             UserId = new Guid("199850bc-ea29-43b0-b342-a11a7fc6cc8c")
@@ -265,9 +262,6 @@ namespace LiftingDome.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<bool>("HasBeenEdited")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ImageURL")
                         .IsRequired()
@@ -306,11 +300,10 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cc7336cf-0014-4cfc-ae1f-94f76701b4dd"),
+                            Id = new Guid("7b32ff98-2818-4726-9941-916de0855384"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Probably the best way to build strength and size simultaneously. Either use 70-85% of your 1RM for all 5 sets or gradually warm up to a heavy top set of five.",
-                            HasBeenEdited = false,
                             ImageURL = "https://global.discourse-cdn.com/tnation/original/4X/3/0/8/30832fc6dfb5cb54e95c9323e45720c3f7476d87.jpeg",
                             IsActive = false,
                             Price = 0m,
@@ -320,11 +313,10 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ea902156-8f9b-4502-94e2-c0de276692c4"),
+                            Id = new Guid("cb0248d4-f09a-4ffc-92cc-59e82eb4714c"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "The best way for beginner and intermediate strength athletes to build strength.",
-                            HasBeenEdited = false,
                             ImageURL = "https://d3h9ln6psucegz.cloudfront.net/wp-content/uploads/2013/08/Best-Set-and-Rep-Scheme-for-Your-Goal.jpg",
                             IsActive = false,
                             Price = 0m,
@@ -334,11 +326,10 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1ab004f1-27f9-4f86-842e-08fb782212ef"),
+                            Id = new Guid("5c63e8be-e4a7-4ba4-a626-19bdbb5b2414"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Boring, bland, but effective! The straight-forward 4x8 is another training protocol that bodybuilders have relied on for over 40 years. If it’s stuck around for that long, there’s good reason. It’s not flashy, but the basics never let you down. Doing 4 sets of 8, with each set getting you close to failure, is a decent way to stimulate growth, especially for beginners.",
-                            HasBeenEdited = false,
                             ImageURL = "https://global.discourse-cdn.com/tnation/original/4X/4/e/c/4ec55b74a7a3a0795248ead7c9b155df540ee97f.jpeg",
                             IsActive = false,
                             Price = 0m,
@@ -348,11 +339,10 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c4f56838-a988-45ff-b782-0acffed3b15b"),
+                            Id = new Guid("930e675a-2ff9-4ddf-b56d-2ea2f642a531"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Easiest way for strong people to do Metcon workouts without losing all of their strength gains is doing Zercher Cycles with heavy weight for a period of time. Deadlift the barbell off the ground, squat down and place it on your legs. Grab it in a zercher position and stand up. Squat down, place the barbell on your legs again, grab it with your hands and stand up. Lower the barbell down to the ground. That's one rep. Do 15-20 with some good weight on the barbell.",
-                            HasBeenEdited = false,
                             ImageURL = "https://d3h9ln6psucegz.cloudfront.net/wp-content/uploads/2017/09/CrossFit-for-Meatheads.jpg",
                             IsActive = false,
                             Price = 20m,

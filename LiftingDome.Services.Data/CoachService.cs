@@ -59,7 +59,21 @@
             return coach.Id.ToString();
 		}
 
-        public async Task<bool> HasWorkoutWithIdAsync(string userId, string workoutId)
+		public async Task<string> GetCoachNameByCoachId(string userId)
+		{
+			Coach? coach = await this.liftingDomeDbContext
+                .Coaches
+                .FirstOrDefaultAsync(c => c.UserId.ToString() == userId);
+
+            if (coach == null)
+            {
+                return null;
+            }
+
+            return coach.Email.ToString();
+		}
+
+		public async Task<bool> HasWorkoutWithIdAsync(string userId, string workoutId)
         {
             Coach? coach = await this.liftingDomeDbContext
                 .Coaches

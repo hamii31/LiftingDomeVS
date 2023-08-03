@@ -27,7 +27,7 @@
 	<font size="6">
 		<div class="text-center" style="padding-top:50px; font-family:Arial">
 			<b>
-				Welcome To Lifting Dome! The <span style="color:red">No.1</span> site for fitness!
+				Welcome to The <span style="color:red">L</span>ifting <span style="color:red">D</span>ome! The <span style="color:red">No.1</span> site for Fitness!
 			</b>
 		</div>
 	</font>
@@ -67,9 +67,10 @@
 </div>
 
 <div class="mt-4 p-5 bg-light d-none" id="statistics">
-	<div class="row">
-		<h2 class="col-md-6 text-center" id="total_workouts"></h2>
-		<h2 class="col-md-6 text-center" id="total_users"></h2>
+	<div class="row" style="float:none; display:inline">
+		<h2 class="col" id="total_workouts"></h2>
+		<h2 class="col" id="total_users"></h2>
+		<h2 class="col" id="total_posts"></h2>
 	</div>
 </div>
 
@@ -87,6 +88,7 @@
 				{
 					$('#total_workouts').text(data.totalWorkouts + " Workouts");
 					$('#total_users').text(data.totalUsers + " Users");
+					$('#total_posts').text(data.totalPosts + " Posts");
 					$('#statistics').removeClass('d-none');
 					$('#statistics-button').text('Hide Statistics');
 					$('#statistics-button').removeClass('btn-dark');

@@ -9,6 +9,7 @@
 		public PostFormModel()
 		{
 			this.Categories = new HashSet<ForumCategorySelectFormModel>();
+			this.EditedOn = DateTime.Now;
 		}
         [Required]
         [MaxLength(TextMaxLength)]
@@ -18,5 +19,7 @@
 		[Display(Name = "Category")]
 		public int CategoryId { get; set; }
         public IEnumerable<ForumCategorySelectFormModel> Categories { get; set; }
+		public string? TaggedUser { get; set; }
+		public DateTime EditedOn { get; set; }
     }
 }

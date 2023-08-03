@@ -4,6 +4,7 @@ using LiftingDome.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftingDome.Data.Migrations
 {
     [DbContext(typeof(LiftingDomeDbContext))]
-    partial class LiftingDomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230803082530_CreateHasBeenEditedColumn")]
+    partial class CreateHasBeenEditedColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,7 +229,7 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0e5cde5f-e7e9-44a7-9e4a-61dc1fe7b2ec"),
+                            Id = new Guid("905db210-0df5-4124-966a-1fb11ef05fdb"),
                             CategoryId = 4,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasBeenEdited = false,
@@ -237,7 +239,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0ac8c807-8d8b-47d3-9d70-1852b5c1b8e3"),
+                            Id = new Guid("fee21cf6-20c3-45e4-84ca-a8f1277205a0"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasBeenEdited = false,
@@ -265,9 +267,6 @@ namespace LiftingDome.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<bool>("HasBeenEdited")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ImageURL")
                         .IsRequired()
@@ -306,11 +305,10 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cc7336cf-0014-4cfc-ae1f-94f76701b4dd"),
+                            Id = new Guid("b5342fd9-83a1-43cd-865c-a3daa2632b24"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Probably the best way to build strength and size simultaneously. Either use 70-85% of your 1RM for all 5 sets or gradually warm up to a heavy top set of five.",
-                            HasBeenEdited = false,
                             ImageURL = "https://global.discourse-cdn.com/tnation/original/4X/3/0/8/30832fc6dfb5cb54e95c9323e45720c3f7476d87.jpeg",
                             IsActive = false,
                             Price = 0m,
@@ -320,11 +318,10 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ea902156-8f9b-4502-94e2-c0de276692c4"),
+                            Id = new Guid("31f14b91-5d8c-45f7-aad3-882672acdb87"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "The best way for beginner and intermediate strength athletes to build strength.",
-                            HasBeenEdited = false,
                             ImageURL = "https://d3h9ln6psucegz.cloudfront.net/wp-content/uploads/2013/08/Best-Set-and-Rep-Scheme-for-Your-Goal.jpg",
                             IsActive = false,
                             Price = 0m,
@@ -334,11 +331,10 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1ab004f1-27f9-4f86-842e-08fb782212ef"),
+                            Id = new Guid("e1264b91-dd01-44cf-8775-31e4c4e56f39"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Boring, bland, but effective! The straight-forward 4x8 is another training protocol that bodybuilders have relied on for over 40 years. If it’s stuck around for that long, there’s good reason. It’s not flashy, but the basics never let you down. Doing 4 sets of 8, with each set getting you close to failure, is a decent way to stimulate growth, especially for beginners.",
-                            HasBeenEdited = false,
                             ImageURL = "https://global.discourse-cdn.com/tnation/original/4X/4/e/c/4ec55b74a7a3a0795248ead7c9b155df540ee97f.jpeg",
                             IsActive = false,
                             Price = 0m,
@@ -348,11 +344,10 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c4f56838-a988-45ff-b782-0acffed3b15b"),
+                            Id = new Guid("6a20005d-7f1e-4857-897a-96487d6d13bb"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Easiest way for strong people to do Metcon workouts without losing all of their strength gains is doing Zercher Cycles with heavy weight for a period of time. Deadlift the barbell off the ground, squat down and place it on your legs. Grab it in a zercher position and stand up. Squat down, place the barbell on your legs again, grab it with your hands and stand up. Lower the barbell down to the ground. That's one rep. Do 15-20 with some good weight on the barbell.",
-                            HasBeenEdited = false,
                             ImageURL = "https://d3h9ln6psucegz.cloudfront.net/wp-content/uploads/2017/09/CrossFit-for-Meatheads.jpg",
                             IsActive = false,
                             Price = 20m,

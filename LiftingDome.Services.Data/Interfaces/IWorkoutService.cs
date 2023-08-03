@@ -24,5 +24,6 @@
         Task AddWorkoutToUserAsync(string workoutId, string userid);
         Task RemoveWorkoutByIdAsync(string workoutId);
         Task<StatisticsServiceModel> GetStatisticsAsync();
+        Task<bool> IsWorkoutFree(string workoutId);
     }
 }

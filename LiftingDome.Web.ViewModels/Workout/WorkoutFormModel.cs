@@ -9,6 +9,7 @@
 		public WorkoutFormModel()
 		{
 			this.Categories = new HashSet<WorkoutCategorySelectFormModel>();
+			this.EditedOn = DateTime.Now;
 		}
 
 		[Required]
@@ -33,6 +34,7 @@
 
 		[Display(Name = "Category")] 
 		public int CategoryId { get; set; }
-		public IEnumerable<WorkoutCategorySelectFormModel> Categories { get; set; } 
+		public IEnumerable<WorkoutCategorySelectFormModel> Categories { get; set; }
+		public DateTime EditedOn { get; set; }
 	}
 }

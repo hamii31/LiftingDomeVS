@@ -1,6 +1,5 @@
 ﻿namespace LiftingDome.Services.Data.Interfaces
-{	
-	using LiftingDome.Web.ViewModels.Forum;
+{
 	public interface IUserService
 	{
 		Task<bool> UserHasWorkoutsByUserIdAsync(string userId);

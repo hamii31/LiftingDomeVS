@@ -4,5 +4,6 @@
 	{
 		public int TotalWorkouts { get; set; }
 		public int TotalUsers { get; set; }
+		public int TotalPosts { get; set; }
 	}
 }

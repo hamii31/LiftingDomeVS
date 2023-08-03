@@ -84,7 +84,19 @@
 			{
 				this.ModelState.AddModelError(nameof(model.CategoryId), "The category does not exist!");
 			}
-			
+
+			if (model.TaggedUser != null)
+			{
+				bool taggedUserExists = await this.userSerivce.UserExistsByUserNameAsync(model.TaggedUser);
+
+				if (!taggedUserExists)
+				{
+					_toastNotification.AddErrorToastMessage("Tagged user does not exist!");
+					return View(model);
+				}
+			}
+
+
 			if (!this.ModelState.IsValid)
 			{
                 try
@@ -205,7 +217,17 @@
                 _toastNotification.AddErrorToastMessage("You must be the owner of the post in order to edit it!");
                 return RedirectToAction("Mine", "ForumChat");
             }
-			
+
+			if (model.TaggedUser != null)
+			{
+				bool taggedUserExists = await this.userSerivce.UserExistsByUserNameAsync(model.TaggedUser);
+
+				if (!taggedUserExists)
+				{
+					_toastNotification.AddErrorToastMessage("Tagged user does not exist!");
+					return View(model);
+				}
+			}
 
 			try
             {

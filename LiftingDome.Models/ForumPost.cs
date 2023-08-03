@@ -20,5 +20,7 @@
 		public virtual ForumCategory Category { get; set; } = null!;
 		public Guid UserId { get; set; }
 		public virtual ApplicationUser User { get; set; } = null!;
+		public string? TaggedUser { get; set; }
+		public bool HasBeenEdited { get; set; } = false;
 	}
 }

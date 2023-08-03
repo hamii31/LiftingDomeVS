@@ -13,6 +13,9 @@
 		[Display(Name = "Workout Price")]
 		public decimal Price { get; set; }
 		public bool IsOwned { get; set; }
+		public string CreatorName { get; set; } = null!;
 		public string CategoryName { get; set; } = null!;
+		public DateTime CreatedOn { get; set; }
+		public bool HasBeenEdited { get; set; } = false;
 	}
 }

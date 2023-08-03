@@ -9,5 +9,6 @@ namespace LiftingDome.Services.Data.Interfaces
         Task Create(string userId, BecomeCoachFormModel model);
         Task<string?> GetCoachIdByUserIdAsync(string userId);
         Task<bool> HasWorkoutWithIdAsync(string userId, string workoutId);
+        Task<string> GetCoachNameByCoachId(string coachId);
     }
 }

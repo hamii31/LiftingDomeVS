@@ -2,20 +2,17 @@
 {
     using LiftingDome.Data;
     using LiftingDome.Models;
-
     using LiftingDome.Services.Data.Interfaces;
+    using LiftingDome.Services.Data.Models.Statistics;
     using LiftingDome.Services.Data.Models.Workout;
-	using LiftingDome.Services.Data.Models.Statistics;
-
-    using LiftingDome.Web.ViewModels.Home;
     using LiftingDome.Web.ViewModels.Coach;
+    using LiftingDome.Web.ViewModels.Home;
     using LiftingDome.Web.ViewModels.Workout;
     using LiftingDome.Web.ViewModels.Workout.Enums;
-
     using Microsoft.EntityFrameworkCore;
 
 
-	public class WorkoutService : IWorkoutService
+    public class WorkoutService : IWorkoutService
     {
         private readonly LiftingDomeDbContext liftingDomeDbContext;
         public WorkoutService(LiftingDomeDbContext liftingDomeDbContext)
@@ -47,10 +44,10 @@
             workoutsQuery = queryModel.WorkoutSorting switch
             {
                 WorkoutSorting.Newest => workoutsQuery
-                .OrderBy(w => w.CreatedOn),
+                .OrderByDescending(w => w.CreatedOn),
 
                 WorkoutSorting.Oldest => workoutsQuery
-                .OrderByDescending(w => w.CreatedOn),
+                .OrderBy(w => w.CreatedOn),
 
                 WorkoutSorting.PriceAscending => workoutsQuery
                 .OrderBy(w => w.Price),
@@ -69,7 +66,10 @@
                     Title = w.Title,
                     ImageUrl = w.ImageURL,
                     Price = w.Price,
-                    CategoryName = w.Category.Name
+					CreatorName = w.Coach.Email.ToString(),
+					CategoryName = w.Category.Name,
+                    CreatedOn = w.CreatedOn,
+                    HasBeenEdited = w.HasBeenEdited
                     
                 }).ToArrayAsync();
 
@@ -93,7 +93,10 @@
                     Title = w.Title,
                     ImageUrl = w.ImageURL,
                     Price = w.Price,
-                    CategoryName = w.Category.Name
+					CreatorName = w.Coach.Email.ToString(),
+					CategoryName = w.Category.Name,
+                    CreatedOn = w.CreatedOn,
+                    HasBeenEdited = w.HasBeenEdited
                 })
                 .ToArrayAsync();
 
@@ -112,7 +115,9 @@
                     ImageUrl = w.ImageURL,
                     Price = w.Price,
                     IsOwned = true,
-                    CategoryName = w.Category.Name
+                    CreatorName = w.Coach.Email.ToString(),
+                    CategoryName = w.Category.Name,
+                    HasBeenEdited = w.HasBeenEdited
                 })
                 .ToArrayAsync();
 
@@ -159,8 +164,10 @@
             workout.ImageURL = formModel.ImageUrl;
             workout.Price = formModel.Price;
             workout.WorkoutCategoryId = formModel.CategoryId;
+            workout.CreatedOn = formModel.EditedOn;
+			workout.HasBeenEdited = true;
 
-            await this.liftingDomeDbContext.SaveChangesAsync();
+			await this.liftingDomeDbContext.SaveChangesAsync();
         }
 
         public async Task<bool> ExistsByIdAsync(string workoutId)
@@ -300,7 +307,23 @@
             {
                 TotalWorkouts = await this.liftingDomeDbContext.Workouts.CountAsync(),
                 TotalUsers = await this.liftingDomeDbContext.Users.CountAsync(),
+                TotalPosts = await this.liftingDomeDbContext.Posts.CountAsync(),
             };
+		}
+
+		public async Task<bool> IsWorkoutFree(string workoutId)
+		{
+			Workout workout = await this.liftingDomeDbContext
+                .Workouts
+                .Where(w => w.IsActive)
+                .FirstAsync(p => p.Id.ToString() == workoutId);
+
+            if (workout.Price == 0)
+            {
+                return true;
+            }
+
+            return false;
 		}
 	}
 }

@@ -28,24 +28,44 @@
 			default:
 				break;
 		}
-			
+			@if (Model.TaggedUser != null)
+			{
+				<b>
+					Replying to: @Model.TaggedUser.Remove(Model.TaggedUser.IndexOf("@"));
+				</b>
+			}
 
 			<h5>@Model.Text</h5>
 
-			<b>
-				@Model.CreatorName
-			</b>
-
-			@if (await CoachService.CoachExistsByUserIdAsync(Model.CreatorId))
+			@if (IsOwner)
 			{
-				<label style="color:red">Coach</label>
+				<b>Created By: <span style="color:red">You</span></b>
 			}
 			else
 			{
-				<label style="color:red">Trainee</label>
+				<b>Created By: @Model.CreatorName.Remove(Model.CreatorName.IndexOf("@"))</b>
 			}
 
-			<p>(Created On: @Model.CreatedOn)</p>
+			@if (await CoachService.CoachExistsByUserIdAsync(Model.CreatorId))
+			{
+				if (!IsOwner)
+				{
+					<label>(<span style="color:red">Coach</span>)</label>
+				}
+			}
+			else
+			{
+				<label>(<span style="color:red">Trainee</span>)</label>
+			}
+
+			@if (Model.HasBeenEdited)
+			{
+				<p>(Edited On: @Model.CreatedOn)</p>
+			}
+			else
+			{
+				<p>(Created On: @Model.CreatedOn)</p>
+			}
 
 			@if (IsOwner)
 			{

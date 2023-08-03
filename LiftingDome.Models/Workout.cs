@@ -37,5 +37,6 @@
         public virtual Coach Coach { get; set; } = null!;
         public Guid? TraineeId { get; set; }
         public virtual ApplicationUser? Trainee { get; set; }
-    }
+		public bool HasBeenEdited { get; set; } = false;
+	}
 }

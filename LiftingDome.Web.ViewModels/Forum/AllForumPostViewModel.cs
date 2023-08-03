@@ -8,5 +8,7 @@
         public string CreatorName { get; set; } = null!;
         public string CategoryName { get; set; } = null!;
         public DateTime CreatedOn { get; set; } 
+        public string? TaggedUser { get; set; }
+        public bool HasBeenEdited { get; set; } = false;
     }
 }

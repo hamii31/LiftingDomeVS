@@ -124,14 +124,19 @@
         [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
         {
-            bool isUserLogged = await this.userService.UserExistsByUserIdAsync(this.User.GetId()!);
+            bool isWorkoutFree = await this.workoutService.IsWorkoutFree(id);
 
-            if (!isUserLogged)
+            if (!isWorkoutFree)
             {
-                _toastNotification.AddErrorToastMessage("You must be a logged user in order to see details for workouts!");
-                return RedirectToAction("Index", "Home");
-            }
+				bool isUserLogged = await this.userService.UserExistsByUserIdAsync(this.User.GetId()!);
 
+				if (!isUserLogged)
+				{
+					_toastNotification.AddErrorToastMessage("You must be a logged user in order to see details for workouts!");
+					return RedirectToAction("Index", "Home");
+				}
+			}
+           
             bool existsById = await this.workoutService.ExistsByIdAsync(id);
             
             if (!existsById)
