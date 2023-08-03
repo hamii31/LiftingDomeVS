@@ -75,7 +75,7 @@ namespace LiftingDome
             app.UseEndpoints(config =>
             {
                 config.MapControllerRoute(
-                    name: "ProtectingUrlPattern",
+                    name: "ProtectingUrlRoute",
                     pattern: "/{controller}/{action}/{id}/{information}",
                     defaults: new { Controller = "WorkoutCategory", Action = "Details"});
                 config.MapDefaultControllerRoute();
