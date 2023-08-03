@@ -4,6 +4,7 @@ using LiftingDome.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftingDome.Data.Migrations
 {
     [DbContext(typeof(LiftingDomeDbContext))]
-    partial class LiftingDomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230803122135_CreateCertificates")]
+    partial class CreateCertificates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,6 +130,9 @@ namespace LiftingDome.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("CoachCertificateId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(254)
@@ -142,6 +147,8 @@ namespace LiftingDome.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CoachCertificateId");
 
                     b.HasIndex("UserId");
 
@@ -165,37 +172,37 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4fd89714-4c02-4eba-85b8-0d30a38f52a0"),
+                            Id = new Guid("221ae88d-54c0-4d6a-b2d6-7243e96c959a"),
                             Name = "ACSM"
                         },
                         new
                         {
-                            Id = new Guid("5c4d7cbc-b20c-4121-ac82-fffedb8a1a3f"),
+                            Id = new Guid("3be14074-a35b-49fb-b1ac-1dc78182b0fe"),
                             Name = "NSCA"
                         },
                         new
                         {
-                            Id = new Guid("26684226-2b68-4eb9-a909-c2356f6e34d7"),
+                            Id = new Guid("6f95564c-c4ad-4d53-9693-5dd2e6469d51"),
                             Name = "NASM"
                         },
                         new
                         {
-                            Id = new Guid("143ebd0d-7dae-4016-99f1-94d88525c735"),
+                            Id = new Guid("397d36b2-2b51-4ea6-bf6c-f94222790fb1"),
                             Name = "ACE"
                         },
                         new
                         {
-                            Id = new Guid("376d99cd-89f1-490e-8f11-c5e51c398e2c"),
+                            Id = new Guid("51ec24ab-8bb6-4911-808c-471a4482bb08"),
                             Name = "ISSA"
                         },
                         new
                         {
-                            Id = new Guid("58ca74da-7ace-44ca-addc-c616f0d15fbb"),
+                            Id = new Guid("c76e6500-5846-49fd-a2f2-ccbcdc31ff3c"),
                             Name = "AFPA"
                         },
                         new
                         {
-                            Id = new Guid("07d1eda8-4927-459a-be2b-7c16cd3919f1"),
+                            Id = new Guid("15e4991a-a538-4618-b021-d1ef2303432d"),
                             Name = "NFPT"
                         });
                 });
@@ -283,7 +290,7 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("48dee13a-8ebd-456c-b44a-4721b595d99a"),
+                            Id = new Guid("003a112f-26ef-40ba-8c7a-d1218bd66998"),
                             CategoryId = 4,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasBeenEdited = false,
@@ -293,7 +300,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3e871a54-f37a-48dc-be7f-d314a0a38e65"),
+                            Id = new Guid("a74fdb0d-8ff8-482e-9521-ca73a0b31b2c"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasBeenEdited = false,
@@ -362,7 +369,7 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bf0394a3-6009-4a53-9491-c66d7a110aea"),
+                            Id = new Guid("1244565a-dc96-4c52-8f07-63d8b0e86815"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Probably the best way to build strength and size simultaneously. Either use 70-85% of your 1RM for all 5 sets or gradually warm up to a heavy top set of five.",
@@ -376,7 +383,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4adf7af1-6e30-4569-b773-19245b4b0ed8"),
+                            Id = new Guid("ffa58c56-0af8-4c9d-86f9-506e7eafdece"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "The best way for beginner and intermediate strength athletes to build strength.",
@@ -390,7 +397,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4e631966-28ee-46a2-812e-5536800f88c9"),
+                            Id = new Guid("91e5ba73-30fb-4ea0-93b7-b52248e3b449"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Boring, bland, but effective! The straight-forward 4x8 is another training protocol that bodybuilders have relied on for over 40 years. If it’s stuck around for that long, there’s good reason. It’s not flashy, but the basics never let you down. Doing 4 sets of 8, with each set getting you close to failure, is a decent way to stimulate growth, especially for beginners.",
@@ -404,7 +411,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ab84f375-4f40-486c-98ad-3ba624681b5b"),
+                            Id = new Guid("bac019e4-ba47-46c7-a528-73445403ab6f"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Easiest way for strong people to do Metcon workouts without losing all of their strength gains is doing Zercher Cycles with heavy weight for a period of time. Deadlift the barbell off the ground, squat down and place it on your legs. Grab it in a zercher position and stand up. Squat down, place the barbell on your legs again, grab it with your hands and stand up. Lower the barbell down to the ground. That's one rep. Do 15-20 with some good weight on the barbell.",
@@ -590,6 +597,10 @@ namespace LiftingDome.Data.Migrations
 
             modelBuilder.Entity("LiftingDome.Models.Coach", b =>
                 {
+                    b.HasOne("LiftingDome.Models.CoachCertificate", null)
+                        .WithMany("Coaches")
+                        .HasForeignKey("CoachCertificateId");
+
                     b.HasOne("LiftingDome.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -704,6 +715,11 @@ namespace LiftingDome.Data.Migrations
             modelBuilder.Entity("LiftingDome.Models.Coach", b =>
                 {
                     b.Navigation("CreatedWorkouts");
+                });
+
+            modelBuilder.Entity("LiftingDome.Models.CoachCertificate", b =>
+                {
+                    b.Navigation("Coaches");
                 });
 
             modelBuilder.Entity("LiftingDome.Models.ForumCategory", b =>

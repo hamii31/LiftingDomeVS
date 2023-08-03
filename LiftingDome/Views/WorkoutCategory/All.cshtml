@@ -4,10 +4,11 @@
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
 
 <div class="list-group">
 	@foreach (AllWorkoutCategoryViewModel category in Model)
 	{
-		<a class="list-group-item list-group-item-action" asp-controller="WorkoutCategory" asp-action="Details" asp-route-id="@category.Id" asp-route-information="@category.GetUrlInfo()">@category.Name</a>
+		<a class="list-group-item list-group-item-action" style="margin-top:20px" asp-controller="WorkoutCategory" asp-action="Details" asp-route-id="@category.Id" asp-route-information="@category.GetUrlInfo()">@category.Name</a>
 	}
 </div>

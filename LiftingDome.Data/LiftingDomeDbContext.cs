@@ -20,6 +20,7 @@
         public DbSet<Calculator> CalculatorMeassurments { get; set; } = null!;
         public DbSet<ForumPost> Posts { get; set; } = null!;
         public DbSet<ForumCategory> PostCategories { get; set; } = null!;
+        public DbSet<CoachCertificate> Certificates { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

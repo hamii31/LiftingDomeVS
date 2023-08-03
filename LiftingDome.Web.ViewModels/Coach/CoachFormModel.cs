@@ -3,7 +3,7 @@
 	using System.ComponentModel.DataAnnotations;
 	using static Common.EntityValidationConstants.Coach;
 
-	public class BecomeCoachFormModel
+	public class CoachFormModel
 	{
 		[Required]
 		[StringLength(NumberMaxLength, MinimumLength = NumberMinLength,
@@ -12,5 +12,8 @@
 		[Display(Name = "Phone")]
 		public string PhoneNumber { get; set; } = null!;
 		public static string Email { get; set; } = null!;
+
+		[Required]
+		public string Certification { get; set; } = null!;
 	}
 }

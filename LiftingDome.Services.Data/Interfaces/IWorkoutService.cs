@@ -8,7 +8,7 @@
 
     public interface IWorkoutService
     {
-        Task<IEnumerable<IndexViewModel>> LastThreeWorkoutsAsync();
+        Task<IEnumerable<IndexViewModel>> ThreeFreeWorkoutsAsync();
         Task CreateAsync(WorkoutFormModel model, string coachId);
         Task<AllWorkoutsFilteredAndPagedServiceModel> AllAsync(AllWorkoutsQueryModel queryModel);
         Task<IEnumerable<AllWorkoutsViewModel>> AllByCoachIdAsync(string coachId);

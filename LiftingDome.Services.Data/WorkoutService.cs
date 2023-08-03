@@ -262,12 +262,12 @@
             return workout.CoachId.ToString() == coachId;
 		}
 
-		public async Task<IEnumerable<IndexViewModel>> LastThreeWorkoutsAsync()
+		public async Task<IEnumerable<IndexViewModel>> ThreeFreeWorkoutsAsync()
         {
-            IEnumerable<IndexViewModel> lastThreeWorkouts = await this.liftingDomeDbContext
+            IEnumerable<IndexViewModel> threeFreeWorkouts = await this.liftingDomeDbContext
                 .Workouts
                 .Where(w => w.IsActive)
-                .OrderBy(w => w.CreatedOn)
+                .OrderBy(w => w.Price)
                 .Take(3)
                 .Select(w => new IndexViewModel
                 {
@@ -277,7 +277,7 @@
                 })
                 .ToArrayAsync();
 
-            return lastThreeWorkouts;
+            return threeFreeWorkouts;
         }
 
 		public async Task<bool> WorkoutIsOwnedByIdAsync(string workoutId, string userid)

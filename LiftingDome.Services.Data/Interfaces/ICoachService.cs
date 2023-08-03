@@ -6,9 +6,10 @@ namespace LiftingDome.Services.Data.Interfaces
     {
         Task<bool> CoachExistsByUserIdAsync(string userId);
         Task<bool> CoachExistsByPhoneNumberAsync(string phoneNumber);
-        Task Create(string userId, BecomeCoachFormModel model);
+        Task Create(string userId, CoachFormModel model);
         Task<string?> GetCoachIdByUserIdAsync(string userId);
         Task<bool> HasWorkoutWithIdAsync(string userId, string workoutId);
-        Task<string> GetCoachNameByCoachId(string coachId);
+        Task<string?> GetCoachNameByCoachId(string coachId);
+        Task UpdateInfo(CoachFormModel model, string coachId);
     }
 }

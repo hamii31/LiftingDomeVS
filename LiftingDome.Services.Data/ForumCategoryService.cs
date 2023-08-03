@@ -3,7 +3,6 @@
     using LiftingDome.Data;
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Web.ViewModels.ForumCategories;
-    using LiftingDome.Web.ViewModels.WorkoutCategory;
     using Microsoft.EntityFrameworkCore;
 
     public class ForumCategoryService : IForumCategoryService

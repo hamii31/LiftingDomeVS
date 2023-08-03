@@ -12,10 +12,12 @@
     public class CoachController : Controller
     {
         private readonly ICoachService coachService;
+        private readonly ICertificateService certificateService;
 		private readonly IToastNotification _toastNotification;
-		public CoachController(ICoachService coachService, IToastNotification toastNotification)
+		public CoachController(ICoachService coachService, ICertificateService certificateService, IToastNotification toastNotification)
         {
             this.coachService = coachService;
+            this.certificateService = certificateService;
 			_toastNotification = toastNotification;
 		}
 
@@ -34,7 +36,7 @@
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Become(BecomeCoachFormModel model)
+        public async Task<IActionResult> Become(CoachFormModel model)
         {
 
             string? userId = this.User.GetId();
@@ -49,7 +51,8 @@
 			bool isPhoneNumberTaken = await this.coachService.CoachExistsByPhoneNumberAsync(model.PhoneNumber);
             if (isPhoneNumberTaken)
             {
-                this.ModelState.AddModelError(string.Empty, "Phone number unavailable!");
+                _toastNotification.AddErrorToastMessage("Phone number is taken!");
+                return View(model);
             }
 
             if (!this.ModelState.IsValid)
@@ -68,7 +71,63 @@
             _toastNotification.AddSuccessToastMessage("You have become a coach successfully!");
             return RedirectToAction("All", "Workout");
         }
+        [HttpGet]
+        public async Task<IActionResult> Update()
+        {
+            string? userId = this.User.GetId();
 
+            bool isCoach = await this.coachService.CoachExistsByUserIdAsync(userId!);
+            if (!isCoach)
+            {
+                _toastNotification.AddErrorToastMessage("You must be a coach in order to update your certification!");
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+		}
+        [HttpPost]
+        public async Task<IActionResult> Update(CoachFormModel model)
+        {
+            string? userId = this.User.GetId();
+
+            bool isCoach = await this.coachService.CoachExistsByUserIdAsync(userId!);
+            if (!isCoach)
+            {
+                _toastNotification.AddErrorToastMessage("You must be a coach in order to update your certification!");
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool isCertificateNameValid = await this.certificateService.IsCertificateNameValid(model.Certification);
+            if (!isCertificateNameValid)
+            {
+                _toastNotification.AddErrorToastMessage("Certificate is not valid!");
+                return View(model);
+            }
+
+            string? certificateId = await this.certificateService.GetCertificateIdByCertificateName(model.Certification);
+
+            if (string.IsNullOrEmpty(certificateId))
+            {
+                this.ModelState.AddModelError(string.Empty, "Certificate does not exist");
+            }
+
+            if (!this.ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			try
+			{
+				await this.coachService.UpdateInfo(model, userId!);
+			}
+			catch (Exception)
+			{
+				return this.GeneralError();
+			}
+
+			_toastNotification.AddSuccessToastMessage("You have updated your certificate successfully!");
+			return RedirectToAction("All", "Workout");
+		}
         private IActionResult GeneralError()
         {
             this.ModelState.AddModelError(string.Empty, "An unexpected error occured! Please try again later! If the problem persists, please contact an administrator.");

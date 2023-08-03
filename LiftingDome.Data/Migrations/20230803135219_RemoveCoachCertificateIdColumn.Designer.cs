@@ -4,6 +4,7 @@ using LiftingDome.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftingDome.Data.Migrations
 {
     [DbContext(typeof(LiftingDomeDbContext))]
-    partial class LiftingDomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230803135219_RemoveCoachCertificateIdColumn")]
+    partial class RemoveCoachCertificateIdColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

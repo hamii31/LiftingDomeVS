@@ -1,7 +1,7 @@
 ﻿namespace LiftingDome.Services.Data
 {
 	using LiftingDome.Data;
-
+	using LiftingDome.Models;
 	using LiftingDome.Services.Data.Interfaces;
 
 	using LiftingDome.Web.ViewModels.WorkoutCategory;
@@ -63,6 +63,21 @@
 				.AnyAsync(c => c.Id == id);
 
 			return result;
+		}
+
+		public async Task<WorkoutCategoryDetailsViewModel> GetDetailsForCategoryWithIdAsync(int id)
+		{
+			WorkoutCategory category = await this.liftingDomeDbContext
+				.WorkoutCategories
+				.FirstAsync(c => c.Id == id);
+
+			WorkoutCategoryDetailsViewModel viewModel = new WorkoutCategoryDetailsViewModel()
+			{
+				Id = category.Id,
+				Name = category.Name
+			};
+
+			return viewModel;
 		}
 	}
 }

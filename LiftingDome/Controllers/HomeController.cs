@@ -13,7 +13,7 @@
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<IndexViewModel> viewModel = await this.workoutService.LastThreeWorkoutsAsync();
+            IEnumerable<IndexViewModel> viewModel = await this.workoutService.ThreeFreeWorkoutsAsync();
 			return View(viewModel);
         }
 

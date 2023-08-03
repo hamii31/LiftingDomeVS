@@ -8,5 +8,6 @@
 		Task<IEnumerable<AllWorkoutCategoryViewModel>> AllCategoriesForListAsync();
 		Task<bool> ExistsByIdAsync(int id);
 		Task<IEnumerable<string>> AllCategoryNamesAsync();
+		Task<WorkoutCategoryDetailsViewModel> GetDetailsForCategoryWithIdAsync(int id);
 	}
 }

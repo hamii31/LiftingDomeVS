@@ -18,7 +18,7 @@
             this.liftingDomeDbContext = liftingDomeDbContext;
         }
 
-        public async Task<bool> CoachExistsByPhoneNumberAsync(string phoneNumber)
+		public async Task<bool> CoachExistsByPhoneNumberAsync(string phoneNumber)
         {
             bool result = await this.liftingDomeDbContext.Coaches.AnyAsync(c => c.PhoneNumber == phoneNumber);
 
@@ -32,13 +32,14 @@
             return result;
         }
 
-        public async Task Create(string userId, BecomeCoachFormModel model)
+        public async Task Create(string userId, CoachFormModel model)
         {
             Coach coach = new Coach()
             {
                 PhoneNumber = model.PhoneNumber,
-                Email = BecomeCoachFormModel.Email,
-                UserId = Guid.Parse(userId)
+                Email = CoachFormModel.Email,
+                UserId = Guid.Parse(userId),
+                CertificateName = model.Certification
             };
 
             await this.liftingDomeDbContext.Coaches.AddAsync(coach);
@@ -59,7 +60,7 @@
             return coach.Id.ToString();
 		}
 
-		public async Task<string> GetCoachNameByCoachId(string userId)
+		public async Task<string?> GetCoachNameByCoachId(string userId)
 		{
 			Coach? coach = await this.liftingDomeDbContext
                 .Coaches
@@ -87,5 +88,16 @@
             return coach.CreatedWorkouts.Any(w => w.Id.ToString() == workoutId.ToLower());
         }
 
+		public async Task UpdateInfo(CoachFormModel model, string userId)
+		{
+			Coach? coach = await this.liftingDomeDbContext
+                .Coaches
+                .FirstAsync(c => c.UserId.ToString() == userId);
+
+            coach.CertificateName = model.Certification;
+            coach.PhoneNumber = model.PhoneNumber;
+
+			await this.liftingDomeDbContext.SaveChangesAsync();
+		}
 	}
 }
