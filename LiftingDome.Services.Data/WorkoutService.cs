@@ -117,6 +117,7 @@
                     IsOwned = true,
                     CreatorName = w.Coach.Email.ToString(),
                     CategoryName = w.Category.Name,
+                    CreatedOn = w.CreatedOn,
                     HasBeenEdited = w.HasBeenEdited
                 })
                 .ToArrayAsync();

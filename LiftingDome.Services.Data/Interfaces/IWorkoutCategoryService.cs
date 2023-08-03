@@ -5,6 +5,7 @@
 	public interface IWorkoutCategoryService
 	{
 		Task<IEnumerable<WorkoutCategorySelectFormModel>> AllCategoriesAsync();
+		Task<IEnumerable<AllWorkoutCategoryViewModel>> AllCategoriesForListAsync();
 		Task<bool> ExistsByIdAsync(int id);
 		Task<IEnumerable<string>> AllCategoryNamesAsync();
 	}

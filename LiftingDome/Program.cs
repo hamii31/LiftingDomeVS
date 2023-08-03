@@ -72,8 +72,15 @@ namespace LiftingDome
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapDefaultControllerRoute();
-            app.MapRazorPages();
+            app.UseEndpoints(config =>
+            {
+                config.MapControllerRoute(
+                    name: "ProtectingUrlPattern",
+                    pattern: "/{controller}/{action}/{id}/{information}",
+                    defaults: new { Controller = "WorkoutCategory", Action = "Details"});
+                config.MapDefaultControllerRoute();
+                config.MapRazorPages();
+            });
 
             app.Run();
         }

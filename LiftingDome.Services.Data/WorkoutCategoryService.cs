@@ -31,6 +31,21 @@
 			return allCategories;
 		}
 
+		public async Task<IEnumerable<AllWorkoutCategoryViewModel>> AllCategoriesForListAsync()
+		{
+			IEnumerable<AllWorkoutCategoryViewModel> allCategories = await this.liftingDomeDbContext
+				.WorkoutCategories
+				.AsNoTracking()
+				.Select(c => new AllWorkoutCategoryViewModel()
+				{
+					Id = c.Id,
+					Name = c.Name
+				})
+				.ToArrayAsync();
+
+			return allCategories;
+		}
+
 		public async Task<IEnumerable<string>> AllCategoryNamesAsync()
 		{
 			IEnumerable<string> allNames = await this.liftingDomeDbContext
