@@ -1,9 +1,23 @@
 ﻿@model AllWorkoutsQueryModel
+@using LiftingDome.Services.Data.Interfaces;
+@inject ICoachService CoachService
+@{
+	bool isUserCoach = await CoachService.CoachExistsByUserIdAsync(this.User.GetId()!);
+}
 @{
 	ViewBag.Title = "All Workouts";
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
+@if (this.User.Identity?.IsAuthenticated ?? false)
+{
+	<a class="btn btn-dark" asp-controller="Workout" asp-action="Mine"><b>My Workouts</b></a>
+
+	if (isUserCoach)
+	{
+		<a class="btn btn-dark" asp-controller="Workout" asp-action="Add"><b>Add Workout</b></a>
+	}
+}
 <form method="get">
 	<div class="row">
 		<div class="form-group col-md-3 d-flex justify-content-between">

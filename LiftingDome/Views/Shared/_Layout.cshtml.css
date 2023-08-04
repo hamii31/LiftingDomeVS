@@ -1,19 +1,31 @@
-﻿
-
-a {
-  color: #0077cc;
+﻿a {
+    color: #fa052e;
 }
 
 .btn-primary {
-  color: #fff;
+  color: black;
   background-color: black;
   border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #020000;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #fa052e;
+    border-color: #fa052e;
+}
+
+.navbar-nav :hover{
+    background-color:black;
+    color:white
+}
+
+.navbar-brand{
+    text-decoration:none
+}
+
+.navbar-brand :hover{
+    background-color:black;
+    color:red
 }
 
 .border-top {
