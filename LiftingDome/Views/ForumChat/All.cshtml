@@ -6,7 +6,12 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-
+@if (this.User.Identity?.IsAuthenticated ?? false)
+{
+	<a class="btn btn-dark" asp-controller="ForumChat" asp-action="Add"><b>Add Post To Forum</b></a>
+	<a class="btn btn-dark" asp-controller="ForumChat" asp-action="Mine"><b>My Forum Posts</b></a>
+}
+<br />
 <form method="get">
 	<div class="row">
 		<div class="form-group col-md-3 d-flex justify-content-between">

@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using LiftingDome.Data;
 namespace LiftingDome
 {
     using LiftingDome.Data;
@@ -16,6 +19,9 @@ namespace LiftingDome
 
             string connectionString
                 = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+                        builder.Services.AddDbContext<LiftingDomeDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
             builder.Services
                 .AddDbContext<LiftingDomeDbContext>(options =>
