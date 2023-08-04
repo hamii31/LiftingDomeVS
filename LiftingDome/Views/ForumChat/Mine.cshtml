@@ -4,7 +4,8 @@
 }
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
-
+<a class="btn btn-dark" style="margin:5px" asp-area="" asp-controller="ForumChat" asp-action="All">To <span style="color:red">All</span> Posts</a>
+<a class="btn btn-dark" style="margin:5px" asp-controller="ForumChat" asp-action="Add"><span style="color:red">Create</span> Post</a>
 @if (!Model.Any())
 {
 		<h2 class="text-center">You do not have any posts yet! Create some!</h2>
@@ -17,4 +18,5 @@ else
 			<partial name="_PostPartial" model="post"/>
 		}
 	</div>
+
 }

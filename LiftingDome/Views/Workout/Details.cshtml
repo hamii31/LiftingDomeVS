@@ -29,35 +29,48 @@
 			<p>@Model.Description</p>
 			<p>Category: <b>@Model.Category</b></p>
 			<div class="form-inline">
-				@if (this.User.Identity?.IsAuthenticated ?? false)
-				{
-					@if (CoachIsOwnerOfWorkout)
+					@if (this.User.Identity?.IsAuthenticated ?? false)
 					{
-						<a class="btn btn-dark" asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-
-						<a class="ml-2 btn btn-danger" asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-					}
-					@if (!isUserCoach)
-					{
-						@if (!UserIsOwnerOfWorkout)
+						@if (CoachIsOwnerOfWorkout)
 						{
-							<form class="ml-2" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id" method="post">
-								<input class="btn btn-dark" type="submit" value="Get" />
-							</form>
+								<a class="btn btn-dark" asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+
+								<a class="ml-2 btn btn-danger" asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+						}
+						@if (!isUserCoach)
+						{
+							@if (!UserIsOwnerOfWorkout)
+							{
+										<form class="ml-2" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id" method="post">
+											<input class="btn btn-dark" type="submit" value="Get" />
+										</form>
+							}
 						}
 					}
-
-					
-				}
 			</div>
 			<p></p>
-			<div class="card" style="width: 18rem;">
+			<div class="card" style="width:18rem">
 				<div class="card-body">
 					<h5 class="card-title">Coach Info</h5>
 					<p class="card-text">Email: @Model.Coach.Email</p>
 					<p class="card-text">Phone Number: @Model.Coach.PhoneNumber</p>
 				</div>
 			</div>
+			@if (this.User?.Identity?.IsAuthenticated ?? false)
+			{
+				<div class="text" style="float:left">
+					<a class="btn btn-dark" style="margin:5px" asp-area="" asp-controller="Workout" asp-action="All">To <span style="color:red">All</span> Workouts</a>
+				</div>
+				<div class="text" style="float:left">
+					<a class="btn btn-dark" style="margin:5px" asp-area="" asp-controller="Workout" asp-action="Mine">To <span style="color:red">My</span> Workouts</a>
+				</div>
+			}
+			else
+			{
+				<div class="text" style="float:left">
+					<a class="btn btn-dark" style="margin:5px" asp-area="" asp-controller="Workout" asp-action="All">To <span style="color:red">All</span> Workouts</a>
+				</div>
+			}
 		</div>
 	</div>
 </div>

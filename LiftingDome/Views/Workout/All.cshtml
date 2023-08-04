@@ -11,11 +11,11 @@
 <hr />
 @if (this.User.Identity?.IsAuthenticated ?? false)
 {
-	<a class="btn btn-dark" asp-controller="Workout" asp-action="Mine"><b>My Workouts</b></a>
+	<a class="btn btn-dark" asp-controller="Workout" asp-action="Mine"><span style="color:red">My</span> Workouts</a>
 
 	if (isUserCoach)
 	{
-		<a class="btn btn-dark" asp-controller="Workout" asp-action="Add"><b>Add Workout</b></a>
+		<a class="btn btn-dark" asp-controller="Workout" asp-action="Add"><span style="color:red">Create</span> Workout</a>
 	}
 }
 <form method="get">
@@ -57,8 +57,8 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="form-group mt-4 p-2">
-				<input type="submit" value="Search" class="btn btn-dark" />
+			<div class="form-group mt-4">
+				<input class="btn btn-dark" type="submit" value="Search" />
 			</div>
 		</div>
 	</div>
@@ -75,9 +75,8 @@
 
 }
 <div class="row mb-5">
-	<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-		<a class="btn btn-dark @(Model.CurrentPage == 1 ? "disabled" :
-string.Empty)"
+	<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start" style="padding-top:5px">
+		<a class="btn btn-dark @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
 		   asp-controller="Workout"
 		   asp-action="All"
 		   asp-route-currentPage="@previousPage"
@@ -89,9 +88,8 @@ string.Empty)"
 		bool shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
 		!Model.Workouts.Any();
 	}
-	<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-		<a class="btn btn-dark
-@(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+	<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end" style="padding-top:5px">
+		<a class="btn btn-dark @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
 		   asp-controller="Workout"
 		   asp-action="All"
 		   asp-route-currentPage="@(Model.CurrentPage + 1)"

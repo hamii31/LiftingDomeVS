@@ -78,7 +78,7 @@ else
                 }
             </label>
             <div class="text-center">
-                <a class="btn btn-dark" style="margin:15px" asp-area="" asp-controller="Calculator" asp-action="Calculate"><b>Go back</b></a>
+                <a class="btn btn-dark" style="margin:15px" asp-area="" asp-controller="Calculator" asp-action="Calculate">Go Back</a>
             </div>
         </div>
     </div>
@@ -109,9 +109,12 @@ else
                     <span asp-validation-for="MeassurmentId" class="small text-danger"></span>
                 </div>
                 <div class="text-center">
-                    <input class="btn btn-dark" type="submit" style="margin:15px"value="Submit" />
+                    <input class="btn btn-dark" type="submit" style="margin:5px"value="Submit" />
                </div>
             </form>
+            <div class="text-center" style="float:none">
+                <a class="btn btn-dark" style="margin:1px" asp-area="" asp-controller="Home" asp-action="Index">Go Back</a>
+            </div>
         </div>
     </div>
 }
