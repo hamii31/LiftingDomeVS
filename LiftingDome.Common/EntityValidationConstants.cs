@@ -36,5 +36,13 @@
         {
             public const int TextMaxLength = 300;
         }
+        public static class User
+        {
+            public const int FirstNameMinLength = 1;
+            public const int FirstNameMaxLength = 15;
+
+            public const int LastNameMinLength = 1;
+            public const int LastNameMaxLength = 15;
+        }
     }
 }
