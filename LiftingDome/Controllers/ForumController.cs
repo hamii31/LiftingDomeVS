@@ -8,7 +8,7 @@
 	using Microsoft.AspNetCore.Mvc;
 	using NToastNotify;
 
-	public class ForumChatController : Controller
+	public class ForumController : Controller
 	{
 		private readonly IForumChatService forumChatService;
 		private readonly IForumCategoryService forumCategoryService;
@@ -16,7 +16,7 @@
 		private readonly IUserService userSerivce;
 		private readonly IToastNotification _toastNotification;
 
-		public ForumChatController(IForumChatService forumChatService, IForumCategoryService forumCategoryService, ICoachService coachService, IUserService userService, IToastNotification toastNotification)
+		public ForumController(IForumChatService forumChatService, IForumCategoryService forumCategoryService, ICoachService coachService, IUserService userService, IToastNotification toastNotification)
 		{
 			this.forumChatService = forumChatService;
 			this.forumCategoryService = forumCategoryService;

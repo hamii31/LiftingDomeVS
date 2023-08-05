@@ -44,6 +44,11 @@ namespace LiftingDome
 
             builder.Services.AddApplicationServices(typeof(IWorkoutService));
 
+            builder.Services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.LogoutPath = "/User/Login";
+            });
+
             builder.Services.AddMvc().AddNToastNotifyToastr();
 
             builder.Services

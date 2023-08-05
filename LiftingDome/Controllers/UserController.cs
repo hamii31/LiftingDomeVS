@@ -2,20 +2,22 @@
 {
 	using LiftingDome.Models;
 	using LiftingDome.Web.ViewModels.User;
+	using Microsoft.AspNetCore.Authentication;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;
+	using NToastNotify;
 
 	public class UserController : Controller
 	{
 		private readonly SignInManager<ApplicationUser> signInManager;
 		private readonly UserManager<ApplicationUser> userManager;
-		private readonly IUserStore<ApplicationUser> userStore;
+		private readonly IToastNotification _toastNotification;
 
-		public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IUserStore<ApplicationUser> userStore)
+		public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IToastNotification toastNotification)
 		{
 			this.userManager = userManager;
 			this.signInManager = signInManager;
-			this.userStore = userStore;
+			this._toastNotification = toastNotification;
 		}
 
 		[HttpGet]
@@ -57,5 +59,36 @@
 
             return RedirectToAction("Index", "Home");
         }
+
+		[HttpGet]
+		public async Task<IActionResult> Login(string? returnUrl = null)
+		{
+			await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+			LoginFormModel formModel = new LoginFormModel()
+			{
+				ReturnUrl = returnUrl
+			};
+			return View(formModel);
+		}
+		[HttpPost]
+		public async Task<IActionResult> Login(LoginFormModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			var result = 
+				await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+            if (!result.Succeeded)
+            {
+				_toastNotification.AddErrorToastMessage("There was an error while logging you in! Please try again later or contact an administrator if the problem persists!");
+                return View(model);
+            }
+
+			return RedirectToAction("Index", "Home");
+		}
 	}
 }

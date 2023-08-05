@@ -38,6 +38,9 @@
         }
         public static class User
         {
+            public const int UserNameMinLength = 1;
+            public const int UserNameMaxLength = 15;
+
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 100;
 

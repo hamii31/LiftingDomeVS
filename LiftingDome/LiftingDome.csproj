@@ -31,4 +31,8 @@
     <ProjectReference Include="..\LiftingDome.Web.ViewModels\LiftingDome.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\Account\" />
+  </ItemGroup>
+
 </Project>
