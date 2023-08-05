@@ -1,5 +1,6 @@
 ﻿@using LiftingDome.Infrastructure.Extensions;
 @using LiftingDome.Services.Data.Interfaces;
+@using static LiftingDome.Common.EntityValidationConstants.SaleDate;
 @model LiftingDome.Web.ViewModels.Workout.AllWorkoutsViewModel
 
 @inject ICoachService CoachService
@@ -33,10 +34,19 @@
 						@if (Model.Price == 0)
 					    {
 							<b style="color:red">FREE</b>
-					    }
+						}
 						else
 						{
-							<b style="color:red">@($"{Model.Price:f2}") BGN</b>
+							DateTime saleStart = new DateTime(startDateYear, startDateMonth, startDateDay);
+							DateTime saleEnd = new DateTime(endDateYear, endDateMonth, endDateDay);
+							if (this.User.Identity?.IsAuthenticated ?? false && (saleStart <= DateTime.Now && DateTime.Now <= saleEnd))
+							{
+								<b style="color:red"><del style="color:black">@($"{Model.Price:f2}") BGN</del> FREE</b>
+							}
+							else
+							{
+								<b style="color:red">@($"{Model.Price:f2}") BGN</b>
+							}
 						}
 				</h6>
 

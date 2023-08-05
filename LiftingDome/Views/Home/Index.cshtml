@@ -1,7 +1,11 @@
-﻿@model IEnumerable<IndexViewModel>
+﻿@using static LiftingDome.Common.EntityValidationConstants.SaleDate;
+@model IEnumerable<IndexViewModel>
+
 @{
 	ViewData["Title"] = "Home Page";
 	var workouts = Model.ToList();
+	DateTime saleStart = new DateTime(startDateYear, startDateMonth, startDateDay);
+	DateTime saleEnd = new DateTime(endDateYear, endDateMonth, endDateDay);
 }
 @if (!workouts.Any())
 {
@@ -31,7 +35,12 @@
 			</b>
 		</div>
 	</font>
-
+	
+	@if (saleStart <= DateTime.Now && DateTime.Now <= saleEnd)
+	{
+		<b class="text-center" style="font-size:20px;"><span style="color:red; font-size:25px">!!!</span><span style="color:red">Announcement</span>: From 1st August 2023 to 31st August 2023, <span style="color:red">new</span> users can enjoy all workouts for free!</b>
+	}
+	
 	<div class="mb-5"></div>
 
 	@foreach (var workout in workouts)

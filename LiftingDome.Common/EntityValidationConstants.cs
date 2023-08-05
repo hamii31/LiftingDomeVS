@@ -50,5 +50,15 @@
             public const int LastNameMinLength = 1;
             public const int LastNameMaxLength = 15;
         }
+        public static class SaleDate
+        {
+            public const int startDateYear = 2023;
+            public const int startDateMonth = 08;
+            public const int startDateDay = 01;
+
+            public const int endDateYear = 2023;
+            public const int endDateMonth = 08;
+            public const int endDateDay = 31;
+        }
     }
 }
