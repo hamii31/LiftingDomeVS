@@ -12,8 +12,12 @@
 		[Display(Name = "Phone")]
 		public string PhoneNumber { get; set; } = null!;
 		public static string Email { get; set; } = null!;
-
 		[Required]
 		public string Certification { get; set; } = null!;
+		public string ImageURL { get; set; } = null!;
+		[Display(Name = "First Name")]
+		public string FirstName { get; set; } = null!;
+		[Display(Name = "Last Name")]
+		public string LastName { get; set; } = null!;
 	}
 }

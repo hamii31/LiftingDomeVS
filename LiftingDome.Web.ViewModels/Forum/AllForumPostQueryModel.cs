@@ -17,7 +17,7 @@
         [Display(Name = "Search by keyword")]
         public string? SearchString { get; set; }
 
-        [Display(Name = "Sort Messages By")]
+        [Display(Name = "Sort Posts By")]
         public ForumPostSorting PostSorting { get; set; }
 
         public int CurrentPage { get; set; }

@@ -17,6 +17,9 @@
         [Required]
         [MaxLength(EmailMaxLength)]
         public string Email { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string? ImageURL { get; set; } 
         public string CertificateName { get; set; } = null!;
         public Guid UserId { get; set; }
         public virtual ApplicationUser User { get; set; } = null!;

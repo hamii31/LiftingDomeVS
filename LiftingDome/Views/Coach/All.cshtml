@@ -1,0 +1,22 @@
+﻿@model List<AllCoachesViewModel>
+
+@{
+	ViewData["Title"] = "Meet The Coaches";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if(!Model.Any())
+{
+	<h2 class="text-center">There aren't any coaches in the system! Become one!</h2>
+}
+else
+{
+	<div class="row">
+		@foreach (AllCoachesViewModel coach in Model)
+		{
+			<partial name="_CoachPartial" model="coach"/>
+		}
+	</div>
+}

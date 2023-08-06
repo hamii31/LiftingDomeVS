@@ -124,9 +124,29 @@
 				return this.GeneralError();
 			}
 
-			_toastNotification.AddSuccessToastMessage("You have updated your certificate successfully!");
+			_toastNotification.AddSuccessToastMessage("You have updated your information successfully!");
 			return RedirectToAction("All", "Workout");
 		}
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> All()
+        {
+
+            List<AllCoachesViewModel> allCoaches = new List<AllCoachesViewModel>();
+
+            try
+            {
+                allCoaches.AddRange(await this.coachService.GetAllCoachesAsync());
+
+                return View(allCoaches);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
+        }
         private IActionResult GeneralError()
         {
             this.ModelState.AddModelError(string.Empty, "An unexpected error occured! Please try again later! If the problem persists, please contact an administrator.");

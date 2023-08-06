@@ -7,5 +7,6 @@
 		Task<bool> UserHasWorkoutsWithId(string userId, string workoutId);
 		Task<bool> UserExistsByUserIdAsync(string userId);
 		Task<bool> UserExistsByUserNameAsync(string userName);
+		Task<string> GetFullNameByEmailAsync(string email);
 	}
 }

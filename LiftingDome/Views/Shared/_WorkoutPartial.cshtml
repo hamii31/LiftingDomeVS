@@ -9,6 +9,7 @@
 	bool isUserCoach = await CoachService.CoachExistsByUserIdAsync(this.User.GetId()!);
 	bool isCoachOwnerOfWorkout = await CoachService.HasWorkoutWithIdAsync(this.User.GetId()!, Model.Id);
 	bool isWorkoutFree = await WorkoutService.IsWorkoutFree(Model.Id);
+	string fullName = await CoachService.GetCoachNameBYCoachEmailAsync(Model.CreatorName);
 }
 <div class="col-md-4">
 	<div class="card mb-3">
@@ -56,7 +57,7 @@
 				}
 				else
 				{
-					<b>Created By: @Model.CreatorName.Remove(Model.CreatorName.IndexOf("@"))</b>
+					<b>Created By: @fullName</b>
 				}
 
 				@if (Model.HasBeenEdited)

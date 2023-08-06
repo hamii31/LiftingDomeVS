@@ -1,0 +1,36 @@
+﻿@model AllCoachesViewModel
+
+<div class="col-md-4">
+	<div class="card mb-3">
+		<div class="card-body text-center">
+
+			<img class="card-img-top" src="@Model.ImageURL" alt="Workout Image" style="width:100%" height="200" />
+			<br />
+
+			<b>
+				Name: @Model.FirstName @Model.LastName
+			</b>
+			<br />
+
+			<b>
+				Certification: @Model.CertificateName
+			</b>
+			<br />
+
+			<b>
+				Total workouts: @Model.WorkoutCount
+			</b>
+			<br />
+
+			<b>
+				Email: @Model.Email
+			</b>
+			<br />
+
+			<b>
+				Phone: @Model.Phone
+			</b>
+
+		</div>
+	</div>
+</div>

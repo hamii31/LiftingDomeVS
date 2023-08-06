@@ -4,6 +4,7 @@ using LiftingDome.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftingDome.Data.Migrations
 {
     [DbContext(typeof(LiftingDomeDbContext))]
-    partial class LiftingDomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230806152514_AddCoachImage")]
+    partial class AddCoachImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,15 +149,7 @@ namespace LiftingDome.Data.Migrations
                         .HasMaxLength(254)
                         .HasColumnType("nvarchar(254)");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -190,37 +184,37 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8cab39c3-c4bc-495e-a3f1-467a094dea55"),
+                            Id = new Guid("b76dc387-2070-4f90-a020-f9412f639454"),
                             Name = "ACSM"
                         },
                         new
                         {
-                            Id = new Guid("4a7dbddb-ca25-403e-80f2-3e3a2e6bb4a9"),
+                            Id = new Guid("710ff618-6fbd-4840-98a2-231deb806586"),
                             Name = "NSCA"
                         },
                         new
                         {
-                            Id = new Guid("219ddea3-57c0-4e39-9eda-183602d09a0f"),
+                            Id = new Guid("b3e72daa-f253-4895-a9fb-7bd2292a64bc"),
                             Name = "NASM"
                         },
                         new
                         {
-                            Id = new Guid("54d7b2cd-e4b3-4c4c-a7ce-57a3ef7067fe"),
+                            Id = new Guid("f36d1c84-bd0d-43e4-8890-ed26c97faabb"),
                             Name = "ACE"
                         },
                         new
                         {
-                            Id = new Guid("296fe26c-b072-4520-8ce6-0a398342c79f"),
+                            Id = new Guid("d1552a77-25de-4e61-b4ff-4d2ce1235876"),
                             Name = "ISSA"
                         },
                         new
                         {
-                            Id = new Guid("3606cfd7-f7bd-4d9f-9ddf-b67a0db4ec96"),
+                            Id = new Guid("60f092ac-a21b-49ba-9cf7-a5c3bf0432fe"),
                             Name = "AFPA"
                         },
                         new
                         {
-                            Id = new Guid("5124d4ec-8e86-4ca1-974a-b9555d3e54a5"),
+                            Id = new Guid("102bf116-4f56-4163-8e62-a8d4f414da5d"),
                             Name = "NFPT"
                         });
                 });
@@ -308,7 +302,7 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a9adcb6a-7299-4e17-8324-c1ef8c2c3010"),
+                            Id = new Guid("8d80c086-2354-4d24-b02d-507d76f61e8f"),
                             CategoryId = 4,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasBeenEdited = false,
@@ -318,7 +312,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("43dcd10c-0f50-475b-bef8-10590108baf7"),
+                            Id = new Guid("0885b928-7821-45c2-bd56-b41333d0b0fe"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasBeenEdited = false,
@@ -387,7 +381,7 @@ namespace LiftingDome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("91fe8788-53dd-492b-9b26-48781c6833f9"),
+                            Id = new Guid("671c58c5-8d56-42f8-8f49-6cc44f745df3"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Probably the best way to build strength and size simultaneously. Either use 70-85% of your 1RM for all 5 sets or gradually warm up to a heavy top set of five.",
@@ -401,7 +395,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aa2d3030-f755-4780-b9fa-09050a864197"),
+                            Id = new Guid("c6004b2d-2c20-45d9-9562-93bc6e0de18a"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "The best way for beginner and intermediate strength athletes to build strength.",
@@ -415,7 +409,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("80a424e5-3b7c-424c-8dad-94752cbd8019"),
+                            Id = new Guid("5351299a-69a6-43f1-940c-63a995d5ed93"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Boring, bland, but effective! The straight-forward 4x8 is another training protocol that bodybuilders have relied on for over 40 years. If it’s stuck around for that long, there’s good reason. It’s not flashy, but the basics never let you down. Doing 4 sets of 8, with each set getting you close to failure, is a decent way to stimulate growth, especially for beginners.",
@@ -429,7 +423,7 @@ namespace LiftingDome.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fc413a20-3b81-495b-a658-590189ffc2ff"),
+                            Id = new Guid("d60fcc11-6d56-4e40-8ed9-2c9aa6763d17"),
                             CoachId = new Guid("09cd637a-3447-4f2f-bbf0-5ba9cb561209"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Easiest way for strong people to do Metcon workouts without losing all of their strength gains is doing Zercher Cycles with heavy weight for a period of time. Deadlift the barbell off the ground, squat down and place it on your legs. Grab it in a zercher position and stand up. Squat down, place the barbell on your legs again, grab it with your hands and stand up. Lower the barbell down to the ground. That's one rep. Do 15-20 with some good weight on the barbell.",

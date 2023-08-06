@@ -3,9 +3,12 @@
 @model AllForumPostViewModel
 @inject ICoachService CoachService
 @inject IForumChatService ForumChatService
+@inject IUserService UserService
 
 @{
 	bool IsOwner = await ForumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, Model.Id);
+	//string fullName = 
+	bool isUserCoach = await CoachService.CoachExistsByUserIdAsync(Model.CreatorId);
 }
 
 <div class="col-md-4">
@@ -31,7 +34,7 @@
 			@if (Model.TaggedUser != null)
 			{
 				<b>
-					Replying to: @Model.TaggedUser.Remove(Model.TaggedUser.IndexOf("@"));
+					Replying to: @Model.TaggedUser
 				</b>
 			}
 
@@ -43,7 +46,14 @@
 			}
 			else
 			{
-				<b>Created By: @Model.CreatorName.Remove(Model.CreatorName.IndexOf("@"))</b>
+				if (!isUserCoach)
+				{
+					<b>Created By: @Model.CreatorEmail</b>
+				}
+				else
+				{
+					<b>Created By: @await CoachService.GetCoachNameBYCoachEmailAsync(Model.CreatorEmail)</b>
+				}
 			}
 
 			@if (await CoachService.CoachExistsByUserIdAsync(Model.CreatorId))

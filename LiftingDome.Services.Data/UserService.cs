@@ -3,7 +3,6 @@
 	using LiftingDome.Data;
 	using LiftingDome.Models;
 	using LiftingDome.Services.Data.Interfaces;
-	using LiftingDome.Web.ViewModels.Forum;
 	using Microsoft.EntityFrameworkCore;
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
@@ -24,6 +23,21 @@
 				.ToArrayAsync();
 
 			return allNames;
+		}
+
+		public async Task<string> GetFullNameByEmailAsync(string email)
+		{
+			ApplicationUser? user = await this.liftingDomeDbContext
+				.Users
+				.FirstOrDefaultAsync(u => u.Email == email);
+
+			if (user == null)
+			{
+				return string.Empty;
+			}
+
+			return user.FirstName + " " + user.LastName;
+
 		}
 
 		public async Task<string?> GetUserEmailByUserIdAsync(string userId)
