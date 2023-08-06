@@ -7,7 +7,6 @@
 
 @{
 	bool IsOwner = await ForumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, Model.Id);
-	//string fullName = 
 	bool isUserCoach = await CoachService.CoachExistsByUserIdAsync(Model.CreatorId);
 }
 
@@ -34,7 +33,7 @@
 			@if (Model.TaggedUser != null)
 			{
 				<b>
-					Replying to: @Model.TaggedUser
+					Replying to: @await UserService.GetFullNameByEmailAsync(Model.TaggedUser)
 				</b>
 			}
 
@@ -48,7 +47,7 @@
 			{
 				if (!isUserCoach)
 				{
-					<b>Created By: @Model.CreatorEmail</b>
+					<b>Created By: @await UserService.GetFullNameByEmailAsync(Model.CreatorEmail)</b>
 				}
 				else
 				{
