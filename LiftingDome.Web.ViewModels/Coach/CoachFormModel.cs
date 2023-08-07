@@ -15,9 +15,8 @@
 		[Required]
 		public string Certification { get; set; } = null!;
 		public string ImageURL { get; set; } = null!;
-		[Display(Name = "First Name")]
-		public string FirstName { get; set; } = null!;
-		[Display(Name = "Last Name")]
-		public string LastName { get; set; } = null!;
+		
+		public string? FirstName { get; set; }
+		public string? LastName { get; set;}
 	}
 }

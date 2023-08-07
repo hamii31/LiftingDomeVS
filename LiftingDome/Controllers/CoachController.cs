@@ -12,11 +12,13 @@
     {
         private readonly ICoachService coachService;
         private readonly ICertificateService certificateService;
+        private readonly IUserService userService;
 		private readonly IToastNotification _toastNotification;
-		public CoachController(ICoachService coachService, ICertificateService certificateService, IToastNotification toastNotification)
+		public CoachController(ICoachService coachService, ICertificateService certificateService, IUserService userService, IToastNotification toastNotification)
         {
             this.coachService = coachService;
             this.certificateService = certificateService;
+            this.userService = userService;
 			_toastNotification = toastNotification;
 		}
 
@@ -53,6 +55,18 @@
                 _toastNotification.AddErrorToastMessage("Phone number is taken!");
                 return View(model);
             }
+
+            string? userEmail = await this.userService.GetUserEmailByUserIdAsync(userId!);
+
+            string fullName = await this.userService.GetFullNameByEmailAsync(userEmail!);
+
+            string[] splitted = fullName.Split(" ");
+
+            string firstName = splitted[0];
+            string lastName = splitted[1];
+
+            model.FirstName = firstName;
+            model.LastName = lastName;
 
             if (!this.ModelState.IsValid)
             {

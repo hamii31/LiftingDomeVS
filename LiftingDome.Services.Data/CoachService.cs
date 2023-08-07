@@ -40,7 +40,10 @@
                 PhoneNumber = model.PhoneNumber,
                 Email = CoachFormModel.Email,
                 UserId = Guid.Parse(userId),
-                CertificateName = model.Certification
+                CertificateName = model.Certification,
+                ImageURL = model.ImageURL,
+                FirstName = model.FirstName!,
+                LastName = model.LastName!
             };
 
             await this.liftingDomeDbContext.Coaches.AddAsync(coach);
@@ -133,8 +136,6 @@
             coach.CertificateName = model.Certification;
             coach.PhoneNumber = model.PhoneNumber;
             coach.ImageURL = model.ImageURL;
-			coach.FirstName = model.FirstName;
-			coach.LastName = model.LastName;
 		
             
 

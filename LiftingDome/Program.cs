@@ -10,6 +10,7 @@ namespace LiftingDome
     using LiftingDome.Services.Data.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using static Common.GeneralApplicationConstants;
     public class Program
     {
         public static void Main(string[] args)
@@ -27,20 +28,22 @@ namespace LiftingDome
                 .AddDbContext<LiftingDomeDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = 
+                options.SignIn.RequireConfirmedAccount =
                     builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
-                options.Password.RequireLowercase = 
+                options.Password.RequireLowercase =
                     builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
-                options.Password.RequireUppercase = 
-                    builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase"); 
-                options.Password.RequireNonAlphanumeric = 
+                options.Password.RequireUppercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+                options.Password.RequireNonAlphanumeric =
                     builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
-                options.Password.RequiredLength = 
+                options.Password.RequiredLength =
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 
-            }).AddEntityFrameworkStores<LiftingDomeDbContext>();
+            })
+              .AddRoles<IdentityRole<Guid>>()
+              .AddEntityFrameworkStores<LiftingDomeDbContext>();
 
             builder.Services.AddApplicationServices(typeof(IWorkoutService));
 
@@ -82,6 +85,8 @@ namespace LiftingDome
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedAdministator(DevelopmentAdminEmail);
 
             app.UseEndpoints(config =>
             {

@@ -8,5 +8,8 @@
         public const int EntitiesPerPage = 3;
 
         public const int DefaultMeassurmentIndex = 1;
+
+        public const string AdminRoleName = "Admin";
+        public const string DevelopmentAdminEmail = "Admin@liftingdome.bg";
     }
 }
