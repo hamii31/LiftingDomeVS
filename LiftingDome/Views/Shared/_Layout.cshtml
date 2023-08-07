@@ -42,10 +42,16 @@
                         <li>
                             <a class="nav-link text-white" asp-area="" asp-controller="Coach" asp-action="All"><b>Meet The Coaches</b></a>
                         </li>
-                        @if (isUserCoach)
+                        @if (isUserCoach || this.User.IsAdmin())
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Coach" asp-action="Update"><b>Update Personal Info</b></a>
+                            </li>
+                        }
+                        @if (this.User.IsAdmin())
+                        {
+                             <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="All"><b>See All Users</b></a>
                             </li>
                         }
                     </ul>

@@ -19,6 +19,13 @@
             this.liftingDomeDbContext = liftingDomeDbContext;
         }
 
+		public async Task<bool> CoachExistsByEmailAsync(string email)
+		{
+			bool result = await this.liftingDomeDbContext.Coaches.AnyAsync(c => c.Email.ToLower() == email.ToLower());
+
+			return result;
+		}
+
 		public async Task<bool> CoachExistsByPhoneNumberAsync(string phoneNumber)
         {
             bool result = await this.liftingDomeDbContext.Coaches.AnyAsync(c => c.PhoneNumber == phoneNumber);
@@ -126,6 +133,25 @@
             
             return coach.CreatedWorkouts.Any(w => w.Id.ToString() == workoutId.ToLower());
         }
+
+		public async Task<int> TotalWorkoutsByCoachEmailAsync(string email)
+		{
+			Coach? coach = await this.liftingDomeDbContext
+                .Coaches
+                .FirstAsync(c => c.Email.ToLower() == email.ToLower());
+
+            if (coach == null)
+            {
+                return 0;
+            }
+
+            int totalWorkouts = await this.liftingDomeDbContext
+                .Workouts
+                .Where(w => w.CoachId.ToString() == coach.Id.ToString())
+                .CountAsync();
+
+            return totalWorkouts;
+		}
 
 		public async Task UpdateInfo(CoachFormModel model, string userId)
 		{

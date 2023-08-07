@@ -54,6 +54,21 @@
 			return user.Email.ToString();
 		}
 
+		public async Task<int> TotalWorkoutsByUserIdAsync(string userId)
+		{
+			ApplicationUser? user = await this.liftingDomeDbContext
+				.Users
+				.Include(w => w.AddedWorkouts)
+				.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+			if (user == null)
+			{
+				return 0;
+			}
+
+			return user.AddedWorkouts.Count();
+		}
+
 		public async Task<bool> UserExistsByUserIdAsync(string userId)
 		{
 			bool result = await this.liftingDomeDbContext.Users.AnyAsync(x => x.Id.ToString() == userId);

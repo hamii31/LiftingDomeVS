@@ -1,0 +1,36 @@
+﻿@using LiftingDome.Services.Data.Interfaces;
+@model AllUsersViewModel
+@inject ICoachService CoachService
+@inject IUserService UserService
+@{
+	bool isUSerCoach = await CoachService.CoachExistsByEmailAsync(Model.Email);
+}
+<div class="col-md-4">
+	<div class="card mb-3">
+		<div class="card-body text-center">
+			<b>@Model.FirstName @Model.LastName</b>
+			<br>
+			@if (isUSerCoach)
+			{
+				<b>(<span style="color:red">Coach</span>)</b>
+			}
+			else
+			{
+				<b>(<span style="color:red">Trainee</span>)</b>
+			}
+			<br>
+			<b>@Model.Email</b>
+			<br>
+			<b>Total Posts: @Model.PostCount</b>
+			<br>
+			@if (isUSerCoach)
+			{
+				<b>Total Created Workouts: @await CoachService.TotalWorkoutsByCoachEmailAsync(Model.Email)</b>
+			}
+			else
+			{
+				<b>Total Added Workouts: @await UserService.TotalWorkoutsByUserIdAsync(Model.Id)</b>
+			}
+		</div>
+	</div>
+</div>

@@ -8,5 +8,6 @@
 		Task<bool> UserExistsByUserIdAsync(string userId);
 		Task<bool> UserExistsByUserNameAsync(string userName);
 		Task<string> GetFullNameByEmailAsync(string email);
+		Task<int> TotalWorkoutsByUserIdAsync(string userId);
 	}
 }

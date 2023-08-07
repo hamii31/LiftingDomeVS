@@ -1,0 +1,19 @@
+﻿@model IEnumerable<AllUsersViewModel>
+
+@{
+	ViewData["Title"] = "All Users";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+@if (!Model.Any())
+{
+	<h2 class="text-center">No users in the system!</h2>
+}
+else
+{
+	<div class="row">
+		@foreach (AllUsersViewModel user in Model)
+		{
+			<partial name="_AllUsersVewPartial" model="user" />
+		}
+	</div>
+}
