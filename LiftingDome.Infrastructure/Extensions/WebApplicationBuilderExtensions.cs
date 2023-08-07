@@ -36,6 +36,13 @@
 				services.AddScoped(interfaceType, implementationType);
 			}
 		}
+		/// <summary>
+		/// This method seeds admin role if it doesn't exist.
+		/// Passed email should be of an existing user.
+		/// </summary>
+		/// <param name="app"></param>
+		/// <param name="email"></param>
+		/// <returns></returns>
         public static IApplicationBuilder SeedAdministator(this IApplicationBuilder app, string email)
         {
             using IServiceScope scopedServices = app.ApplicationServices.CreateScope();

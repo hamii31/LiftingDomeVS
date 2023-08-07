@@ -76,7 +76,7 @@
 				<p>(Created On: @Model.CreatedOn)</p>
 			}
 
-			@if (IsOwner)
+			@if (IsOwner || this.User.IsAdmin())
 			{
 				<div class="text-center" style="float:none">
 					<a asp-controller="Forum" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">Edit</a>

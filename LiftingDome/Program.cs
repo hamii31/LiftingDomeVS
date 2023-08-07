@@ -86,7 +86,10 @@ namespace LiftingDome
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.SeedAdministator(DevelopmentAdminEmail);
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministator(DevelopmentAdminEmail);
+            }
 
             app.UseEndpoints(config =>
             {

@@ -135,7 +135,7 @@
 
 			if (!userExists)
 			{
-				_toastNotification.AddErrorToastMessage("Only logged users can have posts!");
+				_toastNotification.AddErrorToastMessage("Log in in order to have posts!");
 				return RedirectToAction("All", "Index");
 			}
 			
@@ -168,7 +168,7 @@
             }
 
 			bool IsUserOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, id);
-			if (!IsUserOwner)
+			if (!IsUserOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be the owner of the post in order to edit it!");
 				return RedirectToAction("Mine", "ForumChat");
@@ -212,7 +212,7 @@
             }
 
             bool IsUserOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, id);
-            if (!IsUserOwner)
+            if (!IsUserOwner && !this.User.IsAdmin())
             {
                 _toastNotification.AddErrorToastMessage("You must be the owner of the post in order to edit it!");
                 return RedirectToAction("Mine", "ForumChat");
@@ -249,7 +249,7 @@
 
 			bool isLoggedUser = await this.userSerivce.UserExistsByUserIdAsync(userId);
 
-			if (!isLoggedUser)
+			if (!isLoggedUser && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be a logged user in order to delete posts!");
 				return RedirectToAction("All", "Index");
@@ -265,7 +265,7 @@
 
 			bool userIsOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(userId, id);
 
-			if (!userIsOwner)
+			if (!userIsOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be the owner of the post in order to delete it!");
 				return RedirectToAction("Mine", "ForumChat");
@@ -288,7 +288,7 @@
 
 			bool isLoggedUser = await this.userSerivce.UserExistsByUserIdAsync(userId);
 
-			if (!isLoggedUser)
+			if (!isLoggedUser && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be a logged user in order to delete posts!");
 				return RedirectToAction("All", "Index");
@@ -304,7 +304,7 @@
 
 			bool userIsOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(userId, id);
 
-			if (!userIsOwner)
+			if (!userIsOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be the owner of the post in order to delete it!");
 				return RedirectToAction("Mine", "ForumChat");

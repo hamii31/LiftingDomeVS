@@ -171,7 +171,7 @@
             bool isCoach = await this.coachService
                 .CoachExistsByUserIdAsync(this.User.GetId()!);
 
-            if (!isCoach)
+            if (!isCoach && !this.User.IsAdmin())
             {
                 _toastNotification.AddErrorToastMessage("You must be a Coach in order to edit this information!");
                 return RedirectToAction("Become", "Coach");
@@ -182,7 +182,7 @@
 			bool isCoachOwner = await this.workoutService
                 .IsCoachOwnerOfWorkoutWithIdAsync(coachId!, id);
 
-            if (!isCoachOwner)
+            if (!isCoachOwner && !this.User.IsAdmin())
             {
                 _toastNotification.AddErrorToastMessage("You are not the owner of this workout!");
                 return RedirectToAction("Mine", "Workout");
@@ -223,7 +223,7 @@
 			bool isCoach = await this.coachService
 				.CoachExistsByUserIdAsync(this.User.GetId()!);
 
-			if (!isCoach)
+			if (!isCoach && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be a Coach in order to edit this information!");
 				return RedirectToAction("Become", "Coach");
@@ -234,7 +234,7 @@
 			bool isCoachOwner = await this.workoutService
 				.IsCoachOwnerOfWorkoutWithIdAsync(coachId!, id);
 
-			if (!isCoachOwner)
+			if (!isCoachOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You are not the owner of this workout!");
 				return RedirectToAction("Mine", "Workout");
@@ -268,7 +268,7 @@
 			bool isCoach = await this.coachService
 				.CoachExistsByUserIdAsync(this.User.GetId()!);
 
-			if (!isCoach)
+			if (!isCoach && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be a Coach in order to edit this information!");
 				return RedirectToAction("Become", "Coach");
@@ -279,7 +279,7 @@
 			bool isCoachOwner = await this.workoutService
 				.IsCoachOwnerOfWorkoutWithIdAsync(coachId!, id);
 
-			if (!isCoachOwner)
+			if (!isCoachOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You are not the owner of this workout!");
 				return RedirectToAction("Mine", "Workout");
@@ -310,7 +310,7 @@
 			bool isCoach = await this.coachService
 				.CoachExistsByUserIdAsync(this.User.GetId()!);
 
-			if (!isCoach)
+			if (!isCoach && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be a Coach in order to edit this information!");
 				return RedirectToAction("Become", "Coach");
@@ -321,7 +321,7 @@
 			bool isCoachOwner = await this.workoutService
 				.IsCoachOwnerOfWorkoutWithIdAsync(coachId!, id);
 
-			if (!isCoachOwner)
+			if (!isCoachOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be the owner of this workout in order to delete it!");
 				return RedirectToAction("Mine", "Workout");
@@ -360,7 +360,7 @@
 			bool isUserCoach = await this.coachService
 				.CoachExistsByUserIdAsync(this.User.GetId()!);
 
-			if (isUserCoach)
+			if (isUserCoach && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You can't get a workout as a Coach! Register as a trainee or contact the owner of the workout!");
 				return RedirectToAction("Index", "Home");
@@ -391,7 +391,7 @@
 
 			bool workoutIsOwned = await this.workoutService.WorkoutIsOwnedByIdAsync(id, this.User.GetId()!);
 
-			if (!workoutIsOwned)
+			if (!workoutIsOwned && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("Workout is not owned by the user!");
 				return RedirectToAction("Mine", "Workout");
@@ -421,7 +421,17 @@
 
             try
             {
-                if (IsCoach)
+                if (this.User.IsAdmin())
+                {
+                    string? coachId = await this.coachService.GetCoachIdByUserIdAsync(userId);
+
+                    myWorkouts.AddRange(await this.workoutService.AllByCoachIdAsync(coachId!));
+
+                    myWorkouts.AddRange(await this.workoutService.AllByTraineeIdAsync(userId));
+
+                    myWorkouts = myWorkouts.DistinctBy(w => w.Id).ToList();
+                }
+                else if (IsCoach)
                 {
                     string? coachId = await this.coachService.GetCoachIdByUserIdAsync(userId);
 

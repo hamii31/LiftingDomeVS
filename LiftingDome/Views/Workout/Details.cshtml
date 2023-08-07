@@ -31,20 +31,17 @@
 			<div class="form-inline">
 					@if (this.User.Identity?.IsAuthenticated ?? false)
 					{
-						@if (CoachIsOwnerOfWorkout)
+						@if (CoachIsOwnerOfWorkout || this.User.IsAdmin())
 						{
 								<a class="btn btn-dark" asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
 
 								<a class="ml-2 btn btn-danger" asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
 						}
-						@if (!isUserCoach)
+						@if ((!isUserCoach && !UserIsOwnerOfWorkout) || this.User.IsAdmin())
 						{
-							@if (!UserIsOwnerOfWorkout)
-							{
-										<form class="ml-2" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id" method="post">
-											<input class="btn btn-dark" type="submit" value="Get" />
-										</form>
-							}
+							<form class="ml-2 mt-2" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id" method="post">
+								<input class="btn btn-dark" type="submit" value="Get" />
+							</form>
 						}
 					}
 			</div>

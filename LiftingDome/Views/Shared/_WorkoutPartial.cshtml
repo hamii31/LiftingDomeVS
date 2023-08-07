@@ -72,21 +72,21 @@
 				@if (isWorkoutFree || (this.User.Identity?.IsAuthenticated ?? false))
 				{
 				<a asp-controller="Workout" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark" style="margin-top:5px">Details</a>
-					@if (isUserCoach && isCoachOwnerOfWorkout)
+					@if ((isUserCoach && isCoachOwnerOfWorkout) || this.User.IsAdmin())
 					{
 					<a asp-controller="Workout" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark" style="margin-top:5px">Edit</a>
 					<a asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" style="margin-top:5px">Delete</a>
 					}
 					
-					@if (!Model.IsOwned && !isUserCoach && (this.User.Identity?.IsAuthenticated ?? false))
+					@if ((!Model.IsOwned && !isUserCoach && (this.User.Identity?.IsAuthenticated ?? false)) || this.User.IsAdmin())
 					{
 						<form class="input-group-sm" asp-controller="Workout" asp-action="Get" asp-route-id="@Model.Id" method="post">
-						<input class="btn btn-danger" style="margin-top:5px" type="submit" value="Get" />
+						<input class="btn btn-dark" style="margin-top:5px" type="submit" value="Get" />
 						</form>
 					}
 					else 
 					{
-						@if (Model.IsOwned && !isUserCoach && (this.User.Identity?.IsAuthenticated ?? false))
+						@if ((Model.IsOwned && !isUserCoach && (this.User.Identity?.IsAuthenticated ?? false)) || this.User.IsAdmin())
 						{
 							<form asp-controller="Workout" asp-action="Remove" asp-route-id="@Model.Id" method="post">
 								<input class="btn btn-danger" style="margin-top:5px" type="submit" value="Remove" />
