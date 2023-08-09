@@ -50,6 +50,7 @@ namespace LiftingDome
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LogoutPath = "/User/Login";
+                cfg.AccessDeniedPath = "/Home/Error/401";
             });
 
             builder.Services.AddMvc().AddNToastNotifyToastr();
@@ -93,11 +94,14 @@ namespace LiftingDome
 
             app.UseEndpoints(config =>
             {
+				config.MapControllerRoute(
+					 name: "areas",
+					 pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 config.MapControllerRoute(
                     name: "ProtectingUrlRoute",
                     pattern: "/{controller}/{action}/{id}/{information}",
-                    defaults: new { Controller = "WorkoutCategory", Action = "Details"});
-                config.MapDefaultControllerRoute();
+                    defaults: new { Controller = "WorkoutCategory", Action = "Details" });	
+				config.MapDefaultControllerRoute();
                 config.MapRazorPages();
             });
 

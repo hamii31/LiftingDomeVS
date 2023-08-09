@@ -8,8 +8,8 @@
 
 @if (this.User.Identity?.IsAuthenticated ?? false)
 {
-	<a class="btn btn-dark" asp-controller="Forum" asp-action="Mine"><span style="color:red">My</span> Posts</a>
-	<a class="btn btn-dark" asp-controller="Forum" asp-action="Add"><span style="color:red">Create</span> Post</a>
+	<a class="btn btn-dark mb-2" asp-controller="Forum" asp-action="Mine"><span style="color:red">My</span> Posts</a>
+	<a class="btn btn-dark mb-2" asp-controller="Forum" asp-action="Add"><span style="color:red">Create</span> Post</a>
 }
 <form method="get">
 	<div class="row">

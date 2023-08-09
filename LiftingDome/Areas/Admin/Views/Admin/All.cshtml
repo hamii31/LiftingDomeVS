@@ -13,7 +13,8 @@ else
 	<div class="row">
 		@foreach (AllUsersViewModel user in Model)
 		{
-			<partial name="_AllUsersVewPartial" model="user" />
+			<partial name="_AllUsersViewPartial" model="user" />
 		}
 	</div>
+	<a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-dark btn-lg">Go Back</a>
 }

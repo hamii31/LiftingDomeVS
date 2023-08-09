@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "LiftingDome.Services.Data.Models": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:64216;http://localhost:64220"
+    }
+  }
+}

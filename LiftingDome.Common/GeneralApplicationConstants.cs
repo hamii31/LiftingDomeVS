@@ -9,6 +9,7 @@
 
         public const int DefaultMeassurmentIndex = 1;
 
+        public const string AdminAreaName = "Admin";
         public const string AdminRoleName = "Admin";
         public const string DevelopmentAdminEmail = "Admin@liftingdome.bg";
     }

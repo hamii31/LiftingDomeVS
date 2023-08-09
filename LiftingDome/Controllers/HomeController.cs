@@ -3,6 +3,7 @@
     using LiftingDome.Services.Data.Interfaces;
     using LiftingDome.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
+    using static Common.GeneralApplicationConstants;
     public class HomeController : Controller
     {
         private readonly IWorkoutService workoutService;
@@ -13,6 +14,11 @@
 
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole(AdminRoleName))
+            {
+                return RedirectToAction("Index", "Home", new {Area = AdminAreaName});
+            }
+
             IEnumerable<IndexViewModel> viewModel = await this.workoutService.ThreeFreeWorkoutsAsync();
 			return View(viewModel);
         }

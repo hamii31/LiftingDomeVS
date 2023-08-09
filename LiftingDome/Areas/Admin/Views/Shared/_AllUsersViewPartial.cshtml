@@ -1,7 +1,9 @@
-﻿@using LiftingDome.Services.Data.Interfaces;
+﻿@using LiftingDome.Areas.Admin.Services.Interfaces;
+
 @model AllUsersViewModel
 @inject ICoachService CoachService
 @inject IUserService UserService
+@inject IAdministratorService AdminService
 @{
 	bool isUSerCoach = await CoachService.CoachExistsByEmailAsync(Model.Email);
 }
@@ -12,11 +14,11 @@
 			<br>
 			@if (isUSerCoach)
 			{
-				<b>(<span style="color:red">Coach</span>)</b>
+					<b>(<span style="color:red">Coach</span>)</b>
 			}
 			else
 			{
-				<b>(<span style="color:red">Trainee</span>)</b>
+					<b>(<span style="color:red">Trainee</span>)</b>
 			}
 			<br>
 			<b>@Model.Email</b>
@@ -25,11 +27,11 @@
 			<br>
 			@if (isUSerCoach)
 			{
-				<b>Total Created Workouts: @await CoachService.TotalWorkoutsByCoachEmailAsync(Model.Email)</b>
+					<b>Total Created Workouts: @await AdminService.TotalWorkoutsByCoachEmailAsync(Model.Email)</b>
 			}
 			else
 			{
-				<b>Total Added Workouts: @await UserService.TotalWorkoutsByUserIdAsync(Model.Id)</b>
+					<b>Total Added Workouts: @await AdminService.TotalWorkoutsByUserIdAsync(Model.Id)</b>
 			}
 		</div>
 	</div>

@@ -11,11 +11,11 @@
 <hr />
 @if (this.User.Identity?.IsAuthenticated ?? false)
 {
-	<a class="btn btn-dark" asp-controller="Workout" asp-action="Mine"><span style="color:red">My</span> Workouts</a>
+	<a class="btn btn-dark mb-2" asp-controller="Workout" asp-action="Mine"><span style="color:red">My</span> Workouts</a>
 
 	if (isUserCoach)
 	{
-		<a class="btn btn-dark" asp-controller="Workout" asp-action="Add"><span style="color:red">Create</span> Workout</a>
+		<a class="btn btn-dark mb-2" asp-controller="Workout" asp-action="Add"><span style="color:red">Create</span> Workout</a>
 	}
 }
 <form method="get">
