@@ -5,18 +5,21 @@
 	using Microsoft.AspNetCore.Authentication;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.Extensions.Caching.Memory;
 	using NToastNotify;
-
+	using static Common.GeneralApplicationConstants;
 	public class UserController : Controller
 	{
 		private readonly SignInManager<ApplicationUser> signInManager;
 		private readonly UserManager<ApplicationUser> userManager;
+		private readonly IMemoryCache memoryCache;
 		private readonly IToastNotification _toastNotification;
 
-		public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IToastNotification toastNotification)
+		public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IMemoryCache memoryCache, IToastNotification toastNotification)
 		{
 			this.userManager = userManager;
 			this.signInManager = signInManager;
+			this.memoryCache = memoryCache;
 			this._toastNotification = toastNotification;
 		}
 
@@ -56,7 +59,9 @@
 			}
 
             await this.signInManager.SignInAsync(user, false);
+			this.memoryCache.Remove(UserCacheKey);
 
+			_toastNotification.AddSuccessToastMessage("Successfully registered!");
             return RedirectToAction("Index", "Home");
         }
 
@@ -88,7 +93,8 @@
                 return View(model);
             }
 
-			return RedirectToAction("Index", "Home");
+            _toastNotification.AddSuccessToastMessage("Successfully logged in!");
+            return RedirectToAction("Index", "Home");
 		}
 	}
 }
