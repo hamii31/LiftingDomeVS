@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using LiftingDome.Data;
 namespace LiftingDome
 {
     using LiftingDome.Data;
@@ -8,8 +5,11 @@ namespace LiftingDome
     using LiftingDome.Infrastructure.ModelBinders;
     using LiftingDome.Models;
     using LiftingDome.Services.Data.Interfaces;
+
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+
     using static Common.GeneralApplicationConstants;
     public class Program
     {
@@ -86,6 +86,8 @@ namespace LiftingDome
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.OnlineUsersCheck();
 
             if (app.Environment.IsDevelopment())
             {

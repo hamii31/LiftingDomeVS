@@ -10,8 +10,4 @@
     <ProjectReference Include="..\LiftingDome.Common\LiftingDome.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Admin\" />
-  </ItemGroup>
-
 </Project>

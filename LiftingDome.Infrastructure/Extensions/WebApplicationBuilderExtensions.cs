@@ -1,10 +1,13 @@
 ﻿namespace LiftingDome.Infrastructure.Extensions
 {
+	using LiftingDome.Infrastructure.Middleware;
 	using LiftingDome.Models;
+
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.Extensions.DependencyInjection;
 	using System.Reflection;
+
 	using static Common.GeneralApplicationConstants;
 	public static class WebApplicationBuilderExtensions
 	{
@@ -75,5 +78,10 @@
 
             return app;
         }
+
+		public static IApplicationBuilder OnlineUsersCheck(this IApplicationBuilder app)
+		{
+			return app.UseMiddleware<OnlineUsersMiddleware>();
+		}
     }
 }

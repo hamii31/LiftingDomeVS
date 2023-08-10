@@ -12,5 +12,8 @@
         public const string AdminAreaName = "Admin";
         public const string AdminRoleName = "Admin";
         public const string DevelopmentAdminEmail = "Admin@liftingdome.bg";
+
+        public const string OnlineUsersCookieName = "UserIsOnline";
+        public const int LastActivityMinutesBeforeOffline = 10;
     }
 }
