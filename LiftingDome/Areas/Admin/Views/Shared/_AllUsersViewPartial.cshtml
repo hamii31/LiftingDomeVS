@@ -1,5 +1,5 @@
 ﻿@using LiftingDome.Areas.Admin.Services.Interfaces;
-
+@using LiftingDome.Infrastructure.Middleware;
 @model AllUsersViewModel
 @inject ICoachService CoachService
 @inject IUserService UserService
@@ -7,32 +7,50 @@
 @{
 	bool isUSerCoach = await CoachService.CoachExistsByEmailAsync(Model.Email);
 }
-<div class="col-md-4">
-	<div class="card mb-3">
-		<div class="card-body text-center">
-			<b>@Model.FirstName @Model.LastName</b>
-			<br>
-			@if (isUSerCoach)
-			{
-					<b>(<span style="color:red">Coach</span>)</b>
-			}
-			else
-			{
-					<b>(<span style="color:red">Trainee</span>)</b>
-			}
-			<br>
-			<b>@Model.Email</b>
-			<br>
-			<b>Total Posts: @Model.PostCount</b>
-			<br>
-			@if (isUSerCoach)
-			{
-					<b>Total Created Workouts: @await AdminService.TotalWorkoutsByCoachEmailAsync(Model.Email)</b>
-			}
-			else
-			{
-					<b>Total Added Workouts: @await AdminService.TotalWorkoutsByUserIdAsync(Model.Id)</b>
-			}
-		</div>
-	</div>
-</div>
+
+<tr>
+	<td><label>@Model.FirstName</label></td>
+	<td><label>@Model.LastName</label></td>
+	<td><label>@Model.Email</label></td>
+	<td>
+		@if (isUSerCoach)
+		{
+			<label>@await CoachService.GetCoachPhoneNumberByCoachIdAsync(Model.Id)</label>
+		}
+		else
+		{
+			<label>@Model.PhoneNumber</label>
+		}
+	</td>
+	<td>
+		@if (isUSerCoach)
+		{
+			<label>✔</label>
+		}
+		else
+		{
+			<label class="text-center">❌</label>
+		}
+	</td>
+	<td>
+		@if (isUSerCoach)
+		{
+			<label>Created Workouts: @await AdminService.TotalWorkoutsByCoachEmailAsync(Model.Email)</label>
+		}
+		else
+		{
+			<label>Bought Workouts: @await AdminService.TotalWorkoutsByUserIdAsync(Model.Id)</label>
+		}
+	</td>
+	<td><label>Created Posts: @Model.PostCount</label></td>
+	<td>
+		@if (OnlineUsersMiddleware.CheckIfUserIsOnline(Model.Id))
+		{
+			<label>✔</label>
+		}
+		else
+		{
+			<label class="text-center">❌</label>
+		}
+	</td>
+</tr>

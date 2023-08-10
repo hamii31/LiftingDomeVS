@@ -15,5 +15,6 @@ namespace LiftingDome.Services.Data.Interfaces
         Task UpdateInfo(CoachFormModel model, string coachId);
         Task<IEnumerable<AllCoachesViewModel>> GetAllCoachesAsync(); 
         Task<int> TotalWorkoutsByCoachEmailAsync(string email);
+        Task<string> GetCoachPhoneNumberByCoachIdAsync(string coachId);
     }
 }

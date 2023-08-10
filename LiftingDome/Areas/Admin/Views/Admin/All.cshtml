@@ -10,11 +10,26 @@
 }
 else
 {
-	<div class="row">
-		@foreach (AllUsersViewModel user in Model)
-		{
-			<partial name="_AllUsersViewPartial" model="user" />
-		}
-	</div>
+	<table class="table table-striped">
+	<thread>
+		<tr>
+				<th><label>First Name</label></th>
+				<th><label>Last Name</label></th>
+				<th><label>Email</label></th>
+				<th><label>Phone Number</label></th>
+				<th><label>User Is Coach</label></th>
+				<th><label>Workouts Count</label></th>
+				<th><label>Posts Count</label></th>
+				<th><label>User Is Online</label></th>
+		</tr>
+	</thread>
+	<tbody>
+			@foreach (AllUsersViewModel user in Model)
+			{
+				<partial name="_AllUsersViewPartial" model="user" />
+			}
+	</tbody>
+</table>
+	
 	<a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-dark btn-lg">Go Back</a>
 }

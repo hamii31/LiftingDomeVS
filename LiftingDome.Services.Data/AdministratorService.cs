@@ -26,6 +26,7 @@
 					FirstName = u.FirstName,
 					LastName = u.LastName,
 					Email = u.Email,
+					PhoneNumber = u.PhoneNumber,
 					PostCount = u.Posts.Count()
 
 				}).ToListAsync();

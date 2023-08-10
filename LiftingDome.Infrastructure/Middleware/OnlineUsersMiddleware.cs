@@ -70,7 +70,7 @@
 
 		public static bool CheckIfUserIsOnline(string userId)
 		{
-			bool value = AllKeys.TryGetValue(userId, out bool success);
+			bool value = AllKeys.TryGetValue(userId.ToLower(), out bool success);
 
 			return success && value;
 		}
