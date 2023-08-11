@@ -14,7 +14,7 @@
 			this.liftingDomeDbContext = liftingDomeDbContext;
 		}
 
-        public async Task<string?> GetCertificateIdByCertificateName(string certificateName)
+        public async Task<string?> GetCertificateIdByCertificateNameAsync(string certificateName)
         {
             CoachCertificate? certificate = await this.liftingDomeDbContext
 				.Certificates
@@ -28,7 +28,7 @@
 			return certificate.Id.ToString();
         }
 
-        public async Task<bool> IsCertificateNameValid(string certificateName)
+        public async Task<bool> IsCertificateNameValidAsync(string certificateName)
 		{
 			bool result = await this.liftingDomeDbContext
 				.Certificates

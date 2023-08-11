@@ -96,7 +96,7 @@
 		{
 			Coach? coach = await this.liftingDomeDbContext
                 .Coaches
-                .FirstAsync(w => w.Email == coachEmail);
+                .FirstOrDefaultAsync(w => w.Email == coachEmail);
 
             if(coach == null)
             {
@@ -124,7 +124,7 @@
 		{
 			Coach? coach = await this.liftingDomeDbContext
                 .Coaches
-                .FirstAsync(c => c.UserId.ToString() == coachId);
+                .FirstOrDefaultAsync(c => c.UserId.ToString() == coachId);
 
             if (coach == null)
             {
@@ -152,7 +152,7 @@
 		{
 			Coach? coach = await this.liftingDomeDbContext
                 .Coaches
-                .FirstAsync(c => c.Email.ToLower() == email.ToLower());
+                .FirstOrDefaultAsync(c => c.Email.ToLower() == email.ToLower());
 
             if (coach == null)
             {

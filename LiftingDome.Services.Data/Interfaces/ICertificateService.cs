@@ -2,7 +2,7 @@
 {
 	public interface ICertificateService
 	{
-		Task<bool> IsCertificateNameValid(string certificateName);
-		Task<string?> GetCertificateIdByCertificateName(string certificateName);
+		Task<bool> IsCertificateNameValidAsync(string certificateName);
+		Task<string?> GetCertificateIdByCertificateNameAsync(string certificateName);
 	}
 }

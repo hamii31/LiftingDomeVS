@@ -259,6 +259,11 @@
                 .Where(w => w.IsActive)
                 .FirstAsync(w => w.Id.ToString() == workoutId);
 
+            if (workout == null)
+            {
+                return false;
+            }
+
             return workout.CoachId.ToString() == coachId;
 		}
 

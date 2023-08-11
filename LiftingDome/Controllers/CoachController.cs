@@ -110,14 +110,14 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            bool isCertificateNameValid = await this.certificateService.IsCertificateNameValid(model.Certification);
+            bool isCertificateNameValid = await this.certificateService.IsCertificateNameValidAsync(model.Certification);
             if (!isCertificateNameValid)
             {
                 _toastNotification.AddErrorToastMessage("Certificate is not valid!");
                 return View(model);
             }
 
-            string? certificateId = await this.certificateService.GetCertificateIdByCertificateName(model.Certification);
+            string? certificateId = await this.certificateService.GetCertificateIdByCertificateNameAsync(model.Certification);
 
             if (string.IsNullOrEmpty(certificateId))
             {
