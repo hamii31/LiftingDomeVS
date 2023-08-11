@@ -99,7 +99,7 @@
             return View();
 		}
         [HttpPost]
-        public async Task<IActionResult> Update(CoachFormModel model)
+        public async Task<IActionResult> Update(UpdateCoachInfoFormModel model)
         {
             string? userId = this.User.GetId();
 
@@ -110,19 +110,21 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            bool isCertificateNameValid = await this.certificateService.IsCertificateNameValidAsync(model.Certification);
-            if (!isCertificateNameValid)
+            if (model.Certification != null)
             {
-                _toastNotification.AddErrorToastMessage("Certificate is not valid!");
-                return View(model);
-            }
+				bool isCertificateNameValid = await this.certificateService.IsCertificateNameValidAsync(model.Certification!);
+				if (!isCertificateNameValid)
+				{
+					_toastNotification.AddErrorToastMessage("Certificate is not valid!");
+					return View(model);
+				}
+				string? certificateId = await this.certificateService.GetCertificateIdByCertificateNameAsync(model.Certification);
 
-            string? certificateId = await this.certificateService.GetCertificateIdByCertificateNameAsync(model.Certification);
-
-            if (string.IsNullOrEmpty(certificateId))
-            {
-                this.ModelState.AddModelError(string.Empty, "Certificate does not exist");
-            }
+				if (string.IsNullOrEmpty(certificateId))
+				{
+					this.ModelState.AddModelError(string.Empty, "Certificate does not exist");
+				}
+			}
 
             if (!this.ModelState.IsValid)
 			{

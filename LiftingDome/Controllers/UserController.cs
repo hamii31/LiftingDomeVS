@@ -89,7 +89,7 @@
 
             if (!result.Succeeded)
             {
-				_toastNotification.AddErrorToastMessage("There was an error while logging you in! Please try again later or contact an administrator if the problem persists!");
+				_toastNotification.AddErrorToastMessage("There was an error while logging you in! Please check if your password or email are correct. If the problem persists, contact an administrator if the problem persists!");
                 return View(model);
             }
 

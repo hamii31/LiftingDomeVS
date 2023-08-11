@@ -42,15 +42,18 @@
 
         public async Task Create(string userId, CoachFormModel model)
         {
+            ApplicationUser user = await this.liftingDomeDbContext
+                .Users
+                .FirstAsync(u => u.Id.ToString() == userId);
+
             Coach coach = new Coach()
             {
                 PhoneNumber = model.PhoneNumber,
                 Email = CoachFormModel.Email,
                 UserId = Guid.Parse(userId),
                 CertificateName = model.Certification,
-                ImageURL = model.ImageURL,
-                FirstName = model.FirstName!,
-                LastName = model.LastName!
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
 
             await this.liftingDomeDbContext.Coaches.AddAsync(coach);
@@ -167,16 +170,28 @@
             return totalWorkouts;
 		}
 
-		public async Task UpdateInfo(CoachFormModel model, string userId)
+		public async Task UpdateInfo(UpdateCoachInfoFormModel model, string userId)
 		{
 			Coach? coach = await this.liftingDomeDbContext
                 .Coaches
                 .FirstAsync(c => c.UserId.ToString() == userId);
 
-            coach.CertificateName = model.Certification;
-            coach.PhoneNumber = model.PhoneNumber;
-            coach.ImageURL = model.ImageURL;
-		
+            if (model.Certification != null)
+            {
+				coach.CertificateName = model.Certification!;
+			}
+            if (model.PhoneNumber != null)
+            {
+				coach.PhoneNumber = model.PhoneNumber!;
+			}
+            if (model.FirstName != null)
+            {
+                coach.FirstName = model.FirstName!;
+            }
+            if (model.LastName != null)
+            {
+                coach.LastName = model.LastName!;
+            }
             
 
 			await this.liftingDomeDbContext.SaveChangesAsync();

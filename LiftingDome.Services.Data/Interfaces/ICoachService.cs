@@ -11,7 +11,7 @@
         Task<bool> HasWorkoutWithIdAsync(string userId, string workoutId);
         Task<string> GetCoachNameByCoachIdAsync(string coachId);
         Task<string> GetCoachNameBYCoachEmailAsync(string coachEmail);
-        Task UpdateInfo(CoachFormModel model, string coachId);
+        Task UpdateInfo(UpdateCoachInfoFormModel model, string coachId);
         Task<IEnumerable<AllCoachesViewModel>> GetAllCoachesAsync(); 
         Task<int> TotalWorkoutsByCoachEmailAsync(string email);
         Task<string> GetCoachPhoneNumberByCoachIdAsync(string coachId);

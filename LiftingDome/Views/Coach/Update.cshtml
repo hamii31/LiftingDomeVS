@@ -1,11 +1,44 @@
-﻿@model CoachFormModel
+﻿@model UpdateCoachInfoFormModel
 @{
-	ViewData["Title"] = "Update Certificate";
+	ViewData["Title"] = "Update Information";
 }
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-<partial name="_CoachFormPartial" model="@Model" />
+<div class="row">
+	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+		<form method="post">
+			<div class="form-group">
+				<label asp-for="FirstName"></label>
+				<input asp-for="FirstName" class="form-control">
+				<span asp-validation-for="FirstName" class="small text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LastName"></label>
+				<input asp-for="LastName" class="form-control">
+				<span asp-validation-for="LastName" class="small text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="PhoneNumber"></label>
+				<input asp-for="PhoneNumber" class="form-control"
+					   placeholder="+359888888888">
+				<span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Certification"></label>
+				<input asp-for="Certification" class="form-control"
+					   placeholder="ACSM, NSCA...">
+				<span asp-validation-for="Certification" class="small text-danger"></span>
+			</div>
+			<div class="text-center">
+				<input class="btn btn-dark mt-3 " type="submit" value="Save" />
+			</div>
+		</form>
+		<div class="text-center">
+			<a class="btn btn-dark" style="margin:5px" asp-area="" asp-controller="Home" asp-action="Index">Go Back</a>
+		</div>
+	</div>
+</div>
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
