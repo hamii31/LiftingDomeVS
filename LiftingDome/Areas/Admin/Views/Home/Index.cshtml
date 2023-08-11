@@ -4,59 +4,14 @@
 <div class="mt-4 p-5 bg-light text-center">
 	<h2 class="display-4">Hello, Admin!</h2>
 	<p class="lead mb-1 mt-3">
-		This is your administrator area - you can <b>read</b>, <b>create</b>,
+		This is your <span style="color:red">administrator</span> area - you can <b>read</b>, <b>create</b>,
 		<b>delete</b> and <b>edit</b> workouts and posts.
 		<br />You can <b>add</b> and <b>remove</b> the free workouts, too!
 	</p>
 	<p class="lead mt-1">
-		You can also see <b>all trainees and coaches</b> and <b>the their workouts and posts count</b> in the
+		You can also see <b>all trainees and coaches</b> and <b>their workouts and posts count</b> in the
 		system.
 	</p>
 	<hr class="my-4">
 	<a asp-area="Admin" asp-controller="Admin" asp-action="All" class="btn btn-dark btn-lg">All Users</a>
 </div>
-
-<div class="mb-10"></div>
-
-<div class="row">
-	<div class="col-12 text-center">
-		<button class="btn btn-dark" id="statistics-button" style="margin-bottom:25px">Show Statistics</button>
-	</div>
-</div>
-
-<div class="mt-4 p-5 bg-light d-none" id="statistics">
-	<div class="row" style="float:none; display:inline">
-		<h2 class="col" id="total_workouts"></h2>
-		<h2 class="col" id="total_users"></h2>
-		<h2 class="col" id="total_posts"></h2>
-	</div>
-</div>
-
-
-@section Scripts
-	{
-	<script>
-		$('#statistics-button').on('click', function (e) {
-			e.preventDefault();
-			e.stopPropagation();
-
-			if ($('#statistics').hasClass('d-none')) {
-				$.get('https://localhost:7087/api/statistics', function (data) {
-					$('#total_workouts').text(data.totalWorkouts + " Workouts");
-					$('#total_users').text(data.totalUsers + " Users");
-					$('#total_posts').text(data.totalPosts + " Posts");
-					$('#statistics').removeClass('d-none');
-					$('#statistics-button').text('Hide Statistics');
-					$('#statistics-button').removeClass('btn-dark');
-					$('#statistics-button').addClass('btn-danger');
-				});
-			}
-			else {
-				$('#statistics').addClass('d-none');
-				$('#statistics-button').text('Show Statistics');
-				$('#statistics-button').removeClass('btn-danger');
-				$('#statistics-button').addClass('btn-dark');
-			}
-
-		});</script>
-}
