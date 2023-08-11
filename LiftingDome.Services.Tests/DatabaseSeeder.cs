@@ -11,6 +11,8 @@
 		public static Workout Workout;
 		public static Workout FreeWorkout;
 		public static CoachCertificate Certificate;
+		public static ForumPost Post;
+		public static ForumPost DeletedPost;
 
 		public static void SeedDatabase(LiftingDomeDbContext liftingDomeDbContext)
 		{ 
@@ -96,6 +98,22 @@
 				Name = "AFPA"
 			};
 
+			Post = new ForumPost()
+			{
+				Text = "Random gibberish",
+				IsActive = true,
+				User = TraineeUser,
+				Category = new ForumCategory() { Name = "General"}
+			};
+
+			DeletedPost = new ForumPost()
+			{
+				Text = "Random gibberish but deleted",
+				IsActive = false,
+				User = CoachUser,
+				Category = new ForumCategory() { Name = "General"}
+			};
+
 			liftingDomeDbContext.Users.Add(CoachUser);
 			liftingDomeDbContext.Users.Add(TraineeUser);
 			liftingDomeDbContext.Coaches.Add(Coach);
@@ -103,6 +121,8 @@
 			liftingDomeDbContext.Workouts.Add(Workout);
 			liftingDomeDbContext.Workouts.Add(FreeWorkout);
 			liftingDomeDbContext.Certificates.Add(Certificate);
+			liftingDomeDbContext.Posts.Add(Post);
+			liftingDomeDbContext.Posts.Add(DeletedPost);
 
 			liftingDomeDbContext.SaveChanges();
 		}

@@ -181,10 +181,15 @@
 
         public async Task<bool> IsUserOwnerOfPostWithIdAsync(string userId, string postId)
         {
-            ForumPost post = await this.liftingDomeDbContext
+            ForumPost? post = await this.liftingDomeDbContext
                 .Posts
                 .Where(p => p.IsActive)
-                .FirstAsync(p => p.Id.ToString() == postId);
+                .FirstOrDefaultAsync(p => p.Id.ToString() == postId);
+
+            if (post == null)
+            {
+                return false;
+            }
             
             return post.UserId.ToString() == userId;
         }

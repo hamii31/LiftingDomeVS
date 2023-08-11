@@ -35,5 +35,33 @@
 
 			Assert.IsNotNull(result);
 		}
+		[Test]
+		public async Task GetCertificateIdByCertificateNameAsyncShouldReturnNullIfCertificateDoesntExist()
+		{
+			string certificateName = "Not Certificate Name";
+
+			string result = await this.certificateService.GetCertificateIdByCertificateNameAsync(certificateName);
+
+			Assert.IsNull(result);
+		}
+		[Test]
+		public async Task IsCertificateNameValidAsyncShouldReturnTrueIfCertificateIsValid()
+		{
+			string certificateName = Certificate.Name;
+
+			bool result = await this.certificateService.IsCertificateNameValidAsync(certificateName);
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public async Task IsCertificateNameValidAsyncShouldReturnFalseIfCertificateDoesntExist()
+		{
+			string certificateName = "Not Certificate Name";
+
+			bool result = await this.certificateService.IsCertificateNameValidAsync(certificateName);
+
+			Assert.IsFalse(result);
+		}
 	}
 }
