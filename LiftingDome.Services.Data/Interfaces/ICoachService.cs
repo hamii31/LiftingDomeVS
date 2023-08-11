@@ -1,7 +1,6 @@
-﻿using LiftingDome.Web.ViewModels.Coach;
-
-namespace LiftingDome.Services.Data.Interfaces
+﻿namespace LiftingDome.Services.Data.Interfaces
 {
+    using LiftingDome.Web.ViewModels.Coach;
     public interface ICoachService
     {
         Task<bool> CoachExistsByUserIdAsync(string userId);

@@ -11,7 +11,7 @@
         public LiftingDomeDbContext(DbContextOptions<LiftingDomeDbContext> options)
             : base(options)
         {
-
+            
         }
 
         public DbSet<WorkoutCategory> WorkoutCategories { get; set; } = null!;

@@ -9,10 +9,10 @@
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
 
-    public class ForumChatService : IForumChatService
+    public class ForumService : IForumService
     {
         private readonly LiftingDomeDbContext liftingDomeDbContext;
-        public ForumChatService(LiftingDomeDbContext liftingDomeDbContext)
+        public ForumService(LiftingDomeDbContext liftingDomeDbContext)
         {
             this.liftingDomeDbContext = liftingDomeDbContext;
         }
