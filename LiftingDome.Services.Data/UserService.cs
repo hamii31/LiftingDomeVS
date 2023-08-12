@@ -97,7 +97,7 @@
 			return user.AddedWorkouts.Any();
 		}
 
-		public async Task<bool> UserHasWorkoutsWithId(string userId, string workoutId)
+		public async Task<bool> UserHasWorkoutsWithIdAsync(string userId, string workoutId)
 		{
 			ApplicationUser? user = await this.liftingDomeDbContext
 		   .Users
@@ -105,6 +105,16 @@
 		   .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
 			if (user == null)
+			{
+				return false;
+			}
+
+			Workout? workout = await this.liftingDomeDbContext
+				.Workouts
+				.Where(w => w.IsActive)
+				.FirstOrDefaultAsync(w => w.Id.ToString() == workoutId);
+
+			if (workout == null)
 			{
 				return false;
 			}

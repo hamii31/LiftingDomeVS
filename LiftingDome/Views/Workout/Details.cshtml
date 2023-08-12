@@ -7,7 +7,7 @@
 @{
 	bool isUserCoach = await CoachService.CoachExistsByUserIdAsync(this.User.GetId()!);
 	bool CoachIsOwnerOfWorkout = await CoachService.HasWorkoutWithIdAsync(this.User.GetId()!, Model.Id);
-	bool UserIsOwnerOfWorkout = await UserService.UserHasWorkoutsWithId(this.User.GetId()!, Model.Id);
+	bool UserIsOwnerOfWorkout = await UserService.UserHasWorkoutsWithIdAsync(this.User.GetId()!, Model.Id);
 }
 @{
 	ViewBag.Title = "Workout Details";
