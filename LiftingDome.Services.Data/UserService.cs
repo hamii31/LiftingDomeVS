@@ -37,7 +37,6 @@
 			}
 
 			return user.FirstName + " " + user.LastName;
-
 		}
 
 		public async Task<string?> GetUserEmailByUserIdAsync(string userId)
