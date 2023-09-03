@@ -121,7 +121,7 @@
 				return View(model);
 			}
 			_toastNotification.AddSuccessToastMessage("Post added successfully!");
-			return RedirectToAction("All", "ForumChat");
+			return RedirectToAction("All", "Forum");
 		}
 
 		[HttpGet]
@@ -164,14 +164,14 @@
             if (!postExists)
             {
                 _toastNotification.AddErrorToastMessage("Post with the provided Id does not exist!");
-                return RedirectToAction("All", "ForumChat");
+                return RedirectToAction("All", "Forum");
             }
 
 			bool IsUserOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, id);
 			if (!IsUserOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be the owner of the post in order to edit it!");
-				return RedirectToAction("Mine", "ForumChat");
+				return RedirectToAction("Mine", "Forum");
 			}
 
             try
@@ -208,14 +208,14 @@
             if (!postExists)
             {
                 _toastNotification.AddErrorToastMessage("Post with the provided Id does not exist!");
-                return RedirectToAction("All", "ForumChat");
+                return RedirectToAction("All", "Forum");
             }
 
             bool IsUserOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(this.User.GetId()!, id);
             if (!IsUserOwner && !this.User.IsAdmin())
             {
                 _toastNotification.AddErrorToastMessage("You must be the owner of the post in order to edit it!");
-                return RedirectToAction("Mine", "ForumChat");
+                return RedirectToAction("Mine", "Forum");
             }
 
 			if (model.TaggedUser != null)
@@ -225,6 +225,7 @@
 				if (!taggedUserExists)
 				{
 					_toastNotification.AddErrorToastMessage("Tagged user does not exist!");
+					model.Categories = await this.forumCategoryService.AllCategoriesAsync();
 					return View(model);
 				}
 			}
@@ -240,7 +241,7 @@
                 return View(model);
             }
             _toastNotification.AddSuccessToastMessage("Post changes saved successfully!");
-            return RedirectToAction("Mine", "ForumChat");
+            return RedirectToAction("Mine", "Forum");
         }
 		[HttpGet]
 		public async Task<IActionResult> Delete(string id)
@@ -260,7 +261,7 @@
 			if (!postExists)
 			{
 				_toastNotification.AddErrorToastMessage("Post with the provided Id does not exist!");
-				return RedirectToAction("All", "ForumChat");
+				return RedirectToAction("All", "Forum");
 			}
 
 			bool userIsOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(userId, id);
@@ -268,7 +269,7 @@
 			if (!userIsOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be the owner of the post in order to delete it!");
-				return RedirectToAction("Mine", "ForumChat");
+				return RedirectToAction("Mine", "Forum");
 			}
 
 			try
@@ -299,7 +300,7 @@
 			if (!postExists)
 			{
 				_toastNotification.AddErrorToastMessage("Post with the provided Id does not exist!");
-				return RedirectToAction("All", "ForumChat");
+				return RedirectToAction("All", "Forum");
 			}
 
 			bool userIsOwner = await this.forumChatService.IsUserOwnerOfPostWithIdAsync(userId, id);
@@ -307,13 +308,13 @@
 			if (!userIsOwner && !this.User.IsAdmin())
 			{
 				_toastNotification.AddErrorToastMessage("You must be the owner of the post in order to delete it!");
-				return RedirectToAction("Mine", "ForumChat");
+				return RedirectToAction("Mine", "Forum");
 			}
 			try
 			{
 				await this.forumChatService.DeletePostByIdAsync(id);
 				_toastNotification.AddWarningToastMessage("Post successfully deleted!");
-				return RedirectToAction("Mine", "ForumChat");
+				return RedirectToAction("Mine", "Forum");
 			}
 			catch (Exception)
 			{
