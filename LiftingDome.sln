@@ -34,7 +34,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Additionals", "Additionals"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{63A69DE3-DE33-4148-B987-5B688E64A947}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftingDome.Services.Tests", "LiftingDome.Services.Tests\LiftingDome.Services.Tests.csproj", "{A747B5C0-9C83-479C-8C07-7F819C438C7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiftingDome.Services.Tests", "LiftingDome.Services.Tests\LiftingDome.Services.Tests.csproj", "{A747B5C0-9C83-479C-8C07-7F819C438C7A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{73BEEE84-CF09-47C1-9026-814E216CE82E}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Pictures\Screenshots\calculatorscr.png = ..\..\..\Pictures\Screenshots\calculatorscr.png
+		..\..\..\Pictures\Screenshots\forumscr.png = ..\..\..\Pictures\Screenshots\forumscr.png
+		..\..\..\Pictures\Screenshots\homepagescr.png = ..\..\..\Pictures\Screenshots\homepagescr.png
+		..\..\..\Pictures\Screenshots\meetthecoachesscr.png = ..\..\..\Pictures\Screenshots\meetthecoachesscr.png
+		..\..\..\Pictures\Screenshots\workoutdetailsscr.png = ..\..\..\Pictures\Screenshots\workoutdetailsscr.png
+		..\..\..\Pictures\Screenshots\workoutsscr.png = ..\..\..\Pictures\Screenshots\workoutsscr.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
