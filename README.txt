@@ -1,4 +1,4 @@
-A complete Web Application featuring User Roles (Coach/User & Admin), Workouts, Forum functionality and Calculator.
+A Full-Stack Website featuring User Roles (Coach/User & Admin), Workouts, Forum functionality and Calculator.
 
 Data is fetched from SQL DB (MS SQL Server & Docker), API is used to fetch data about total users, workouts and forum posts. 
 
